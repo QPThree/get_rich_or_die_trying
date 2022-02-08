@@ -6,7 +6,7 @@ import models.Scene;
 import java.util.Map;
 
 public class EffectsTranslator {
-
+//  Invoked in the game class, mutates the player object at the end of a scene based on decisions made
     public static void doEffects(Person player, Map<String, Object> effect) {
 
         for (String action : effect.keySet()) {
@@ -46,6 +46,7 @@ public class EffectsTranslator {
 
     }
 
+    // Handles the player attributes, displayed after the backstory
     public static void getAttribute(Person player, String attribute) {
 
         switch (attribute) {
