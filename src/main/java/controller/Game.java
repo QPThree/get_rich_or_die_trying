@@ -24,31 +24,32 @@ public class Game {
     }
 
     public void execute() {
-
+        mainFrame.hideMenuScreen();
+        mainFrame.showBackstoryScreen();
         scenes = new SceneContainer();
-        welcome();
-        checkSaveFile();
-        getPlayerBasicData();
-        clearScreen();
-        runSceneOneCareer(player);
-
-        while (shouldPlay()) {
-            clearScreen();
-            Scene currentScene = scenes.getRandomScene(player);
-            System.out.println(currentScene.getArt());
-            System.out.println("\n+++++++ 5 years later +++++++");
-            player.addAge(5);
-            int input = prompt(currentScene);
-            clearScreen();
-            displayOutcome(input, currentScene);
-            runEffect(input, currentScene);
-            String salaryReport = player.addSalary();
-            System.out.println("\nEnter any key to see your 5-year summary");
-            getInput();
-            displaySceneSummary(salaryReport);
-            nextTurnPrompt();
-        }
-        playAgainOrExit();
+        //welcome();
+//        checkSaveFile();
+        //getPlayerBasicData();
+//        clearScreen();
+//        runSceneOneCareer(player);
+//
+//        while (shouldPlay()) {
+//            clearScreen();
+//            Scene currentScene = scenes.getRandomScene(player);
+//            System.out.println(currentScene.getArt());
+//            System.out.println("\n+++++++ 5 years later +++++++");
+//            player.addAge(5);
+//            int input = prompt(currentScene);
+//            clearScreen();
+//            displayOutcome(input, currentScene);
+//            runEffect(input, currentScene);
+//            String salaryReport = player.addSalary();
+//            System.out.println("\nEnter any key to see your 5-year summary");
+//            getInput();
+//            displaySceneSummary(salaryReport);
+//            nextTurnPrompt();
+//        }
+//        playAgainOrExit();
     }
 
     private void nextTurnPrompt() {
@@ -265,7 +266,8 @@ public class Game {
         String printBackstoryArt = Art.getArt("backstory");
         System.out.println(printBackstoryArt);
         System.out.println("Enter your Name: ");
-        String playerName = getInput();
+        mainFrame.writeToTextArea(mainFrame.backstoryTextArea, "Enter your name");
+        String playerName = "NAme";
 
         while(playerName.isEmpty()){
             System.out.println("Name is required. Please enter your name.");
@@ -283,7 +285,7 @@ public class Game {
             return;
         }
         System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
-        String getChoice = getInput("working class", "middle class");
+        String getChoice = "working class"; //or middle class
 
         if (getChoice.equalsIgnoreCase("working class")) {
             this.player.setNetWorth(player.getNetWorth() - 25000);
@@ -305,12 +307,12 @@ public class Game {
         String educationChoice = getInput("y", "n");
 
         boolean userWantsCollege = educationChoice.equalsIgnoreCase("y");
-        System.out.printf("Your name is %s. You chose to %s college.", playerName, userWantsCollege ? "go to" : "skip");
+//        System.out.printf("Your name is %s. You chose to %s college.", playerName, userWantsCollege ? "go to" : "skip");
 
         if(userWantsCollege)
             player.addMoney(-100000);
 
-        player.setName(playerName);
+        player.setName("test on line 315");
         player.setEducation(userWantsCollege);
     }
 
@@ -426,7 +428,7 @@ public class Game {
     }
 
     private void gameBanner() {
-        mainFrame.writeToTextArea("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        mainFrame.writeToTextArea(mainFrame.textArea, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
     }
 }
 
