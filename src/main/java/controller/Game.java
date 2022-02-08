@@ -20,6 +20,7 @@ public class Game {
 
     public Game () {
         setAllActionListeners();
+        gameBanner();
     }
 
     public void execute() {
@@ -424,6 +425,9 @@ public class Game {
         mainFrame.helpButton.addActionListener(e -> helpMenu());
     }
 
+    private void gameBanner() {
+        mainFrame.writeToTextArea("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+    }
 }
 
 
