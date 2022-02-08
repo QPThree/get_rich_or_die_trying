@@ -404,6 +404,14 @@ public class Game {
     }
 
     public void helpMenu() {
+        mainFrame.writeToTextArea("Game is meant to simulate life." +
+                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+                "\nChoices will change how much money you have, as well as health points." +
+                "\nEx: choosing education will grant you an extra money to your salary" +
+                "\nbut skipping college will start you out with less debt." +
+                "\nChoose carefully, your life depends on it" +
+                "\nIf you're done with the help section, please make a selection below.");
+
         System.out.println("Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
                 "\nChoices will change how much money you have, as well as health points." +
@@ -411,22 +419,26 @@ public class Game {
                 "\nbut skipping college will start you out with less debt." +
                 "\nChoose carefully, your life depends on it" +
                 "\nIf you're done with the help section, press any key to continue.");
-        try {
-            System.in.read();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            System.in.read();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void setAllActionListeners () {
         mainFrame.playButton.addActionListener(e -> execute());
-        mainFrame.exitButton.addActionListener(e -> System.out.println("Exiting game"));
+        mainFrame.exitButton.addActionListener(e -> exitGame());
         mainFrame.loadButton.addActionListener(e -> System.out.println("Loading game"));
         mainFrame.helpButton.addActionListener(e -> helpMenu());
     }
 
     private void gameBanner() {
         mainFrame.writeToTextArea("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+    }
+
+    private void exitGame() {
+        System.exit(1);
     }
 }
 

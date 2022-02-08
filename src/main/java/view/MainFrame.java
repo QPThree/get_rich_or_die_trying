@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
         setAllPanels();
         textArea.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 4));
 
-        ImageIcon banner = new ImageIcon("resources/GetRichBanner.png");
+        ImageIcon banner = new ImageIcon(new ImageIcon("resources/GetRichBanner.png").getImage().getScaledInstance(500,150,Image.SCALE_AREA_AVERAGING));
         bannerLabel = new JLabel();
         bannerLabel.setIcon(banner);
         titlePanel.add(bannerLabel);
@@ -51,8 +51,8 @@ public class MainFrame extends JFrame {
 
     private void setAllButtons() {
         playButton = createJButton("Play Game", 150, 50, false, Color.WHITE, Color.GREEN);
-        exitButton = createJButton("Exit Game", 150, 50, false, Color.white, Color.green);
-        loadButton = createJButton("Load Game", 150, 20, false, Color.white, Color.red);
+        exitButton = createJButton("Exit Game", 150, 50, false, Color.white, Color.red);
+        loadButton = createJButton("Load Game", 150, 20, false, Color.white, Color.gray);
         helpButton = createJButton("Help Menu", 150, 20, false, Color.white, Color.blue);
     }
 
