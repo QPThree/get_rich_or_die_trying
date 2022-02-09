@@ -422,7 +422,7 @@ public class Game {
     }
 
     public void helpMenu() {
-        mainFrame.writeToTextArea("Game is meant to simulate life." +
+        mainFrame.writeToTextArea(mainFrame.textArea,"Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
                 "\nChoices will change how much money you have, as well as health points." +
                 "\nEx: choosing education will grant you an extra money to your salary" +
