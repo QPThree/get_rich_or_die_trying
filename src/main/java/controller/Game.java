@@ -24,32 +24,33 @@ public class Game {
     }
 
     public void execute() {
+        mainFrame.hideMenuScreen();
+        mainFrame.showBackstoryScreen();
+        scenes = new SceneContainer();
+        //welcome();
+//        checkSaveFile();
+        //getPlayerBasicData();
+//        clearScreen();
+//        runSceneOneCareer(player);
+//
+//        while (shouldPlay()) {
+//            clearScreen();
+//            Scene currentScene = scenes.getRandomScene(player);
+//            System.out.println(currentScene.getArt());
+//            System.out.println("\n+++++++ 5 years later +++++++");
+//            player.addAge(5);
+//            int input = prompt(currentScene);
+//            clearScreen();
+//            displayOutcome(input, currentScene);
+//            runEffect(input, currentScene);
+//            String salaryReport = player.addSalary();
+//            System.out.println("\nEnter any key to see your 5-year summary");
+//            getInput();
+//            displaySceneSummary(salaryReport);
+//            nextTurnPrompt();
+//        }
+//        playAgainOrExit();
 
-        scenes = new SceneContainer();  // class that contains all the scenes stored in an arrayList of categories
-        welcome();  // banner & what game is about
-        checkSaveFile();    // if progress was previously "saved", supposed to load game(Not working as expected)
-        getPlayerBasicData();   // for the backstory and college
-        clearScreen();
-        runSceneOneCareer(player);
-
-        // while player still has health above 0, hasn't quit nor has less than $1
-        while (shouldPlay()) {
-            clearScreen();
-            Scene currentScene = scenes.getRandomScene(player); // generates random scene and paves a path for the game direction(also prevents repeated scenes)
-            System.out.println(currentScene.getArt()); // prints scene banner
-            System.out.println("\n+++++++ 5 years later +++++++");
-            player.addAge(5); // 5 years are added at the beginning of a new scene
-            int input = prompt(currentScene); // displays scene and prompts user for choice
-            clearScreen();
-            displayOutcome(input, currentScene); // displays consequence from previous choice
-            runEffect(input, currentScene); // deducts or adds health, money and other attributes to player basing on previous decision
-            String salaryReport = player.addSalary(); // displays net worth breakdown
-            System.out.println("\nEnter any key to see your 5-year summary");
-            getInput();
-            displaySceneSummary(salaryReport); // scene summary
-            nextTurnPrompt(); // At the end of scene, user can save, quit or continue playing
-        }
-        playAgainOrExit();
     }
 
     // At the end of a scene user is prompted if they want to save, quit or continue
@@ -275,7 +276,6 @@ public class Game {
         System.out.println(printBackstoryArt);  // Prints backstory banner
         System.out.println("Enter your Name: ");
         String playerName = getInput(); // validates and stores user input
-
         while(playerName.isEmpty()){    // prevents empty strings
             System.out.println("Name is required. Please enter your name.");
             playerName = getInput();
@@ -315,12 +315,12 @@ public class Game {
         String educationChoice = getInput("y", "n");
 
         boolean userWantsCollege = educationChoice.equalsIgnoreCase("y");
-        System.out.printf("Your name is %s. You chose to %s college.", playerName, userWantsCollege ? "go to" : "skip");
+//        System.out.printf("Your name is %s. You chose to %s college.", playerName, userWantsCollege ? "go to" : "skip");
 
         if(userWantsCollege)
             player.addMoney(-100000);
 
-        player.setName(playerName);
+        player.setName("test on line 315");
         player.setEducation(userWantsCollege);
     }
 
@@ -452,7 +452,7 @@ public class Game {
     }
 
     private void gameBanner() {
-        mainFrame.writeToTextArea("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        mainFrame.writeToTextArea(mainFrame.textArea, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
     }
 
     private void exitGame() {
