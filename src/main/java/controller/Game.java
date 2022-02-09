@@ -16,7 +16,7 @@ public class Game {
     Person player = new Person();
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
-    private MainFrame mainFrame = new MainFrame();
+    private MainFrame mainFrame = new MainFrame(); // Java Swing
 
     public Game () {
         setAllActionListeners();
@@ -50,8 +50,10 @@ public class Game {
 //            nextTurnPrompt();
 //        }
 //        playAgainOrExit();
+
     }
 
+    // At the end of a scene user is prompted if they want to save, quit or continue
     private void nextTurnPrompt() {
         System.out.println("\nEnter any key to continue or type 'save' to save the game. Or 'quit' to end the game.");
         String askToSave = getInput();
@@ -72,6 +74,7 @@ public class Game {
 
     //doesn't clear the scroll bar
     public void clearScreen() {
+        // depending on your Operating system, this method is able to clear the screen using a new ProcessBuilder()
         ProcessBuilder var0 = os.contains("windows") ? new ProcessBuilder(new String[]{"cmd", "/c", "cls"}) : new ProcessBuilder(new String[]{"clear"});
 
         try {
@@ -110,8 +113,9 @@ public class Game {
         return values;
     }
 
+    // At the end, Each scene has an effect on a player, such as loss of money or health, effects are a properties found in the JSON objects
     private void runEffect(int index, Scene currentScene) {
-        EffectsTranslator.doEffects(player, currentScene.getEffects().get(index));
+        EffectsTranslator.doEffects(player, currentScene.getEffects().get(index)); // handles mutating the player object
     }
 
     private void displayOutcome(int index, Scene currentScene) {
@@ -119,6 +123,7 @@ public class Game {
         System.out.println();
     }
 
+    // prints the scene details and prompts user to select one of the options provided
     private int prompt(Scene currentScene) {
         System.out.println();
         System.out.println(currentScene.getPrompt());
@@ -143,13 +148,15 @@ public class Game {
         return selectedIndex;
     }
 
+    // first Scene after college, for the career choice
     private void runSceneOneCareer(Person player) {
-
+        // availCareers are dictated by user choice in regards going to college
         Map<Careers, List<String>> availCareers = player.hasEducation() ? Careers.getCollegeCareers() : Careers.getNonCollegeCareers();
         String collegeSummary = player.hasEducation() ? "Congratulations!\nYou finished college." : "You decided to skip the college route.";
         System.out.println(collegeSummary);
         System.out.println("What career do you want?");
 
+        // loops and prints out available careers depending on your college decision
         List<String> allValidCareers = new ArrayList<>();
         for (Careers career : availCareers.keySet()) {
             for (String specialty : availCareers.get(career)) {
@@ -158,8 +165,9 @@ public class Game {
             }
         }
 
-        String selectedCareer = getInput(allValidCareers);
+        String selectedCareer = getInput(allValidCareers); // stores selected career
 
+        // sets career and breaks if you have selected a valid career
         topLoop:
         for (Careers career : availCareers.keySet()) {
             for (String specialty : availCareers.get(career)) {
@@ -185,9 +193,9 @@ public class Game {
      * @param selections a list of valid selections
      * @return lower case version of user input
      */
-    private String getInput(String... selections) {
+    private String getInput(String... selections) { // Asks as our prompter class for the backstory scene
         Scanner scanner = new Scanner(System.in);
-
+        // expects either the right user input from the selections provided, "help" or "quit"
         while (true) {
             String userInput = scanner.nextLine().trim().toLowerCase();
 
@@ -214,11 +222,11 @@ public class Game {
         }
     }
 
-    public void checkSaveFile()
+    public void checkSaveFile() // Not working as expected
     {
         File checkFile = new File("saveFile.txt");
         try
-        {
+        { // able to read the existing saveFile, however once game is loaded, it takes you back to the backstory
             if(checkFile.exists() == true)
             {
                 System.out.println("Enter name of player...");
@@ -262,19 +270,18 @@ public class Game {
         }
     }
 
+    // generates the backstory for the game (from a child -> college)
     private void getPlayerBasicData() {
         String printBackstoryArt = Art.getArt("backstory");
-        System.out.println(printBackstoryArt);
+        System.out.println(printBackstoryArt);  // Prints backstory banner
         System.out.println("Enter your Name: ");
-        mainFrame.writeToTextArea(mainFrame.backstoryTextArea, "Enter your name");
-        String playerName = "NAme";
-
-        while(playerName.isEmpty()){
+        String playerName = getInput(); // validates and stores user input
+        while(playerName.isEmpty()){    // prevents empty strings
             System.out.println("Name is required. Please enter your name.");
             playerName = getInput();
         }
 
-        if (playerName.equalsIgnoreCase("DEV")) {
+        if (playerName.equalsIgnoreCase("DEV")) {   // cheat code for DEV
             player.setName("DEV");
             player.setPrivilege(true);
             player.setEducation(true);
@@ -285,8 +292,8 @@ public class Game {
             return;
         }
         System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
-        String getChoice = "working class"; //or middle class
-
+        String getChoice = getInput("working class", "middle class");
+        // Selecting middle class starts you off $25k more to your net worth while working class $25k less(ie it's easier)
         if (getChoice.equalsIgnoreCase("working class")) {
             this.player.setNetWorth(player.getNetWorth() - 25000);
         } else if (getChoice.contains("middle class")) {
@@ -299,10 +306,11 @@ public class Game {
         clearScreen();
 
 //        System.out.println(printBackstoryArt);
-        List<Backstory> backstories = getBackStoryScenes();
+        List<Backstory> backstories = getBackStoryScenes(); // stores backstory data from JSON in a List
         processBackstories(backstories);
         System.out.println();
         // TODO: Make this better narrative
+        // Going to college reduces your net worth by -100000
         System.out.println("Do you want to go to college? (Y/N): ");
         String educationChoice = getInput("y", "n");
 
@@ -316,7 +324,13 @@ public class Game {
         player.setEducation(userWantsCollege);
     }
 
+    // Responsible for simulating the backstory
     private void processBackstories(List<Backstory> backstories) {
+        /*
+        displays backstory banner
+        displays the current scene (prompt & options)
+        prompts user for an answer
+         */
         for (Backstory backstory : backstories) {
             System.out.println(Art.getArt("backstory"));
             System.out.println(backstory.getPrompt());
@@ -325,9 +339,10 @@ public class Game {
             for (BackstoryOption option : backstory.getOptions())
                 System.out.println(option.getText());
 
-            String resp = getInput(backstory.getBackstoryOptionsText());
+            String resp = getInput(backstory.getBackstoryOptionsText()); // user response from options stored here
             BackstoryOption selectedBackstoryOption = null;
             for (BackstoryOption option : backstory.getOptions()) {
+                // If the user has selected a correct option, its stored as selectedBackstoryOption
                 if (option.getText().contains(resp)) {
                     selectedBackstoryOption = option;
                     break;
@@ -346,6 +361,7 @@ public class Game {
         System.out.println("Creativity: " + player.getCreativity());
     }
 
+    // Reads backstory data from JSON file and stores it in an arrayList
     private List<Backstory> getBackStoryScenes() {
         List<Backstory> backstories = new ArrayList<>();
         JSONArray fileData = readJsonArray("scenes/backstory.json");
@@ -406,6 +422,14 @@ public class Game {
     }
 
     public void helpMenu() {
+        mainFrame.writeToTextArea("Game is meant to simulate life." +
+                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+                "\nChoices will change how much money you have, as well as health points." +
+                "\nEx: choosing education will grant you an extra money to your salary" +
+                "\nbut skipping college will start you out with less debt." +
+                "\nChoose carefully, your life depends on it" +
+                "\nIf you're done with the help section, please make a selection below.");
+
         System.out.println("Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
                 "\nChoices will change how much money you have, as well as health points." +
@@ -413,22 +437,26 @@ public class Game {
                 "\nbut skipping college will start you out with less debt." +
                 "\nChoose carefully, your life depends on it" +
                 "\nIf you're done with the help section, press any key to continue.");
-        try {
-            System.in.read();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            System.in.read();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void setAllActionListeners () {
         mainFrame.playButton.addActionListener(e -> execute());
-        mainFrame.exitButton.addActionListener(e -> System.out.println("Exiting game"));
+        mainFrame.exitButton.addActionListener(e -> exitGame());
         mainFrame.loadButton.addActionListener(e -> System.out.println("Loading game"));
         mainFrame.helpButton.addActionListener(e -> helpMenu());
     }
 
     private void gameBanner() {
         mainFrame.writeToTextArea(mainFrame.textArea, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+    }
+
+    private void exitGame() {
+        System.exit(1);
     }
 }
 
