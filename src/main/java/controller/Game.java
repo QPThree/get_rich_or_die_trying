@@ -5,11 +5,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import view.MainFrame;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class Game {
     SceneContainer scenes;
@@ -26,6 +28,7 @@ public class Game {
     public void execute() {
         mainFrame.hideMenuScreen();
         mainFrame.showBackstoryScreen();
+        mainFrame.writeToTextArea(mainFrame.backstoryTextArea, Color.white, "Backstory text here.\n Coming from line 29 in Game.java");
         scenes = new SceneContainer();
         //welcome();
 //        checkSaveFile();
@@ -422,7 +425,7 @@ public class Game {
     }
 
     public void helpMenu() {
-        mainFrame.writeToTextArea("Game is meant to simulate life." +
+        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
                 "\nChoices will change how much money you have, as well as health points." +
                 "\nEx: choosing education will grant you an extra money to your salary" +
@@ -452,7 +455,7 @@ public class Game {
     }
 
     private void gameBanner() {
-        mainFrame.writeToTextArea(mainFrame.textArea, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
     }
 
     private void exitGame() {

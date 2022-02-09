@@ -10,10 +10,10 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton;
-    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel;
+    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel;
     public JTextArea textArea = new JTextArea(20, 20);;
-    public JTextArea backstoryTextArea = new JTextArea(20,20);
-    public JLabel bannerLabel;
+    public JTextArea backstoryTextArea = new JTextArea(10,20);
+    public JLabel bannerLabel, backstoryLabel;
 
 
     private Container con;
@@ -36,17 +36,30 @@ public class MainFrame extends JFrame {
         menuPanel.add(exitButton);
         menuPanel.add(loadButton);
         menuPanel.add(helpButton);
+
+
+
         //add tp content pane
         con.add(menuPanel);
         con.add(titlePanel);
         con.add(gameIntroPanel);
 
         // -- Backstory components --
-        con.add(backstoryTextPanel);
+        ImageIcon backstoryBanner = new ImageIcon(new ImageIcon("resources/Background.png").getImage().getScaledInstance(500,200,Image.SCALE_AREA_AVERAGING));
+        backstoryLabel = new JLabel();
+        backstoryLabel.setIcon(backstoryBanner);
+        backstoryTitlePanel.add(backstoryLabel);
+        backstoryTitlePanel.setBackground(Color.white);
+        backstoryTextPanel.setBounds(150,150, 300,400);
+        backstoryTextPanel.add(backstoryTextArea);
+
+//        backstoryOptionsPanel.setBackground(Color.cyan);
         backstoryOptionsPanel.add(backstoryOptionOneButton);
         backstoryOptionsPanel.add(backstoryOptionTwoButton);
         backstoryOptionsPanel.add(backstoryOptionThreeButton);
         con.add(backstoryOptionsPanel);
+        con.add(backstoryTextPanel);
+        con.add(backstoryTitlePanel);
 
 
 
@@ -76,12 +89,18 @@ public class MainFrame extends JFrame {
 
         //backstory
         //1
-        backstoryOptionOneButton = createJButton("1", 150, 50, false, Color.WHITE, Color.red);
-        backstoryOptionOneButton.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(5, 15, 5, 15)));
+        backstoryOptionOneButton = createJButton("1", 150, 50, false, Color.black, Color.white);
+        backstoryOptionOneButton.setBounds(70, 75, 150, 50); //set bounds moves the button to desired X/Y coordinate
+        backstoryOptionOneButton.setBorder(new LineBorder(Color.lightGray, 1));
         //2
-        backstoryOptionTwoButton = createJButton("2", 150, 50, false, Color.white, Color.green);
+        backstoryOptionTwoButton = createJButton("2", 150, 50, false, Color.black, Color.white);
+        backstoryOptionTwoButton.setBounds(70, 175, 150, 50);
+        backstoryOptionTwoButton.setBorder(new LineBorder(Color.lightGray, 1));
         //3
-        backstoryOptionThreeButton = createJButton("2", 150, 50, false, Color.white, Color.blue);
+        backstoryOptionThreeButton = createJButton("3", 150, 50, false, Color.black, Color.white);
+        backstoryOptionThreeButton.setBounds(70,275, 150, 50 );
+        backstoryOptionThreeButton.setBorder(new LineBorder(Color.lightGray, 1));
+
     }
 
     private void setAllPanels() {
@@ -90,18 +109,22 @@ public class MainFrame extends JFrame {
         gameIntroPanel= createJPanel(225, 300, 450, 100, Color.yellow, true);
         menuPanel = createJPanel(350, 450, 225, 225, Color.yellow, true);
         //backstory
-        backstoryTextPanel = createJPanel(100, 100, 275, 400, Color.gray, false);
-        backstoryOptionsPanel = createJPanel(550, 100, 275, 400, Color.gray, false);
+        backstoryTextPanel = createJPanel(100, 150, 275, 400, Color.white, false);
+        backstoryTextPanel.setBorder(new LineBorder(Color.black, 2));
+        backstoryOptionsPanel = createJPanel(550, 150, 275, 400, Color.white, false);
+        backstoryOptionsPanel.setLayout(null);
+        backstoryOptionsPanel.setBorder(new LineBorder(Color.black, 2));
+        backstoryTitlePanel = createJPanel(185, 25, 500, 100, Color.white, false);
     }
 
     public void clearMenuPanel() {
         con.remove(menuPanel);
     }
 
-    public void writeToTextArea(JTextArea textArea, String string) {
+    public void writeToTextArea(JTextArea textArea, Color color, String string) {
         textArea.setFont(new Font("Arial", Font.BOLD, 11));
-        textArea.setPreferredSize(new Dimension(425, 75));
-        textArea.setBackground(Color.white);
+        //textArea.setPreferredSize(new Dimension(425, 75));
+        textArea.setBackground(color);
         textArea.setText(string);
     }
     private JButton createJButton(String title, int width, int height, boolean focusable, Color foreground, Color background) {
@@ -131,5 +154,8 @@ public class MainFrame extends JFrame {
     public void showBackstoryScreen() {
         backstoryTextPanel.setVisible(true);
         backstoryOptionsPanel.setVisible(true);
+        backstoryTitlePanel.setVisible(true);
+        con.setBackground(Color.white);
+
     }
 }
