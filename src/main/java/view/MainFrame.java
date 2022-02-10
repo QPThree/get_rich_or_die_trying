@@ -27,17 +27,18 @@ public class MainFrame extends JFrame {
 
         setAllButtons();
         setAllPanels();
-        textArea.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 4));
+        textArea.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 6));
 
         ImageIcon banner = new ImageIcon(new ImageIcon("resources/GetRichBanner.png").getImage().getScaledInstance(500,150,Image.SCALE_AREA_AVERAGING));
+        //ImageIcon banner = new ImageIcon(new ImageIcon("resources/GetRichDieTrying.jpg").getImage().getScaledInstance(500,150,Image.SCALE_AREA_AVERAGING));
         bannerLabel = new JLabel();
         //used for main menu
         bannerLabel.setIcon(banner);
         titlePanel.add(bannerLabel);
         gameIntroPanel.add(textArea);
         menuPanel.add(playButton);
-        menuPanel.add(exitButton);
         menuPanel.add(loadButton);
+        menuPanel.add(exitButton);
         menuPanel.add(helpButton);
 
 
@@ -82,7 +83,7 @@ public class MainFrame extends JFrame {
         setResizable(false); // enable the resize of the frame
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.blue);
+        getContentPane().setBackground(Color.darkGray);
         setLayout(null);
         setVisible(true);
 
@@ -90,10 +91,10 @@ public class MainFrame extends JFrame {
 
     private void setAllButtons() {
         //main menu
-        playButton = createJButton("Play Game", 150, 50, false, Color.WHITE, Color.GREEN);
-        exitButton = createJButton("Exit Game", 150, 50, false, Color.white, Color.red);
-        loadButton = createJButton("Load Game", 150, 20, false, Color.white, Color.gray);
-        helpButton = createJButton("Help Menu", 150, 20, false, Color.white, Color.blue);
+        playButton = createJButton("Play Game", 125, 35, false, Color.WHITE, Color.GREEN);
+        exitButton = createJButton("Exit Game", 125, 35, false, Color.white, Color.red);
+        loadButton = createJButton("Load Game", 125, 35, false, Color.white, Color.orange);
+        helpButton = createJButton("Help Menu", 125, 35, false, Color.white, Color.blue);
 
 
         //backstory
@@ -132,8 +133,8 @@ public class MainFrame extends JFrame {
     private void setAllPanels() {
         //main menu
         titlePanel = createJPanel(200, 50, 500, 150, Color.darkGray, true);
-        gameIntroPanel= createJPanel(225, 300, 450, 100, Color.yellow, true);
-        menuPanel = createJPanel(350, 450, 225, 225, Color.yellow, true);
+        gameIntroPanel= createJPanel(225, 300, 450, 150, Color.darkGray, true);
+        menuPanel = createJPanel(350, 500, 125, 250, Color.darkGray, true);
         //backstory
         backstoryTextPanel = createJPanel(100, 150, 275, 400, Color.white, false);
         backstoryTextPanel.setBorder(new LineBorder(Color.black, 2));
@@ -147,6 +148,7 @@ public class MainFrame extends JFrame {
         con.remove(menuPanel);
     }
 
+
     public void writeToTextArea(JTextArea textArea,String string) {
         //textArea.setPreferredSize(new Dimension(425, 75));
         textArea.removeAll();
@@ -156,6 +158,7 @@ public class MainFrame extends JFrame {
     public void writeToTextArea(JTextArea textArea, Color color, String string) {
         textArea.setFont(new Font("Arial", Font.BOLD, 11));
         textArea.setBackground(color);
+
         textArea.setText(string);
         System.out.println(string);
 

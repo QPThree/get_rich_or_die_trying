@@ -3,13 +3,13 @@ package controller;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 import view.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -30,9 +30,11 @@ public class Game {
     public void execute() {
         translator.transitionMainMenuToBackstory();
         scenes = new SceneContainer();
+
         welcome();
+
 //        checkSaveFile();
-        //getPlayerBasicData();
+//        getPlayerBasicData();
 //        clearScreen();
 //        runSceneOneCareer(player);
 //
@@ -67,8 +69,9 @@ public class Game {
         }
 
         if (askToSave.equalsIgnoreCase("save")) {
-            WriteFile saveGame = new WriteFile("saveFile.txt", displaySceneSummary(""));
-            saveGame.save();
+//            WriteFile saveGame = new WriteFile("saveFile.txt", displaySceneSummary(""));
+//            saveGame.save();
+            saveGame();
         }
     }
 
@@ -325,6 +328,7 @@ public class Game {
 //
     }
 
+
     private void collegeScene(){
         System.out.println();
         mainFrame.showTwoOptionsScreen();
@@ -343,8 +347,9 @@ public class Game {
 //        if(userWantsCollege)
 //            player.addMoney(-100000);
 //
-//        player.setName("test on line 315");
+//        player.setName(playerName);
 //        player.setEducation(userWantsCollege);
+
     }
 
     // Responsible for simulating the backstory
@@ -472,13 +477,15 @@ public class Game {
     }
 
     public void helpMenu() {
+
         mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+
                 "\nChoices will change how much money you have, as well as health points." +
                 "\nEx: choosing education will grant you an extra money to your salary" +
-                "\nbut skipping college will start you out with less debt." +
-                "\nChoose carefully, your life depends on it" +
-                "\nIf you're done with the help section, please make a selection below.");
+                "\nbut skipping college will start you out with less debt.\n" +
+                "\nChoose carefully, your life depends on it!" +
+                "\nIf you're done with the help section, please make a selection below:");
 
         System.out.println("Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
@@ -498,7 +505,7 @@ public class Game {
     private void setAllActionListeners () {
         mainFrame.playButton.addActionListener(e -> execute());
         mainFrame.exitButton.addActionListener(e -> exitGame());
-        mainFrame.loadButton.addActionListener(e -> System.out.println("Loading game"));
+        mainFrame.loadButton.addActionListener(e -> loadGame());
         mainFrame.helpButton.addActionListener(e -> helpMenu());
     }
 
@@ -510,9 +517,57 @@ public class Game {
         System.exit(1);
     }
 
+
     private void removeAllActionListeners(JButton button){
         for (ActionListener action : button.getActionListeners()){
             button.removeActionListener(action);
+        }
+}
+
+    private void saveGame() {
+        JSONObject saveData = new JSONObject();
+
+        saveData.put("Career", player.getCareer());
+        saveData.put("Education", player.hasEducation());
+        saveData.put("Partner", player.getPartner());
+        saveData.put("NetWorth", player.getNetWorth());
+        saveData.put("Age", player.getAge());
+        saveData.put("Health", player.getHealthPoints());
+        saveData.put("Children", player.getChildren());
+
+        JSONObject newSaveData = new JSONObject();
+        newSaveData.put(player.getName(), saveData);
+
+        try{
+            FileWriter file = new FileWriter("resources/saves/"+player.getName()+".json");
+            file.write(newSaveData.toString());
+            file.close();
+        }catch (IOException e){
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
+    private void loadGame () {
+        try {
+            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE).toLowerCase();
+            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
+            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+            //Load scene
+
+            //Load player info
+            long loadedNetWorth = (long) loadedData.get("NetWorth");
+            player.setNetWorth((int) loadedNetWorth);
+            long loadedAge = (long) loadedData.get("Age");
+            player.setAge((int) loadedAge);
+            long loadedHealth = (long) loadedData.get("Health");
+            player.setHealth((int) loadedHealth);
+            System.out.println("Example of saved data:" + player.getPrettyNetWorth() + player.getAge() + player.getHealthPoints());
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
+            System.out.println("ERROR: Could not locate your saved file");
+
         }
     }
 }
