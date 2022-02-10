@@ -27,29 +27,29 @@ public class Game {
         mainFrame.hideMenuScreen();
         mainFrame.showBackstoryScreen();
         scenes = new SceneContainer();
-        welcome();
-        checkSaveFile();
-        getPlayerBasicData();
-        clearScreen();
-        runSceneOneCareer(player);
-
-        while (shouldPlay()) {
-            clearScreen();
-            Scene currentScene = scenes.getRandomScene(player);
-            System.out.println(currentScene.getArt());
-            System.out.println("\n+++++++ 5 years later +++++++");
-            player.addAge(5);
-            int input = prompt(currentScene);
-            clearScreen();
-            displayOutcome(input, currentScene);
-            runEffect(input, currentScene);
-            String salaryReport = player.addSalary();
-            System.out.println("\nEnter any key to see your 5-year summary");
-            getInput();
-            displaySceneSummary(salaryReport);
-            nextTurnPrompt();
-        }
-        playAgainOrExit();
+//        welcome();
+//        checkSaveFile();
+//        getPlayerBasicData();
+//        clearScreen();
+//        runSceneOneCareer(player);
+//
+//        while (shouldPlay()) {
+//            clearScreen();
+//            Scene currentScene = scenes.getRandomScene(player);
+//            System.out.println(currentScene.getArt());
+//            System.out.println("\n+++++++ 5 years later +++++++");
+//            player.addAge(5);
+//            int input = prompt(currentScene);
+//            clearScreen();
+//            displayOutcome(input, currentScene);
+//            runEffect(input, currentScene);
+//            String salaryReport = player.addSalary();
+//            System.out.println("\nEnter any key to see your 5-year summary");
+//            getInput();
+//            displaySceneSummary(salaryReport);
+//            nextTurnPrompt();
+//        }
+//        playAgainOrExit();
 
     }
 
@@ -225,7 +225,6 @@ public class Game {
 
     public void checkSaveFile() // Not working as expected
     {
-        //loadGame("juan");
         File checkFile = new File("saveFile.txt");
         try
         { // able to read the existing saveFile, however once game is loaded, it takes you back to the backstory
