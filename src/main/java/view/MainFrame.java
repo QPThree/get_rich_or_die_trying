@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
-    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton;
+    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton, optionA, optionB;
     public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel;
     public JTextArea textArea = new JTextArea(20, 20);;
     public TextField nameTextField = new TextField("Enter Name", 12);
@@ -60,6 +60,11 @@ public class MainFrame extends JFrame {
         backstoryOptionsPanel.add(nameTextField);
         backstoryOptionsPanel.add(continueButton);
 
+        backstoryOptionsPanel.add(optionA);
+        backstoryOptionsPanel.add(optionB);
+
+
+
         con.add(backstoryOptionsPanel);
         con.add(backstoryTextPanel);
         con.add(backstoryTitlePanel);
@@ -90,6 +95,7 @@ public class MainFrame extends JFrame {
         loadButton = createJButton("Load Game", 150, 20, false, Color.white, Color.gray);
         helpButton = createJButton("Help Menu", 150, 20, false, Color.white, Color.blue);
 
+
         //backstory
         continueButton = createJButton("Continue", 150, 50, false, Color.green, Color.white);
         continueButton.setBounds(70,275, 150, 50 );
@@ -114,6 +120,12 @@ public class MainFrame extends JFrame {
          allBackstoryOptionsButtons.add(backstoryOptionOneButton);
          allBackstoryOptionsButtons.add(backstoryOptionTwoButton);
          allBackstoryOptionsButtons.add(backstoryOptionThreeButton);
+
+
+         //Buttons where its Yes or No
+        optionA = createJButton("A", 150, 50, false, Color.white, Color.GREEN);
+        optionB = createJButton("B", 150, 50, false, Color.white, Color.red);
+
 
     }
 
@@ -215,5 +227,20 @@ public class MainFrame extends JFrame {
         continueButton.updateUI();
         backstoryOptionsPanel.updateUI();
         System.out.println("SHOULD SEE CONTINUE BUTTON");
+    }
+
+    public void hideContinueButton() {
+        continueButton.setVisible(false);
+        continueButton.updateUI();
+        backstoryOptionsPanel.updateUI();
+    }
+
+    public void showTwoOptionsScreen(){
+
+        backstoryOptionsPanel.setVisible(true);
+        optionA.setVisible(true);
+        optionB.setVisible(true);
+        optionA.updateUI();
+        backstoryOptionsPanel.updateUI();
     }
 }

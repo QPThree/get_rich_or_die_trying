@@ -32,7 +32,7 @@ public class Game {
         scenes = new SceneContainer();
         welcome();
 //        checkSaveFile();
-        //agetPlayerBasicData();
+        //getPlayerBasicData();
 //        clearScreen();
 //        runSceneOneCareer(player);
 //
@@ -322,10 +322,19 @@ public class Game {
 
         List<Backstory> backstories = getBackStoryScenes(); // stores backstory data from JSON in a List
         processBackstories(backstories, 0);
-//        System.out.println();
+//
+    }
+
+    private void collegeScene(){
+        System.out.println();
+        mainFrame.showTwoOptionsScreen();
 //        // TODO: Make this better narrative
 //        // Going to college reduces your net worth by -100000
 //        System.out.println("Do you want to go to college? (Y/N): ");
+        translator.writeToComponent(mainFrame.backstoryTextArea, "Would you like to go to college?");
+        translator.editButtonText(mainFrame.optionA, "Yes");
+        translator.editButtonText(mainFrame.optionB, "No");
+
 //        String educationChoice = getInput("y", "n");
 //
 //        boolean userWantsCollege = educationChoice.equalsIgnoreCase("y");
@@ -345,12 +354,24 @@ public class Game {
         displays the current scene (prompt & options)
         prompts user for an answer
          */
+
+        System.out.println("Your character's stats:");
+        System.out.println("Strength: " + player.getStrength());
+        System.out.println("Intellect: " + player.getIntellect());
+        System.out.println("Creativity: " + player.getCreativity());
+
         //reset teh action listeners here
         removeAllActionListeners(mainFrame.backstoryOptionOneButton);
         removeAllActionListeners(mainFrame.backstoryOptionTwoButton);
         removeAllActionListeners(mainFrame.backstoryOptionThreeButton);
         removeAllActionListeners(mainFrame.continueButton);
+        mainFrame.hideContinueButton();
         mainFrame.backstoryOptionsPanel.updateUI();
+
+        if (j > backstories.size() - 1){
+            collegeScene();
+            return;
+        }
 
         System.out.println("BACKSTORIES RUN!");
         Backstory backstory = backstories.get(j);
@@ -366,6 +387,7 @@ public class Game {
                         mainFrame.showContinueButton();
                         mainFrame.continueButton.addActionListener(event -> processBackstories(backstories, j + 1));
                         translator.writeToComponent(mainFrame.backstoryTextArea, option.getOutcome());
+                        EffectsTranslator.getAttribute(player, option.getAttribute());
                     });
             i++;
             };
@@ -373,29 +395,7 @@ public class Game {
 
         }
         //TODO: Put this block of commented out code into new functino to play when backstory finishes
-//        for (Backstory backstory : backstories) {
-//            System.out.println(Art.getArt("backstory"));
-//            System.out.println(backstory.getPrompt()); //this will print backstory to screen
-//            showToComponent(mainFrame.backstoryTextArea, backstory.getPrompt());
-//            System.out.println();
-//            int i = 0;
-//            for (BackstoryOption option : backstory.getOptions()){
-//                System.out.println(option.getText());
-//                System.out.println(i);
-//                translator.editButtonText(mainFrame.allBackstoryOptionsButtons.get(i), option.getText());
-//                mainFrame.allBackstoryOptionsButtons.get(i).addActionListener(e -> System.out.println(option.getOutcome()) );
-//                i++;
-//            }
-            ;
-            //String resp = getInput(backstory.getBackstoryOptionsText()); // user response from options stored here
-//            BackstoryOption selectedBackstoryOption = null;
-//            for (BackstoryOption option : backstory.getOptions()) {
-//                // If the user has selected a correct option, its stored as selectedBackstoryOption
-//                if (option.getText().contains(resp)) {
-//                    selectedBackstoryOption = option;
-//                    break;
-//                }
-//            }
+//
 //            System.out.println();
 //            System.out.println(selectedBackstoryOption.getOutcome());
 //            EffectsTranslator.getAttribute(player, selectedBackstoryOption.getAttribute());
