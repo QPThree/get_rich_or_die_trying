@@ -6,14 +6,17 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
-    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton;
+    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton;
     public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel;
     public JTextArea textArea = new JTextArea(20, 20);;
-    public JTextArea backstoryTextArea = new JTextArea(10,20);
+    public TextField nameTextField = new TextField("Enter Name", 12);
+    public JTextArea backstoryTextArea = new JTextArea(10,10);
     public JLabel bannerLabel, backstoryLabel;
+    public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
 
 
     private Container con;
@@ -50,13 +53,13 @@ public class MainFrame extends JFrame {
         backstoryLabel.setIcon(backstoryBanner);
         backstoryTitlePanel.add(backstoryLabel);
         backstoryTitlePanel.setBackground(Color.white);
-        backstoryTextPanel.setBounds(150,150, 300,400);
+        backstoryTextPanel.setBounds(150,150, 400,400);
         backstoryTextPanel.add(backstoryTextArea);
 
-//        backstoryOptionsPanel.setBackground(Color.cyan);
-        backstoryOptionsPanel.add(backstoryOptionOneButton);
-        backstoryOptionsPanel.add(backstoryOptionTwoButton);
-        backstoryOptionsPanel.add(backstoryOptionThreeButton);
+
+        backstoryOptionsPanel.add(nameTextField);
+        backstoryOptionsPanel.add(continueButton);
+
         con.add(backstoryOptionsPanel);
         con.add(backstoryTextPanel);
         con.add(backstoryTitlePanel);
@@ -88,18 +91,29 @@ public class MainFrame extends JFrame {
         helpButton = createJButton("Help Menu", 150, 20, false, Color.white, Color.blue);
 
         //backstory
+        continueButton = createJButton("Continue", 150, 50, false, Color.green, Color.white);
+        continueButton.setBounds(70,275, 150, 50 );
+        continueButton.setBorder(new LineBorder(Color.lightGray, 1));
+
         //1
         backstoryOptionOneButton = createJButton("1", 150, 50, false, Color.black, Color.white);
         backstoryOptionOneButton.setBounds(70, 75, 150, 50); //set bounds moves the button to desired X/Y coordinate
         backstoryOptionOneButton.setBorder(new LineBorder(Color.lightGray, 1));
+        backstoryOptionOneButton.setOpaque(true); //needed for mac to see color
+
         //2
         backstoryOptionTwoButton = createJButton("2", 150, 50, false, Color.black, Color.white);
         backstoryOptionTwoButton.setBounds(70, 175, 150, 50);
         backstoryOptionTwoButton.setBorder(new LineBorder(Color.lightGray, 1));
+
         //3
         backstoryOptionThreeButton = createJButton("3", 150, 50, false, Color.black, Color.white);
         backstoryOptionThreeButton.setBounds(70,275, 150, 50 );
         backstoryOptionThreeButton.setBorder(new LineBorder(Color.lightGray, 1));
+
+         allBackstoryOptionsButtons.add(backstoryOptionOneButton);
+         allBackstoryOptionsButtons.add(backstoryOptionTwoButton);
+         allBackstoryOptionsButtons.add(backstoryOptionThreeButton);
 
     }
 
@@ -121,11 +135,18 @@ public class MainFrame extends JFrame {
         con.remove(menuPanel);
     }
 
+    public void writeToTextArea(JTextArea textArea,String string) {
+        //textArea.setPreferredSize(new Dimension(425, 75));
+        textArea.removeAll();
+        writeToTextArea(textArea, Color.white, string);
+
+    }
     public void writeToTextArea(JTextArea textArea, Color color, String string) {
         textArea.setFont(new Font("Arial", Font.BOLD, 11));
-        //textArea.setPreferredSize(new Dimension(425, 75));
         textArea.setBackground(color);
         textArea.setText(string);
+        System.out.println(string);
+
     }
     private JButton createJButton(String title, int width, int height, boolean focusable, Color foreground, Color background) {
         JButton product = new JButton(title);
@@ -151,11 +172,48 @@ public class MainFrame extends JFrame {
         menuPanel.updateUI();
     }
 
-    public void showBackstoryScreen() {
+    public void showBackstoryScreenNameEntry() {
+        nameTextField.setFont(new Font("Arial", Font.BOLD, 15));
+        nameTextField.setForeground(Color.red);
+        nameTextField.setBackground(Color.white);
+        nameTextField.setBounds(70, 175, 150, 50);
         backstoryTextPanel.setVisible(true);
         backstoryOptionsPanel.setVisible(true);
-        backstoryTitlePanel.setVisible(true);
-        con.setBackground(Color.white);
 
+
+        backstoryTitlePanel.setVisible(true);
+        backstoryTextPanel.updateUI();
+        con.setBackground(Color.white);
+    }
+
+    public void showBackstoryOptions(){
+        backstoryOptionsPanel.remove(nameTextField);
+        continueButton.setVisible(false);
+
+        backstoryOptionsPanel.add(backstoryOptionOneButton);
+        backstoryOptionsPanel.add(backstoryOptionTwoButton);
+        backstoryOptionsPanel.add(backstoryOptionThreeButton);
+        backstoryOptionsPanel.updateUI();
+    }
+
+    public void hideBackstorySelectionScreen() {
+       backstoryOptionOneButton.setVisible(false);
+       backstoryOptionTwoButton.setVisible(false);
+       backstoryOptionThreeButton.setVisible(false);
+
+        backstoryOptionsPanel.updateUI();
+    }
+
+    public void showBackstorySelectionScreen(){
+        backstoryOptionOneButton.setVisible(true);
+        backstoryOptionThreeButton.setVisible(true);
+        backstoryOptionsPanel.updateUI();
+    }
+
+    public void showContinueButton() {
+        continueButton.setVisible(true);
+        continueButton.updateUI();
+        backstoryOptionsPanel.updateUI();
+        System.out.println("SHOULD SEE CONTINUE BUTTON");
     }
 }
