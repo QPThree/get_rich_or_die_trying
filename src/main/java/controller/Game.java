@@ -538,10 +538,11 @@ public class Game {
         System.out.println("Creativity: " + player.getCreativity());
 
 }
-    private void removeAllActionListeners(JButton button){
-        for (ActionListener action : button.getActionListeners()){
+    private void removeAllActionListeners(JButton button) {
+        for (ActionListener action : button.getActionListeners()) {
             button.removeActionListener(action);
         }
+    }
 
 
     private void saveGame() {
