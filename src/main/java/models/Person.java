@@ -266,4 +266,14 @@ public class Person {
         setMarried(false);
 
     }
+
+    //added setter to use when loading a saved game
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    //added setter to use when loading a saved game
+    public void setHealth(int health) {
+        this.health = health;
+    }
 }

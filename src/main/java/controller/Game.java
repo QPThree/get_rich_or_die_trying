@@ -27,29 +27,29 @@ public class Game {
         mainFrame.hideMenuScreen();
         mainFrame.showBackstoryScreen();
         scenes = new SceneContainer();
-//        welcome();
-//        checkSaveFile();
-//        getPlayerBasicData();
-//        clearScreen();
-//        runSceneOneCareer(player);
-//
-//        while (shouldPlay()) {
-//            clearScreen();
-//            Scene currentScene = scenes.getRandomScene(player);
-//            System.out.println(currentScene.getArt());
-//            System.out.println("\n+++++++ 5 years later +++++++");
-//            player.addAge(5);
-//            int input = prompt(currentScene);
-//            clearScreen();
-//            displayOutcome(input, currentScene);
-//            runEffect(input, currentScene);
-//            String salaryReport = player.addSalary();
-//            System.out.println("\nEnter any key to see your 5-year summary");
-//            getInput();
-//            displaySceneSummary(salaryReport);
-//            nextTurnPrompt();
-//        }
-//        playAgainOrExit();
+        welcome();
+        checkSaveFile();
+        getPlayerBasicData();
+        clearScreen();
+        runSceneOneCareer(player);
+
+        while (shouldPlay()) {
+            clearScreen();
+            Scene currentScene = scenes.getRandomScene(player);
+            System.out.println(currentScene.getArt());
+            System.out.println("\n+++++++ 5 years later +++++++");
+            player.addAge(5);
+            int input = prompt(currentScene);
+            clearScreen();
+            displayOutcome(input, currentScene);
+            runEffect(input, currentScene);
+            String salaryReport = player.addSalary();
+            System.out.println("\nEnter any key to see your 5-year summary");
+            getInput();
+            displaySceneSummary(salaryReport);
+            nextTurnPrompt();
+        }
+        playAgainOrExit();
 
     }
 
@@ -495,11 +495,10 @@ public class Game {
             long loadedNetWorth = (long) loadedData.get("NetWorth");
             player.setNetWorth((int) loadedNetWorth);
             long loadedAge = (long) loadedData.get("Age");
-            player.addAge((int) loadedAge);
+            player.setAge((int) loadedAge);
             long loadedHealth = (long) loadedData.get("Health");
-            player.addHealth((int) loadedHealth);
-
-            System.out.println("Example of saved data:" + player.getPrettyNetWorth());
+            player.setHealth((int) loadedHealth);
+            System.out.println("Example of saved data:" + player.getPrettyNetWorth() + player.getAge() + player.getHealthPoints());
 
 
         } catch (Exception e) {
