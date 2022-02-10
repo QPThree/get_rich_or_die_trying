@@ -4,7 +4,6 @@ import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import view.MainFrame;
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -450,7 +449,7 @@ public class Game {
     private void setAllActionListeners () {
         mainFrame.playButton.addActionListener(e -> execute());
         mainFrame.exitButton.addActionListener(e -> exitGame());
-        mainFrame.loadButton.addActionListener(e -> System.out.println("Loading game"));
+        mainFrame.loadButton.addActionListener(e -> loadGame());
         mainFrame.helpButton.addActionListener(e -> helpMenu());
     }
 
@@ -485,30 +484,29 @@ public class Game {
         }
     }
 
-//    private void loadGame (String name) {
-//        try {
-//            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
-//            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
-//            //Load scene
-//
-//            //Load player info
-//            long loadedNetWorth = (long) loadedData.get("NetWorth");
-//            player.setNetWorth((int) loadedNetWorth);
-//            System.out.println(player.getPrettyNetWorth());
-//            long loadedAge = (long) loadedData.get("Age");
-//            player.addAge((int) loadedAge);
-//            long loadedHealth = (long) loadedData.get("Health");
-//            player.addHealth((int) loadedHealth);
-//
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void loadGame () {
+        try {
+            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE).toLowerCase();
+            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
+            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+            //Load scene
+
+            //Load player info
+            long loadedNetWorth = (long) loadedData.get("NetWorth");
+            player.setNetWorth((int) loadedNetWorth);
+            long loadedAge = (long) loadedData.get("Age");
+            player.addAge((int) loadedAge);
+            long loadedHealth = (long) loadedData.get("Health");
+            player.addHealth((int) loadedHealth);
+
+            System.out.println("Example of saved data:" + player.getPrettyNetWorth());
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
+            System.out.println("ERROR: Could not locate your saved file");
+        }
+    }
 }
 
 
