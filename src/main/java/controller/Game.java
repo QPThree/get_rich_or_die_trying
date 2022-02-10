@@ -56,6 +56,7 @@ public class Game {
 //        }
 //        playAgainOrExit();
 
+
     }
 
     // At the end of a scene user is prompted if they want to save, quit or continue
@@ -507,6 +508,7 @@ public class Game {
         mainFrame.exitButton.addActionListener(e -> exitGame());
         mainFrame.loadButton.addActionListener(e -> loadGame());
         mainFrame.helpButton.addActionListener(e -> helpMenu());
+        mainFrame.skipBackstory.addActionListener(e -> displayAttributes());
     }
 
     private void gameBanner() {
@@ -518,11 +520,29 @@ public class Game {
     }
 
 
+    // Testing purposes for now
+    private void displayAttributes(){
+        mainFrame.hideMenuScreen();
+        player.setName("DEV");
+        player.setPrivilege(true);
+        player.setEducation(true);
+        player.addStrength(5);
+        player.addIntellect(5);
+        player.addCreativity(5);
+        player.setCareer(Careers.PASSION);
+        mainFrame.showAttributesScreen(player);
+        System.out.println("Playing the game in DEV mode");
+        System.out.println("Your character's stats:");
+        System.out.println("Strength: " + player.getStrength());
+        System.out.println("Intellect: " + player.getIntellect());
+        System.out.println("Creativity: " + player.getCreativity());
+
+}
     private void removeAllActionListeners(JButton button){
         for (ActionListener action : button.getActionListeners()){
             button.removeActionListener(action);
         }
-}
+
 
     private void saveGame() {
         JSONObject saveData = new JSONObject();

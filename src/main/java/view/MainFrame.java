@@ -1,21 +1,26 @@
 package view;
 
-import javax.sound.sampled.Line;
+import models.Person;
+import models.Scene;
+import models.SceneContainer;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+
 import java.util.ArrayList;
-
+import java.util.Scanner;
 public class MainFrame extends JFrame {
-
-    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton, optionA, optionB;
-    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel;
-    public JTextArea textArea = new JTextArea(20, 20);;
+    Scanner scanner = new Scanner(System.in);
+    public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton, optionA, optionB,skipBackstory;
+    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel, attributesPanel, playerInfoPanel, sceneInfo, healthPanel, wealthPanel, optionsPanel, sceneArt;
+    public JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(20,20), sceneInfoTextArea = new JTextArea(20,20), optionsTextArea = new JTextArea(5,20);
     public TextField nameTextField = new TextField("Enter Name", 12);
     public JTextArea backstoryTextArea = new JTextArea(10,10);
     public JLabel bannerLabel, backstoryLabel;
+    public JLabel attributesLabel = new JLabel(), healthLabel = new JLabel(), wealthLabel = new JLabel();
     public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
 
 
@@ -41,7 +46,8 @@ public class MainFrame extends JFrame {
         menuPanel.add(exitButton);
         menuPanel.add(helpButton);
 
-
+        // testing player attributes
+        menuPanel.add(skipBackstory);
 
         //add tp content pane
         con.add(menuPanel);
@@ -71,8 +77,28 @@ public class MainFrame extends JFrame {
         con.add(backstoryTitlePanel);
 
 
+        // -- Attributes components --
+        attributesPanel.add(attributesLabel);
+        con.add(attributesPanel);
+        playerInfoPanel.add(playerInfoTextArea);
+        con.add(playerInfoPanel);
 
+        healthPanel.add(healthLabel);
+        con.add(healthPanel);
+        wealthPanel.add(wealthLabel);
+        con.add(wealthPanel);
 
+        optionsPanel.add(optionsTextArea);
+        con.add(optionsPanel);
+
+        sceneInfo.add(sceneInfoTextArea);
+
+//        Draw shape = new Draw();
+//        shape.drawing();
+//        shape.setVisible(true);
+//        scene.add(shape);
+        con.add(sceneInfo);
+//        scene.add(new CustomPaintComponent());
 
         setVisible(true);
     }
@@ -91,10 +117,13 @@ public class MainFrame extends JFrame {
 
     private void setAllButtons() {
         //main menu
-        playButton = createJButton("Play Game", 125, 35, false, Color.WHITE, Color.GREEN);
-        exitButton = createJButton("Exit Game", 125, 35, false, Color.white, Color.red);
-        loadButton = createJButton("Load Game", 125, 35, false, Color.white, Color.orange);
-        helpButton = createJButton("Help Menu", 125, 35, false, Color.white, Color.blue);
+
+        playButton = createJButton("Play Game", 150, 50, false, Color.WHITE, Color.GREEN);
+        exitButton = createJButton("Exit Game", 150, 50, false, Color.white, Color.red);
+        loadButton = createJButton("Load Game", 150, 20, false, Color.white, Color.gray);
+        helpButton = createJButton("Help Menu", 150, 20, false, Color.white, Color.blue);
+        // Testing player attributes
+        skipBackstory = createJButton("skip Backstory",150,20,false, Color.black, Color.red);
 
 
         //backstory
@@ -136,12 +165,21 @@ public class MainFrame extends JFrame {
         gameIntroPanel= createJPanel(225, 300, 450, 150, Color.darkGray, true);
         menuPanel = createJPanel(350, 500, 125, 250, Color.darkGray, true);
         //backstory
-        backstoryTextPanel = createJPanel(100, 150, 275, 400, Color.white, false);
+
+        backstoryTextPanel = createJPanel(100, 100, 275, 400, Color.gray, false);
         backstoryTextPanel.setBorder(new LineBorder(Color.black, 2));
-        backstoryOptionsPanel = createJPanel(550, 150, 275, 400, Color.white, false);
+        backstoryOptionsPanel = createJPanel(550, 100, 275, 400, Color.white, false);
         backstoryOptionsPanel.setLayout(null);
         backstoryOptionsPanel.setBorder(new LineBorder(Color.black, 2));
         backstoryTitlePanel = createJPanel(185, 25, 500, 100, Color.white, false);
+      
+        // Attributes menu
+        attributesPanel = createJPanel(500,10,350, 40, Color.white, false);
+        playerInfoPanel = createJPanel(50,10,350, 60, Color.white, false);
+        sceneInfo = createJPanel(100,200,300,300,Color.white,false);
+        healthPanel = createJPanel(50,550,150,40, Color.white,false);
+        wealthPanel = createJPanel(600,550,150,40, Color.white,false);
+        optionsPanel = createJPanel(550,200,300,50,Color.white,false);
     }
 
     public void clearMenuPanel() {
@@ -246,4 +284,70 @@ public class MainFrame extends JFrame {
         optionA.updateUI();
         backstoryOptionsPanel.updateUI();
     }
+
+    public void showAttributesScreen(Person player){
+        SceneContainer scenes = new SceneContainer();
+        Scene currentScene = scenes.getRandomScene(player);
+//        sceneInfoTextArea.setText(currentScene.getArt());
+        sceneInfoTextArea.setWrapStyleWord(true);
+        sceneInfoTextArea.setLineWrap(true);
+//        sceneInfoTextArea.setText(currentScene.getPrompt());
+//        optionsTextArea.setText(getOptions(currentScene));
+        attributesLabel.setText("Strength: " + player.getStrength() +
+        " Intellect: " + player.getIntellect() + " Creativity: " + player.getCreativity());
+        playerInfoTextArea.setText("Name: " + player.getName() +
+                "\nAge: " + player.getAge()
+                + "\nCareer Level: " + player.getCareer());
+        healthLabel.setText("health: " + player.getHealthPoints());
+        wealthLabel.setText("Net worth: " + player.getNetWorth());
+        attributesPanel.setVisible(true);
+        playerInfoPanel.setVisible(true);
+        healthPanel.setVisible(true);
+        wealthPanel.setVisible(true);
+        sceneInfo.setVisible(true);
+        optionsPanel.setVisible(true);
+        letsPlay(player);
+    }
+
+    private String getOptions(Scene currentScene){
+        String optionz = "";
+        for (String option : currentScene.getOptions())
+            optionz += option + "\n";
+        return optionz;
+    }
+
+    private void letsPlay(Person player){
+        SceneContainer scenes = new SceneContainer();
+//        while (true) {
+            Scene currentScene = scenes.getRandomScene(player);
+            sceneInfoTextArea.setText(currentScene.getPrompt());
+            System.out.println(currentScene.getArt());
+            System.out.println("\n+++++++ 5 years later +++++++");
+            player.addAge(5);
+//            int input = prompt(currentScene);
+            optionsTextArea.setText(getOptions(currentScene));
+            playerInfoTextArea.setText("Name: " + player.getName() +
+                    "\nAge: " + player.getAge()
+                    + "\nCareer Level: " + player.getCareer());
+        healthLabel.setText("health: " + player.getHealthPoints());
+        wealthLabel.setText("Net worth: " + player.getNetWorth());
+//            String userChoice = userChoice();
+//            clearScreen();
+//            displayOutcome(input, currentScene);
+//            runEffect(input, currentScene);
+//            String salaryReport = player.addSalary();
+//            System.out.println("\nEnter any key to see your 5-year summary");
+//            getInput();
+//            displaySceneSummary(salaryReport);
+//            nextTurnPrompt();
+
+//        }
+    }
+
+    private String userChoice(){
+        String userInput = scanner.nextLine().trim().toLowerCase();
+        scanner.close();
+        return userInput;
+    }
+
 }
