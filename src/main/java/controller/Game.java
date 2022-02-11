@@ -3,13 +3,15 @@ package controller;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+//import org.json.simple.parser.JSONParser;
 import view.MainFrame;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class Game {
     SceneContainer scenes;
@@ -17,40 +19,45 @@ public class Game {
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
     private MainFrame mainFrame = new MainFrame(); // Java Swing
+    private GUILogicTranslator translator;
 
     public Game () {
+        translator = new GUILogicTranslator(this, mainFrame);
         setAllActionListeners();
         gameBanner();
     }
 
     public void execute() {
-        mainFrame.hideMenuScreen();
-        mainFrame.showBackstoryScreen();
+        translator.transitionMainMenuToBackstory();
         scenes = new SceneContainer();
-        //welcome();
+
+        welcome();
+
 //        checkSaveFile();
-        //getPlayerBasicData();
+//        getPlayerBasicData();
 //        clearScreen();
 //        runSceneOneCareer(player);
 //
-//        while (shouldPlay()) {
-//            clearScreen();
-//            Scene currentScene = scenes.getRandomScene(player);
-//            System.out.println(currentScene.getArt());
-//            System.out.println("\n+++++++ 5 years later +++++++");
-//            player.addAge(5);
-//            int input = prompt(currentScene);
-//            clearScreen();
-//            displayOutcome(input, currentScene);
-//            runEffect(input, currentScene);
-//            String salaryReport = player.addSalary();
-//            System.out.println("\nEnter any key to see your 5-year summary");
-//            getInput();
-//            displaySceneSummary(salaryReport);
-//            nextTurnPrompt();
-//        }
-//        playAgainOrExit();
 
+//        playAgainOrExit();
+    }
+    private void mainGameLoop(){
+        while (shouldPlay()) {
+//            clearScreen();
+            Scene currentScene = scenes.getRandomScene(player);
+            System.out.println(currentScene.getArt());
+            System.out.println("\n+++++++ 5 years later +++++++");
+            player.addAge(5);
+            int input = prompt(currentScene);
+            clearScreen();
+            displayOutcome(input, currentScene);
+            runEffect(input, currentScene);
+            String salaryReport = player.addSalary();
+            System.out.println("\nEnter any key to see your 5-year summary");
+            getInput();
+            displaySceneSummary(salaryReport);
+            nextTurnPrompt();
+        }
     }
 
     // At the end of a scene user is prompted if they want to save, quit or continue
@@ -64,8 +71,9 @@ public class Game {
         }
 
         if (askToSave.equalsIgnoreCase("save")) {
-            WriteFile saveGame = new WriteFile("saveFile.txt", displaySceneSummary(""));
-            saveGame.save();
+//            WriteFile saveGame = new WriteFile("saveFile.txt", displaySceneSummary(""));
+//            saveGame.save();
+            saveGame();
         }
     }
 
@@ -150,11 +158,27 @@ public class Game {
 
     // first Scene after college, for the career choice
     private void runSceneOneCareer(Person player) {
+
+        mainFrame.showAttributesScreen(player);
         // availCareers are dictated by user choice in regards going to college
+
+        if(player.hasEducation()) {
+            translator.writeToComponent(mainFrame.sceneInfoTextArea, "Congratulations!\nYou finished college.");
+        }
+        else {
+            translator.writeToComponent(mainFrame.sceneInfoTextArea, "You decided to skip the college route.");
+        }
+        mainFrame.showContinueButton();
+        mainFrame.continueButton.addActionListener( e-> {
+            chooseCareer();
+        });
+
+
+    }
+
+    private void chooseCareer() {
         Map<Careers, List<String>> availCareers = player.hasEducation() ? Careers.getCollegeCareers() : Careers.getNonCollegeCareers();
-        String collegeSummary = player.hasEducation() ? "Congratulations!\nYou finished college." : "You decided to skip the college route.";
-        System.out.println(collegeSummary);
-        System.out.println("What career do you want?");
+//        System.out.println("What career do you want?");
 
         // loops and prints out available careers depending on your college decision
         List<String> allValidCareers = new ArrayList<>();
@@ -165,18 +189,18 @@ public class Game {
             }
         }
 
-        String selectedCareer = getInput(allValidCareers); // stores selected career
+//        String selectedCareer = getInput(allValidCareers); // stores selected career
 
         // sets career and breaks if you have selected a valid career
-        topLoop:
-        for (Careers career : availCareers.keySet()) {
-            for (String specialty : availCareers.get(career)) {
-                if (selectedCareer.equalsIgnoreCase(specialty)) {
-                    player.setCareer(career);
-                    break topLoop;
-                }
-            }
-        }
+//        topLoop:
+//        for (Careers career : availCareers.keySet()) {
+//            for (String specialty : availCareers.get(career)) {
+//                if (selectedCareer.equalsIgnoreCase(specialty)) {
+//                    player.setCareer(career);
+//                    break topLoop;
+//                }
+//            }
+//        }
 
         System.out.println("\nYou chose a " + player.getCareer() + " job");
 
@@ -275,91 +299,132 @@ public class Game {
         String printBackstoryArt = Art.getArt("backstory");
         System.out.println(printBackstoryArt);  // Prints backstory banner
         System.out.println("Enter your Name: ");
-        String playerName = getInput(); // validates and stores user input
-        while(playerName.isEmpty()){    // prevents empty strings
-            System.out.println("Name is required. Please enter your name.");
-            playerName = getInput();
-        }
-
-        if (playerName.equalsIgnoreCase("DEV")) {   // cheat code for DEV
-            player.setName("DEV");
-            player.setPrivilege(true);
-            player.setEducation(true);
-            player.addStrength(5);
-            player.addIntellect(5);
-            player.addCreativity(5);
-            System.out.println("Playing the game in DEV mode");
-            return;
-        }
+//        String playerName = getInput(); // validates and stores user input
+//        while(playerName.isEmpty()){    // prevents empty strings
+//            System.out.println("Name is required. Please enter your name.");
+//            playerName = getInput();
+//        }
+//
+//        if (playerName.equalsIgnoreCase("DEV")) {   // cheat code for DEV
+//            player.setName("DEV");
+//            player.setPrivilege(true);
+//            player.setEducation(true);
+//            player.addStrength(5);
+//            player.addIntellect(5);
+//            player.addCreativity(5);
+//            System.out.println("Playing the game in DEV mode");
+//            return;
+//        }
+        mainFrame.showTwoOptionsScreen();
         System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
-        String getChoice = getInput("working class", "middle class");
-        // Selecting middle class starts you off $25k more to your net worth while working class $25k less(ie it's easier)
-        if (getChoice.equalsIgnoreCase("working class")) {
+        translator.writeToComponent(mainFrame.backstoryTextArea,"Select your privilege status" );
+        translator.editButtonText(mainFrame.optionA, "Working Class");
+        translator.editButtonText(mainFrame.optionB, "Middle Class");
+
+        removeAllActionListeners(mainFrame.optionA);
+        removeAllActionListeners(mainFrame.optionB);
+        mainFrame.optionA.addActionListener(e -> {
             this.player.setNetWorth(player.getNetWorth() - 25000);
-        } else if (getChoice.contains("middle class")) {
+            mainFrame.hideTwoOptionsScreen();
+            mainFrame.showBackstorySelectionScreen();
+            startBackstoryScenes();});
+
+        mainFrame.optionB.addActionListener(e -> {
             this.player.setNetWorth(player.getNetWorth() + 25000);
-        }
-        System.out.println("" +
-                "You chose: " + getChoice + "\n" +
-                "Your Net Worth is: " + player.getPrettyNetWorth() + "\n\n");
+            mainFrame.hideTwoOptionsScreen();
+            mainFrame.showBackstorySelectionScreen();
+            startBackstoryScenes();});
+    }
 
-        clearScreen();
+    private void startBackstoryScenes(){
 
-//        System.out.println(printBackstoryArt);
         List<Backstory> backstories = getBackStoryScenes(); // stores backstory data from JSON in a List
-        processBackstories(backstories);
-        System.out.println();
-        // TODO: Make this better narrative
-        // Going to college reduces your net worth by -100000
-        System.out.println("Do you want to go to college? (Y/N): ");
-        String educationChoice = getInput("y", "n");
+        processBackstories(backstories, 0);
+//
+    }
 
-        boolean userWantsCollege = educationChoice.equalsIgnoreCase("y");
-//        System.out.printf("Your name is %s. You chose to %s college.", playerName, userWantsCollege ? "go to" : "skip");
 
-        if(userWantsCollege)
+    private void collegeScene(){
+//        // TODO: Make this better narrative
+//        // Going to college reduces your net worth by -100000
+//        System.out.println("Do you want to go to college? (Y/N): ");
+        translator.writeToComponent(mainFrame.backstoryTextArea, "Would you like to go to college?");
+        translator.editButtonText(mainFrame.optionA, "Yes");
+        translator.editButtonText(mainFrame.optionB, "No");
+        mainFrame.optionA.addActionListener(e -> {
             player.addMoney(-100000);
+            player.setEducation(true);
+            runSceneOneCareer(player);
+            mainFrame.hideTwoOptionsScreen();
+            mainFrame.hideBackstorySelectionScreen();
+            mainFrame.hideBackstoryTextPanel();
 
-        player.setName("test on line 315");
-        player.setEducation(userWantsCollege);
+        });
+        mainFrame.optionB.addActionListener(e -> {
+            player.setEducation(false);
+            runSceneOneCareer(player);
+            mainFrame.hideTwoOptionsScreen();
+            mainFrame.hideBackstorySelectionScreen();
+            mainFrame.hideBackstoryTextPanel();
+        });
+
+        mainFrame.showTwoOptionsScreen();
+
+        //run sceneOneCareer() Next!
+
+
     }
 
     // Responsible for simulating the backstory
-    private void processBackstories(List<Backstory> backstories) {
+    private void processBackstories(List<Backstory> backstories, int j) {
         /*
         displays backstory banner
         displays the current scene (prompt & options)
         prompts user for an answer
          */
-        for (Backstory backstory : backstories) {
-            System.out.println(Art.getArt("backstory"));
-            System.out.println(backstory.getPrompt());
-            System.out.println();
 
-            for (BackstoryOption option : backstory.getOptions())
-                System.out.println(option.getText());
-
-            String resp = getInput(backstory.getBackstoryOptionsText()); // user response from options stored here
-            BackstoryOption selectedBackstoryOption = null;
-            for (BackstoryOption option : backstory.getOptions()) {
-                // If the user has selected a correct option, its stored as selectedBackstoryOption
-                if (option.getText().contains(resp)) {
-                    selectedBackstoryOption = option;
-                    break;
-                }
-            }
-            System.out.println();
-            System.out.println(selectedBackstoryOption.getOutcome());
-            EffectsTranslator.getAttribute(player, selectedBackstoryOption.getAttribute());
-            System.out.println("\nPress any key to continue or help for additional instructions");
-            getInput();
-            clearScreen();
-        }
         System.out.println("Your character's stats:");
         System.out.println("Strength: " + player.getStrength());
         System.out.println("Intellect: " + player.getIntellect());
         System.out.println("Creativity: " + player.getCreativity());
+
+        //reset teh action listeners here
+        removeAllActionListeners(mainFrame.backstoryOptionOneButton);
+        removeAllActionListeners(mainFrame.backstoryOptionTwoButton);
+        removeAllActionListeners(mainFrame.backstoryOptionThreeButton);
+        removeAllActionListeners(mainFrame.continueButton);
+        mainFrame.hideContinueButton();
+
+        if (j > backstories.size() - 1){
+            mainFrame.hideBackstorySelectionScreen();
+
+            collegeScene();
+            return;
+        }
+        else{
+            Backstory backstory = backstories.get(j);
+            System.out.println("J____" + j);
+            int i = 0;
+            translator.writeToComponent(mainFrame.backstoryTextArea, backstory.getPrompt());
+            for (BackstoryOption option : backstory.getOptions()){
+                translator.editButtonText(mainFrame.allBackstoryOptionsButtons.get(i), option.getText());
+                mainFrame.allBackstoryOptionsButtons.get(i).setVisible(true);
+                mainFrame.backstoryOptionsPanel.updateUI();
+                mainFrame.allBackstoryOptionsButtons.get(i).addActionListener(e -> {
+                    mainFrame.hideBackstorySelectionScreen();
+                    mainFrame.showContinueButton();
+                    mainFrame.continueButton.addActionListener(event -> processBackstories(backstories, j + 1));
+                    translator.writeToComponent(mainFrame.backstoryTextArea, option.getOutcome());
+                    EffectsTranslator.getAttribute(player, option.getAttribute());
+                });
+                i++;
+            };
+
+        }
+
     }
+
+
 
     // Reads backstory data from JSON file and stores it in an arrayList
     private List<Backstory> getBackStoryScenes() {
@@ -400,10 +465,15 @@ public class Game {
                 "                                                                                                                                                     |  $$$$$$/              |  $$$$$$/\n" +
                 "                                                                                                                                                      \\______/                \\______/ \n";
         System.out.println(art);
-        System.out.println("Welcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\n Each choice you make will affect your net worth and health levels.");
-        System.out.println("\nPress any key to continue.");
-        getInput();
-        clearScreen();
+        mainFrame.writeToTextArea(mainFrame.backstoryTextArea, "Welcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\n Each choice you make will affect your net worth and health levels.\n\n Enter name to start");
+        removeAllActionListeners(mainFrame.continueButton);
+        mainFrame.continueButton.addActionListener(e -> {
+            player.setName(mainFrame.nameTextField.getText());
+            mainFrame.showBackstoryOptions();
+            getPlayerBasicData();
+        });
+       // getInput();
+//        clearScreen();
         return "";
     }
 
@@ -422,13 +492,15 @@ public class Game {
     }
 
     public void helpMenu() {
-        mainFrame.writeToTextArea("Game is meant to simulate life." +
+
+        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+
                 "\nChoices will change how much money you have, as well as health points." +
                 "\nEx: choosing education will grant you an extra money to your salary" +
-                "\nbut skipping college will start you out with less debt." +
-                "\nChoose carefully, your life depends on it" +
-                "\nIf you're done with the help section, please make a selection below.");
+                "\nbut skipping college will start you out with less debt.\n" +
+                "\nChoose carefully, your life depends on it!" +
+                "\nIf you're done with the help section, please make a selection below:");
 
         System.out.println("Game is meant to simulate life." +
                 "\nThe intent of the game is to have 1 million dollars by the end of the game" +
@@ -444,19 +516,94 @@ public class Game {
 //        }
     }
 
+    //TODO: move this to eventual translator class
     private void setAllActionListeners () {
         mainFrame.playButton.addActionListener(e -> execute());
         mainFrame.exitButton.addActionListener(e -> exitGame());
-        mainFrame.loadButton.addActionListener(e -> System.out.println("Loading game"));
+        mainFrame.loadButton.addActionListener(e -> loadGame());
         mainFrame.helpButton.addActionListener(e -> helpMenu());
+        mainFrame.skipBackstory.addActionListener(e -> displayAttributes());
     }
 
     private void gameBanner() {
-        mainFrame.writeToTextArea(mainFrame.textArea, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
     }
 
     private void exitGame() {
         System.exit(1);
+    }
+
+
+    // Testing purposes for now
+    private void displayAttributes(){
+        mainFrame.hideMenuScreen();
+        player.setName("DEV");
+        player.setPrivilege(true);
+        player.setEducation(true);
+        player.addStrength(5);
+        player.addIntellect(5);
+        player.addCreativity(5);
+        player.setCareer(Careers.PASSION);
+        mainFrame.showAttributesScreen(player);
+        System.out.println("Playing the game in DEV mode");
+        System.out.println("Your character's stats:");
+        System.out.println("Strength: " + player.getStrength());
+        System.out.println("Intellect: " + player.getIntellect());
+        System.out.println("Creativity: " + player.getCreativity());
+
+}
+    private void removeAllActionListeners(JButton button) {
+        for (ActionListener action : button.getActionListeners()) {
+            button.removeActionListener(action);
+        }
+    }
+
+
+    private void saveGame() {
+        JSONObject saveData = new JSONObject();
+
+        saveData.put("Career", player.getCareer());
+        saveData.put("Education", player.hasEducation());
+        saveData.put("Partner", player.getPartner());
+        saveData.put("NetWorth", player.getNetWorth());
+        saveData.put("Age", player.getAge());
+        saveData.put("Health", player.getHealthPoints());
+        saveData.put("Children", player.getChildren());
+
+        JSONObject newSaveData = new JSONObject();
+        newSaveData.put(player.getName(), saveData);
+
+        try{
+            FileWriter file = new FileWriter("resources/saves/"+player.getName()+".json");
+            file.write(newSaveData.toString());
+            file.close();
+        }catch (IOException e){
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
+    private void loadGame () {
+        try {
+            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE).toLowerCase();
+//            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
+//            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+//            //Load scene
+//
+//            //Load player info
+//            long loadedNetWorth = (long) loadedData.get("NetWorth");
+//            player.setNetWorth((int) loadedNetWorth);
+//            long loadedAge = (long) loadedData.get("Age");
+//            player.setAge((int) loadedAge);
+//            long loadedHealth = (long) loadedData.get("Health");
+//            player.setHealth((int) loadedHealth);
+//            System.out.println("Example of saved data:" + player.getPrettyNetWorth() + player.getAge() + player.getHealthPoints());
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
+            System.out.println("ERROR: Could not locate your saved file");
+
+        }
     }
 }
 
