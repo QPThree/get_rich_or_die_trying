@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class MainFrame extends JFrame {
     Scanner scanner = new Scanner(System.in);
     public JButton playButton, exitButton, loadButton, helpButton, backstoryOptionOneButton, backstoryOptionTwoButton, backstoryOptionThreeButton, continueButton, optionA, optionB,skipBackstory;
-    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel, attributesPanel, playerInfoPanel, sceneInfo, healthPanel, wealthPanel, optionsPanel, sceneArt;
+    public JPanel titlePanel, menuPanel, gameIntroPanel, backstoryTextPanel, backstoryOptionsPanel, backstoryTitlePanel, attributesPanel, playerInfoPanel, sceneInfo, healthPanel, wealthPanel, optionsPanel, sceneArt, oneOfTwoOptionsPanel;
     public JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(20,20), sceneInfoTextArea = new JTextArea(20,20), optionsTextArea = new JTextArea(5,20);
     public TextField nameTextField = new TextField("Enter Name", 12);
     public JTextArea backstoryTextArea = new JTextArea(10,10);
@@ -67,8 +67,10 @@ public class MainFrame extends JFrame {
         backstoryOptionsPanel.add(nameTextField);
         backstoryOptionsPanel.add(continueButton);
 
-        backstoryOptionsPanel.add(optionA);
-        backstoryOptionsPanel.add(optionB);
+
+        oneOfTwoOptionsPanel.add(optionA);
+        oneOfTwoOptionsPanel.add(optionB);
+        con.add(oneOfTwoOptionsPanel);
 
 
 
@@ -153,8 +155,12 @@ public class MainFrame extends JFrame {
 
 
          //Buttons where its Yes or No
-        optionA = createJButton("A", 150, 50, false, Color.white, Color.GREEN);
-        optionB = createJButton("B", 150, 50, false, Color.white, Color.red);
+        optionA = createJButton("A", 150, 50, false, Color.black, Color.GREEN);
+        optionA.setBounds(70, 275, 150, 50);
+        optionA.setBorder(new LineBorder(Color.lightGray, 1));
+        optionB = createJButton("B", 150, 50, false, Color.black, Color.red);
+        optionB.setBounds(70, 375, 150, 50);
+        optionB.setBorder(new LineBorder(Color.lightGray, 1));
 
 
     }
@@ -172,6 +178,9 @@ public class MainFrame extends JFrame {
         backstoryOptionsPanel.setLayout(null);
         backstoryOptionsPanel.setBorder(new LineBorder(Color.black, 2));
         backstoryTitlePanel = createJPanel(185, 25, 500, 100, Color.white, false);
+
+        //One of two options panel(panel to hold two buttons)
+        oneOfTwoOptionsPanel = createJPanel(550, 100, 275, 400, Color.white, false);
       
         // Attributes menu
         attributesPanel = createJPanel(500,10,350, 40, Color.white, false);
@@ -196,10 +205,7 @@ public class MainFrame extends JFrame {
     public void writeToTextArea(JTextArea textArea, Color color, String string) {
         textArea.setFont(new Font("Arial", Font.BOLD, 11));
         textArea.setBackground(color);
-
         textArea.setText(string);
-        System.out.println(string);
-
     }
     private JButton createJButton(String title, int width, int height, boolean focusable, Color foreground, Color background) {
         JButton product = new JButton(title);
@@ -232,11 +238,14 @@ public class MainFrame extends JFrame {
         nameTextField.setBounds(70, 175, 150, 50);
         backstoryTextPanel.setVisible(true);
         backstoryOptionsPanel.setVisible(true);
-
-
         backstoryTitlePanel.setVisible(true);
         backstoryTextPanel.updateUI();
         con.setBackground(Color.white);
+    }
+
+    public void hideBackstoryTextPanel(){
+        backstoryTextPanel.setVisible(false);
+        backstoryTitlePanel.setVisible(false);
     }
 
     public void showBackstoryOptions(){
@@ -254,12 +263,13 @@ public class MainFrame extends JFrame {
        backstoryOptionTwoButton.setVisible(false);
        backstoryOptionThreeButton.setVisible(false);
 
-        backstoryOptionsPanel.updateUI();
+       backstoryOptionsPanel.updateUI();
     }
 
     public void showBackstorySelectionScreen(){
         backstoryOptionOneButton.setVisible(true);
         backstoryOptionThreeButton.setVisible(true);
+        backstoryOptionsPanel.setVisible(true);
         backstoryOptionsPanel.updateUI();
     }
 
@@ -267,7 +277,6 @@ public class MainFrame extends JFrame {
         continueButton.setVisible(true);
         continueButton.updateUI();
         backstoryOptionsPanel.updateUI();
-        System.out.println("SHOULD SEE CONTINUE BUTTON");
     }
 
     public void hideContinueButton() {
@@ -278,14 +287,22 @@ public class MainFrame extends JFrame {
 
     public void showTwoOptionsScreen(){
 
-        backstoryOptionsPanel.setVisible(true);
+        oneOfTwoOptionsPanel.setVisible(true);
+        backstoryOptionsPanel.setVisible(false);
         optionA.setVisible(true);
         optionB.setVisible(true);
-        optionA.updateUI();
-        backstoryOptionsPanel.updateUI();
+
+    }
+
+    public void hideTwoOptionsScreen(){
+        oneOfTwoOptionsPanel.setVisible(false);
+        backstoryOptionsPanel.setVisible(false);
+        optionA.setVisible(false);
+        optionB.setVisible(false);
     }
 
     public void showAttributesScreen(Person player){
+        hideBackstorySelectionScreen();
         SceneContainer scenes = new SceneContainer();
         Scene currentScene = scenes.getRandomScene(player);
 //        sceneInfoTextArea.setText(currentScene.getArt());
@@ -297,7 +314,7 @@ public class MainFrame extends JFrame {
         " Intellect: " + player.getIntellect() + " Creativity: " + player.getCreativity());
         playerInfoTextArea.setText("Name: " + player.getName() +
                 "\nAge: " + player.getAge()
-                + "\nCareer Level: " + player.getCareer());
+                + "\nCareer Choice: " + player.getCareer());
         healthLabel.setText("health: " + player.getHealthPoints());
         wealthLabel.setText("Net worth: " + player.getNetWorth());
         attributesPanel.setVisible(true);
@@ -305,9 +322,12 @@ public class MainFrame extends JFrame {
         healthPanel.setVisible(true);
         wealthPanel.setVisible(true);
         sceneInfo.setVisible(true);
+        continueButton.setVisible(true);
+        optionsPanel.add(continueButton);
         optionsPanel.setVisible(true);
-        letsPlay(player);
+//        letsPlay(player);
     }
+
 
     private String getOptions(Scene currentScene){
         String optionz = "";
