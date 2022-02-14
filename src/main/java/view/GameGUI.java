@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.tools.javac.Main;
 import controller.EffectsTranslator;
 import models.Person;
 import models.Scene;
@@ -15,21 +14,19 @@ public class GameGUI {
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
     public static JButton option1, option2, continueButton;
-    public static JPanel attributesPanel, playerInfoPanel, sceneInfo, healthPanel, wealthPanel, optionsPanel, sceneArt, oneOfTwoOptionsPanel;
-    public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), optionsTextArea = new JTextArea(5,20), playerAttributes = new JTextArea(5, 20);
-    public static JLabel attributesLabel = new JLabel(), healthLabel = new JLabel(), wealthLabel = new JLabel();
+    public static JPanel optionsPanel;
+    public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), playerAttributes = new JTextArea(5, 20);
+    public static JLabel healthLabel = new JLabel(), wealthLabel = new JLabel();
     private static Person player = new Person();
     static SceneContainer scene = new SceneContainer();
     //static Scene currentScene;
     static Scene currentScene = scene.getRandomScene(player);
-    MainFrame mainFrame = new MainFrame();
 
     public static void addGameComponentsToPane(Container pane) {
         if (RIGHT_TO_LEFT) {
             pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
 
-        JButton button;
         pane.setLayout(new GridBagLayout());
         pane.setSize(600,400);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
@@ -64,14 +61,6 @@ public class GameGUI {
         c.gridx = 1;
         c.gridy = 0;
         pane.add(playerAttributes, c);
-
-//        attributesLabel.setText("Strength: " + player.getStrength() +
-//                " Intellect: " + player.getIntellect() + " Creativity: " + player.getCreativity());
-//        c.gridx = 0;
-//        c.gridy = 0;
-//        c.gridwidth = 4;
-//        pane.add(attributesLabel, c);
-
 
         sceneInfoTextArea.setBounds(0, 400, 800, 800);
         sceneInfoTextArea.setBackground(Color.pink);
@@ -115,22 +104,6 @@ public class GameGUI {
         c.gridy = 2;
         c.gridwidth = 4;
         pane.add(wealthLabel, c);
-        //gameLoop();
-    }
-
-    // so far, dont know how to render data while using the loop
-    private static void gameLoop(){
-
-
-
-        while (shouldPlay()){
-            currentScene = scene.getRandomScene(player);
-            sceneInfoTextArea.setText(currentScene.getPrompt());
-            System.out.println("working!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            // buttons
-            setListenersForButtons();
-        }
-        System.out.println("End of Game");
     }
 
     private static void writeToComponent(JTextArea textComponent, String text){
@@ -182,7 +155,7 @@ public class GameGUI {
         option1.setText(currentScene.getOptions().get(0));
         option1.addActionListener(e -> {
             writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(0));
-            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
+            EffectsTranslator.doEffects(player,currentScene.getEffects().get(0));
             continueButton.addActionListener(el -> {
                 System.out.println("lets go!");
                 writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
@@ -226,14 +199,27 @@ public class GameGUI {
     }
 
     private static void displayNextScene() {
-        currentScene = scene.getRandomScene(player);
-        sceneInfoTextArea.setText(currentScene.getPrompt());
-        playerUpdateAge();
-        hideContinueButton();
-        option1.setVisible(true);
-        option2.setVisible(true);
-        setListenersForButtons();
-        System.out.println("next scene works");
+        if(shouldPlay()) {
+            currentScene = scene.getRandomScene(player);
+            sceneInfoTextArea.setText(currentScene.getPrompt());
+            playerUpdateAge();
+            hideContinueButton();
+            removeAllActionListeners(continueButton);
+            removeAllActionListeners(option1);
+            removeAllActionListeners(option2);
+            option1.setVisible(true);
+            option2.setVisible(true);
+            setListenersForButtons();
+            System.out.println("next scene works");
+        } else {
+            if (player.getHealthPoints() <= 0){
+                sceneInfoTextArea.setText("Game Over");
+                System.out.println("Game Over");
+            } else {
+                sceneInfoTextArea.setText("YOU ARE A MILLIONAIRE");
+                System.out.println("You win");
+            }
+        }
     }
 
     private static boolean shouldPlay() {
