@@ -8,6 +8,7 @@ import models.SceneContainer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class GameGUI {
     final static boolean shouldFill = true;
@@ -19,6 +20,7 @@ public class GameGUI {
     public static JLabel attributesLabel = new JLabel(), healthLabel = new JLabel(), wealthLabel = new JLabel();
     private static Person player = new Person();
     static SceneContainer scene = new SceneContainer();
+    //static Scene currentScene;
     static Scene currentScene = scene.getRandomScene(player);
     MainFrame mainFrame = new MainFrame();
 
@@ -90,29 +92,12 @@ public class GameGUI {
         c.gridx = 1;
         optionsPanel.setBackground(Color.green);
 
-        option1 = new JButton(currentScene.getOptions().get(0));
-        option1.addActionListener(e -> {
-            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(0));
-            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
-            continueButton.addActionListener(el -> {
-                System.out.println("lets go!");
-                writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
-            });
-    });
+        option1 = new JButton();
+        option2 = new JButton();
+
         optionsPanel.add(option1, c);
-
-        option2 = new JButton(currentScene.getOptions().get(1));
-        option2.addActionListener(e -> {
-            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(1));
-            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
-            continueButton.addActionListener(el -> {
-                System.out.println("lets go!");
-                writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
-//                gameLoop();
-            });
-        });
         optionsPanel.add(option2, c);
-
+        setListenersForButtons();
         pane.add(optionsPanel, c);
 
         continueButton = new JButton("Continue");
@@ -130,16 +115,22 @@ public class GameGUI {
         c.gridy = 2;
         c.gridwidth = 4;
         pane.add(wealthLabel, c);
+        //gameLoop();
     }
 
     // so far, dont know how to render data while using the loop
     private static void gameLoop(){
 
+
+
         while (shouldPlay()){
+            currentScene = scene.getRandomScene(player);
             sceneInfoTextArea.setText(currentScene.getPrompt());
-            player.addAge(5);
             System.out.println("working!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            // buttons
+            setListenersForButtons();
         }
+        System.out.println("End of Game");
     }
 
     private static void writeToComponent(JTextArea textComponent, String text){
@@ -175,6 +166,32 @@ public class GameGUI {
         continueButton.updateUI();
     }
 
+    private static void setListenersForButtons(){
+        option2.setText(currentScene.getOptions().get(1));
+        option2.addActionListener(e -> {
+            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(1));
+            EffectsTranslator.doEffects(player, currentScene.getEffects().get(1));
+            continueButton.addActionListener(el -> {
+                System.out.println("lets go!");
+                writeToComponent(sceneInfoTextArea, displaySceneSummary(player.addSalary()));
+
+                removeAllActionListeners(continueButton);
+                continueButton.addActionListener(event -> displayNextScene());
+            });
+        });
+        option1.setText(currentScene.getOptions().get(0));
+        option1.addActionListener(e -> {
+            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(0));
+            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
+            continueButton.addActionListener(el -> {
+                System.out.println("lets go!");
+                writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
+
+                removeAllActionListeners(continueButton);
+                continueButton.addActionListener(event -> displayNextScene());
+            });
+        });
+    }
     private static String displaySceneSummary(String salaryBreakdown) {
         String values = "";
         System.out.println("\n++++++ 5-Year Summary ++++++");
@@ -208,6 +225,17 @@ public class GameGUI {
         return values;
     }
 
+    private static void displayNextScene() {
+        currentScene = scene.getRandomScene(player);
+        sceneInfoTextArea.setText(currentScene.getPrompt());
+        playerUpdateAge();
+        hideContinueButton();
+        option1.setVisible(true);
+        option2.setVisible(true);
+        setListenersForButtons();
+        System.out.println("next scene works");
+    }
+
     private static boolean shouldPlay() {
         if (player.getHealthPoints() <= 0) {
             System.out.println("Game Over. You died because you ran out of health points: " + player.getHealthPoints());
@@ -220,6 +248,15 @@ public class GameGUI {
         }
 
         return true;
+    }
+
+    private static void playerUpdateAge() {
+        player.addAge(5);
+        playerInfoTextArea.setText("Name: " + player.getName() +
+                "\nAge: " + player.getAge()
+                + "\nCareer Choice: " + player.getCareer());
+        playerInfoTextArea.updateUI();
+        System.out.println("updated age");
     }
 
     private static void renderGame() {
@@ -241,6 +278,12 @@ public class GameGUI {
         frame.setVisible(true);
     }
 
+    private static void removeAllActionListeners(JButton button) {
+        for (ActionListener action : button.getActionListeners()) {
+            button.removeActionListener(action);
+        }
+    }
+
     private static void testPlayer () {
         player.setName("DEV");
         player.setPrivilege(true);
@@ -248,6 +291,7 @@ public class GameGUI {
         player.addStrength(5);
         player.addIntellect(5);
         player.addCreativity(5);
+        player.setNetWorth(-25000);
     }
 
     //    For testing individual page. This should be exported.
