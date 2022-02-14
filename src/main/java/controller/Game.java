@@ -3,7 +3,7 @@ package controller;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-//import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.JSONParser;
 import view.MainFrame;
 import view.TestMainFrame;
 
@@ -547,6 +547,10 @@ public class Game {
         saveData.put("Age", player.getAge());
         saveData.put("Health", player.getHealthPoints());
         saveData.put("Children", player.getChildren());
+        saveData.put("Career Choice", player.getCareer());
+        saveData.put("Strength Attribute", player.getStrength());
+        saveData.put("Intellect Attribute", player.getIntellect());
+        saveData.put("Creativity Attribute", player.getCreativity());
 
         JSONObject newSaveData = new JSONObject();
         newSaveData.put(player.getName(), saveData);
@@ -563,20 +567,20 @@ public class Game {
     private void loadGame () {
         try {
             String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE).toLowerCase();
-//            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
-//            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
+            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+            System.out.println("Loaded File" + loadedData.get("NetWorth"));
 //            //Load scene
 //
 //            //Load player info
-//            long loadedNetWorth = (long) loadedData.get("NetWorth");
-//            player.setNetWorth((int) loadedNetWorth);
-//            long loadedAge = (long) loadedData.get("Age");
-//            player.setAge((int) loadedAge);
-//            long loadedHealth = (long) loadedData.get("Health");
-//            player.setHealth((int) loadedHealth);
+            player.setName(name);
+            long loadedNetWorth = (long) loadedData.get("NetWorth");
+            player.setNetWorth((int) loadedNetWorth);
+            long loadedAge = (long) loadedData.get("Age");
+            player.setAge((int) loadedAge);
+            long loadedHealth = (long) loadedData.get("Health");
+            player.setHealth((int) loadedHealth);
 //            System.out.println("Example of saved data:" + player.getPrettyNetWorth() + player.getAge() + player.getHealthPoints());
-
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
             System.out.println("ERROR: Could not locate your saved file");
