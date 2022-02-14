@@ -62,6 +62,7 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Play Game");
+//        button.addActionListener(e -> backstoryPane(pane));
         button.addActionListener(e -> backstoryPane(pane));
         c.fill = GridBagConstraints.HORIZONTAL;
         button.setBackground(Color.green);
@@ -108,7 +109,6 @@ public class Intro {
             c.fill = GridBagConstraints.HORIZONTAL;
         }
 
-        button = new JButton("Help");
         if (shouldWeightX) {
             c.weightx = 0;
         }
@@ -142,6 +142,7 @@ public class Intro {
 //        c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
+        c.gridwidth = 1;
         pane.add(button, c);
 
         button = new JButton("Load");
@@ -186,19 +187,19 @@ public class Intro {
         pane.add(button, c);
 
         JTextArea product = new JTextArea();
-        product.setBounds(0, 200, 600, 400);
+//        product.setBounds(0, 200, 600, 400);
         product.setBackground(Color.white);
         product.setVisible(true);
         product.setFont(new Font("Hei", Font.BOLD, 22));
-        product.setPreferredSize(new Dimension(600, 400));
+        product.setPreferredSize(new Dimension(500, 330));
         product.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
         c.gridx = 0;
         c.gridy = 1;
-        c.gridheight = 5;
+        c.gridheight = 3;
         pane.add(product, c);
 
         button = createJButton("Continue", 800, 50, false);
-        button.addActionListener(e -> System.out.println("Clicked Button 3"));
+        button.addActionListener(e -> System.out.println("Clicked Continue"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridheight = 0;

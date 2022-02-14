@@ -121,6 +121,7 @@ public class Backstory {
         c.gridy = 4;
         pane.add(button, c);
 
+
     }
 
     private static JButton createJButton(String title, int width, int height, boolean focusable) {
@@ -137,7 +138,7 @@ public class Backstory {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void renderBackstory() {
+    public static void renderBackstory() {
         //Create and set up the window.
         JFrame frame = new JFrame("GridBagLayoutDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
