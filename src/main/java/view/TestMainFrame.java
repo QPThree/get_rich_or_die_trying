@@ -1,13 +1,19 @@
 package view;
 
+import controller.Game;
+
 import javax.swing.*;
 import java.awt.*;
 
-import view.Intro;
+public class TestMainFrame{
+    static JFrame frame = new JFrame("Game Frame");
+    static private Intro intro = new Intro();
+    static private Backstory backstory = new Backstory();
+    public static Game game = new Game();
 
-public class TestMainFrame {
-    static JFrame frame = new JFrame("GridBagLayoutDemo");
-    public TestMainFrame() {
+
+    public TestMainFrame(String title) {
+        frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Display the window.
         frame.pack();
@@ -20,20 +26,45 @@ public class TestMainFrame {
         frame.setVisible(true);
     }
 
-//    public static void removeComponentsFromPane(Container pane) {
-//        pane.removeAll();
-//        pane.setVisible(false);
-//        pane.revalidate();
-//    }
+    public static void removeComponentsFromPane(Container pane, JFrame frame) {
+        pane.removeAll();
+        pane.setVisible(false);
+        frame.remove(pane);
+        pane.revalidate();
+    }
+
+    public static void changeView(String view){
+        switch (view){
+            case "backstory":
+                System.out.println("backstory called!");
+                removeComponentsFromPane(frame.getContentPane(), frame);
+                backstory.render();
+                break;
+        }
+
+    }
 
 
-//    public static void main(String[] args) {
-//        //Schedule a job for the event-dispatching thread:
-//        //creating and showing this application's GUI.
-////        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-////            public void run() {
-////                Intro.addComponentsToPane(frame,frame.getContentPane());
-////            }
-////        });
-//    }
+    //Game sends text to translator which sends text to here
+    public void writeToTextArea(JTextArea textArea,String string) {
+        //textArea.setPreferredSize(new Dimension(425, 75));
+        textArea.removeAll();
+        writeToTextArea(textArea, Color.white, string);
+
+    }
+    public void writeToTextArea(JTextArea textArea, Color color, String string) {
+        textArea.setFont(new Font("Arial", Font.BOLD, 11));
+        textArea.setBackground(color);
+        textArea.setText(string);
+    }
+
+public static void main(String[] args) {
+    //Schedule a job for the event-dispatching thread:
+    //creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            intro.render();
+        }
+    });
+}
 }
