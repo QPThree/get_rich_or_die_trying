@@ -1,6 +1,7 @@
 package view;
 
 import com.sun.tools.javac.Main;
+import controller.EffectsTranslator;
 import models.Person;
 import models.Scene;
 import models.SceneContainer;
@@ -12,7 +13,7 @@ public class GameGUI {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    public static JButton option1, option2;
+    public static JButton option1, option2, continueButton;
     public static JPanel attributesPanel, playerInfoPanel, sceneInfo, healthPanel, wealthPanel, optionsPanel, sceneArt, oneOfTwoOptionsPanel;
     public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), optionsTextArea = new JTextArea(5,20), playerAttributes = new JTextArea(5, 20);
     public static JLabel attributesLabel = new JLabel(), healthLabel = new JLabel(), wealthLabel = new JLabel();
@@ -89,15 +90,34 @@ public class GameGUI {
         c.gridx = 1;
         optionsPanel.setBackground(Color.green);
 
-        option1 = new JButton("Option 1");
-        option1.addActionListener(e -> System.out.println("Clicked 1"));
+        option1 = new JButton(currentScene.getOptions().get(0));
+        option1.addActionListener(e -> {
+            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(0));
+            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
+            continueButton.addActionListener(el -> {
+                System.out.println("lets go!");
+                writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
+            });
+    });
         optionsPanel.add(option1, c);
 
-        option2 = new JButton("Option 2");
-        option2.addActionListener(e -> System.out.println("Clicked 2"));
+        option2 = new JButton(currentScene.getOptions().get(1));
+        option2.addActionListener(e -> {
+            writeToComponent(sceneInfoTextArea, currentScene.getOutcomes().get(1));
+            EffectsTranslator.doEffects(player,currentScene.getEffects().get(1));
+            continueButton.addActionListener(el -> {
+                System.out.println("lets go!");
+                writeToComponent(sceneInfoTextArea,displaySceneSummary(player.addSalary()));
+//                gameLoop();
+            });
+        });
         optionsPanel.add(option2, c);
 
         pane.add(optionsPanel, c);
+
+        continueButton = new JButton("Continue");
+        continueButton.setVisible(false);
+        optionsPanel.add(continueButton, c);
 
         healthLabel.setText("Health: " + player.getHealthPoints());
         c.gridx = 0;
@@ -112,7 +132,95 @@ public class GameGUI {
         pane.add(wealthLabel, c);
     }
 
+    // so far, dont know how to render data while using the loop
+    private static void gameLoop(){
 
+        while (shouldPlay()){
+            sceneInfoTextArea.setText(currentScene.getPrompt());
+            player.addAge(5);
+            System.out.println("working!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+    }
+
+    private static void writeToComponent(JTextArea textComponent, String text){
+        writeToTextArea(textComponent, text);
+        textComponent.setLineWrap(true);
+        textComponent.setWrapStyleWord(true);
+        textComponent.updateUI();
+    }
+
+    private static void writeToTextArea(JTextArea textArea,String string) {
+        //textArea.setPreferredSize(new Dimension(425, 75));
+        textArea.removeAll();
+        writeToTextArea(textArea, Color.white, string);
+    }
+
+    private static void writeToTextArea(JTextArea textArea, Color color, String string) {
+        textArea.setFont(new Font("Arial", Font.BOLD, 11));
+        textArea.setBackground(color);
+        textArea.setText(string);
+        option1.setVisible(false);
+        option2.setVisible(false);
+        optionsPanel.updateUI();
+        showContinueButton();
+    }
+
+    private static void showContinueButton() {
+        continueButton.setVisible(true);
+        continueButton.updateUI();
+    }
+
+    private static void hideContinueButton() {
+        continueButton.setVisible(false);
+        continueButton.updateUI();
+    }
+
+    private static String displaySceneSummary(String salaryBreakdown) {
+        String values = "";
+        System.out.println("\n++++++ 5-Year Summary ++++++");
+        System.out.println("Player: " + player.getName());
+        System.out.println("Age: " + player.getAge());
+        System.out.println("Net Worth: " + player.getPrettyNetWorth());
+        System.out.println("Health: " + player.getHealthPoints());
+        System.out.println("Children: " + player.getChildren());
+        if (player.isMarried()) {
+            System.out.println("Spouse: Sam");
+        } else {
+            System.out.println("Partner: " + (player.getPartner() == null ? "none" : "Sam"));
+        }
+        System.out.println(salaryBreakdown);
+
+        healthLabel.setText("Health: " + player.getHealthPoints());
+        wealthLabel.setText("Net worth: " + player.getPrettyNetWorth());
+
+
+        // This is currently being used to output the summary.
+        // This can go away when serialization is implemented
+        values += ("++++++ 5-Year Summary ++++++");
+        values += ("\nPlayer: " + player.getName());
+        values += ("\nNet Worth: " + player.getPrettyNetWorth());
+        values += ("\nChildren: " + player.getChildren());
+        if (player.isMarried()) {
+            values += ("\nSpouse: " + player.getPartner());
+        } else {
+            values += ("\nPartner: " + (player.getPartner() == null ? "none" : player.getPartner().getName()));
+        }
+        return values;
+    }
+
+    private static boolean shouldPlay() {
+        if (player.getHealthPoints() <= 0) {
+            System.out.println("Game Over. You died because you ran out of health points: " + player.getHealthPoints());
+            return false;
+        }
+
+        if (player.getNetWorth() >= 1000000) {
+            System.out.println("You win. You have: " + player.getPrettyNetWorth());
+            return false;
+        }
+
+        return true;
+    }
 
     private static void renderGame() {
         //Create and set up the window.
