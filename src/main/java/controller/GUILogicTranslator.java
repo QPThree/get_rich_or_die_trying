@@ -1,27 +1,30 @@
 package controller;
 
 import view.MainFrame;
+import view.TestMainFrame;
 
 import javax.swing.*;
 
 /*
   class that converts Game.java logic to GUI display, and User-GUI interactions to Game.java logic.
  */
-class GUILogicTranslator {
+public class GUILogicTranslator {
     private Game game;
     private MainFrame mainframe;
+    TestMainFrame frame;
 
 
-    public GUILogicTranslator(Game game, MainFrame mainframe){
+    public GUILogicTranslator(Game game, TestMainFrame frame){
         setGame(game);
-        setMainframe(mainframe);
+        setMainframe(frame);
     }
-    public void setGame(Game game) {
+
+    private void setGame(Game game) {
         this.game = game;
     }
 
-    public void setMainframe(MainFrame mainframe) {
-        this.mainframe = mainframe;
+    private void setMainframe(TestMainFrame frame) {
+        this.frame = frame;
     }
 
     /* 1. DONE: writeToComponent(JTextArea comp, String text) -> writes text to textarea component
@@ -31,16 +34,14 @@ class GUILogicTranslator {
 
     //used to write to text areas in gui
     public void writeToComponent(JTextArea textComponent, String text){
-        mainframe.writeToTextArea(textComponent, text);
+        frame.writeToTextArea(textComponent, text);
         textComponent.setLineWrap(true);
         textComponent.setWrapStyleWord(true);
         textComponent.updateUI();
     }
-    public void transitionMainMenuToBackstory(){
-        mainframe.hideMenuScreen(); //allocate this to translator
-        mainframe.showBackstoryScreenNameEntry(); //allocate to translator
-    }
+
     public void editButtonText(JButton button, String text){
+        System.out.println("Setting text at " + button.getText());
         button.setText(text);
         button.updateUI();
         System.out.println("SETTING TEXT " + text);

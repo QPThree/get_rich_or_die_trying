@@ -246,6 +246,7 @@ public class MainFrame extends JFrame {
     public void hideBackstoryTextPanel(){
         backstoryTextPanel.setVisible(false);
         backstoryTitlePanel.setVisible(false);
+        backstoryOptionsPanel.removeAll();
     }
 
     public void showBackstoryOptions(){
@@ -315,8 +316,8 @@ public class MainFrame extends JFrame {
         playerInfoTextArea.setText("Name: " + player.getName() +
                 "\nAge: " + player.getAge()
                 + "\nCareer Choice: " + player.getCareer());
-        healthLabel.setText("health: " + player.getHealthPoints());
-        wealthLabel.setText("Net worth: " + player.getNetWorth());
+        healthLabel.setText("Health: " + player.getHealthPoints());
+        wealthLabel.setText("Net worth: " + player.getPrettyNetWorth());
         attributesPanel.setVisible(true);
         playerInfoPanel.setVisible(true);
         healthPanel.setVisible(true);
