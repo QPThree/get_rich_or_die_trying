@@ -10,6 +10,7 @@ public class TestMainFrame{
     static public Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
+    public static LifeStory mainLoop = new LifeStory();
 
 
     public TestMainFrame() {
@@ -39,7 +40,11 @@ public class TestMainFrame{
                 removeComponentsFromPane(frame.getContentPane(), frame);
                 backstory.render();
                 game.getPlayerBasicData(); //start the game
+                break;
 
+            case "mainLoop":
+                removeComponentsFromPane(frame.getContentPane(), frame);
+                mainLoop.render();
                 break;
         }
 

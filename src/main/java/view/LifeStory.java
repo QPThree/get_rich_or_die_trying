@@ -1,6 +1,7 @@
 package view;
 
 import controller.EffectsTranslator;
+import controller.Game;
 import models.Person;
 import models.Scene;
 import models.SceneContainer;
@@ -9,15 +10,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameGUI {
+public class LifeStory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
+    static JFrame frame = TestMainFrame.frame; //from quen/zach branch
     public static JButton option1, option2, continueButton;
     public static JPanel optionsPanel;
     public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), playerAttributes = new JTextArea(5, 20);
     public static JLabel healthLabel = new JLabel(), wealthLabel = new JLabel();
-    private static Person player = new Person();
+    private static Person player = Game.player;
     static SceneContainer scene = new SceneContainer();
     //static Scene currentScene;
     static Scene currentScene = scene.getRandomScene(player);
@@ -28,7 +30,7 @@ public class GameGUI {
         }
 
         pane.setLayout(new GridBagLayout());
-        pane.setSize(600,400);
+        pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
         if (shouldFill) {
             //natural height, maximum width
@@ -36,7 +38,7 @@ public class GameGUI {
         }
 
         // instantiating player data for testing
-        testPlayer();
+//        testPlayer();
 
         playerInfoTextArea.setBounds(0, 50, 100, 100);
         playerInfoTextArea.setBackground(Color.gray);
@@ -54,7 +56,7 @@ public class GameGUI {
         playerAttributes.setBackground(Color.blue);
         playerAttributes.setVisible(true);
         playerAttributes.setFont(new Font("Hei", Font.BOLD, 12));
-        playerAttributes.setPreferredSize(new Dimension(300, 100));
+        playerAttributes.setPreferredSize(new Dimension(500, 100));
         playerAttributes.setText("Strength: " + player.getStrength() +
                 " Intellect: " + player.getIntellect() + " Creativity: " + player.getCreativity());
 
@@ -104,6 +106,9 @@ public class GameGUI {
         c.gridy = 2;
         c.gridwidth = 4;
         pane.add(wealthLabel, c);
+
+        pane.revalidate();
+        pane.setVisible(true);
     }
 
     private static void writeToComponent(JTextArea textComponent, String text){
@@ -245,9 +250,9 @@ public class GameGUI {
         System.out.println("updated age");
     }
 
-    private static void renderGame() {
+    static void render() {
+        System.out.println("****RUNNING MAIN LOOP! ****");
         //Create and set up the window.
-        JFrame frame = new JFrame("GridBagLayoutDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
@@ -281,13 +286,13 @@ public class GameGUI {
     }
 
     //    For testing individual page. This should be exported.
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                renderGame();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        //Schedule a job for the event-dispatching thread:
+//        //creating and showing this application's GUI.
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                render();
+//            }
+//        });
+//    }
 }

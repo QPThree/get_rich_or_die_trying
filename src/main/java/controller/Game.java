@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Game {
     SceneContainer scenes;
-    Person player = new Person();
+    public static Person player = new Person();
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
     private TestMainFrame mainFrame = new TestMainFrame(); // Java Swing
@@ -339,11 +339,13 @@ public class Game {
         mainFrame.backstory.button1.addActionListener(e -> {
             player.addMoney(-100000);
             player.setEducation(true);
+            mainFrame.changeView("mainLoop");
 
 
         });
         mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
+            mainFrame.changeView("mainLoop");
 
         });
 
