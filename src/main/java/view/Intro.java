@@ -9,6 +9,7 @@ public class Intro {
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = TestMainFrame.frame;
+    public static JTextArea textArea;
 
 
     public static void introPane(Container pane) {
@@ -65,7 +66,7 @@ public class Intro {
 
         button = new JButton("Play Game");
 //        button.addActionListener(e -> backstoryPane(pane));
-        button.addActionListener(e -> {TestMainFrame.changeView("backstory"); TestMainFrame.game.execute();}); //this starts the game!
+        button.addActionListener(e -> {TestMainFrame.changeView("backstory"); }); //this starts the game!
         c.fill = GridBagConstraints.HORIZONTAL;
         button.setBackground(Color.green);
         c.ipady = 40;      //make this component tall
@@ -76,16 +77,16 @@ public class Intro {
         pane.add(button, c);
 
 
-        JTextArea product = new JTextArea();
-        product.setBounds(0, 400, 800, 800);
-        product.setBackground(Color.white);
-        product.setVisible(true);
-        product.setFont(new Font("Hei", Font.BOLD, 22));
-        product.setPreferredSize(new Dimension(800, 400));
-        product.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        textArea = new JTextArea();
+        textArea.setBounds(0, 400, 800, 800);
+        textArea.setBackground(Color.white);
+        textArea.setVisible(true);
+        textArea.setFont(new Font("Hei", Font.BOLD, 22));
+        textArea.setPreferredSize(new Dimension(800, 400));
+        textArea.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
         c.gridx = 0;
         c.gridy = 3;
-        pane.add(product, c);
+        pane.add(textArea, c);
 
     }
 

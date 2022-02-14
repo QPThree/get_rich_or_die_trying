@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 //import org.json.simple.parser.JSONParser;
 import view.MainFrame;
+import view.TestMainFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -18,17 +20,16 @@ public class Game {
     Person player = new Person();
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
-    private MainFrame mainFrame = new MainFrame(); // Java Swing
+    private TestMainFrame mainFrame = new TestMainFrame(); // Java Swing
     private GUILogicTranslator translator;
 
     public Game () {
         translator = new GUILogicTranslator(this, mainFrame);
-        setAllActionListeners();
-        gameBanner();
+//        setAllActionListeners();
+//        gameBanner();
     }
 
     public void execute() {
-        translator.transitionMainMenuToBackstory();
         scenes = new SceneContainer();
 
         welcome();
@@ -157,24 +158,24 @@ public class Game {
     }
 
     // first Scene after college, for the career choice
-    private void runSceneOneCareer(Person player) {
-
-        mainFrame.showAttributesScreen(player);
-        // availCareers are dictated by user choice in regards going to college
-
-        if(player.hasEducation()) {
-            translator.writeToComponent(mainFrame.sceneInfoTextArea, "Congratulations!\nYou finished college.");
-        }
-        else {
-            translator.writeToComponent(mainFrame.sceneInfoTextArea, "You decided to skip the college route.");
-        }
-        mainFrame.showContinueButton();
-        mainFrame.continueButton.addActionListener( e-> {
-            chooseCareer();
-        });
-
-
-    }
+//    private void runSceneOneCareer(Person player) {
+//
+//        mainFrame.showAttributesScreen(player);
+//        // availCareers are dictated by user choice in regards going to college
+//
+//        if(player.hasEducation()) {
+//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "Congratulations!\nYou finished college.");
+//        }
+//        else {
+//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "You decided to skip the college route.");
+//        }
+//        mainFrame.showContinueButton();
+//        mainFrame.continueButton.addActionListener( e-> {
+//            chooseCareer();
+//        });
+//
+//
+//    }
 
     private void chooseCareer() {
         Map<Careers, List<String>> availCareers = player.hasEducation() ? Careers.getCollegeCareers() : Careers.getNonCollegeCareers();
@@ -224,7 +225,7 @@ public class Game {
             String userInput = scanner.nextLine().trim().toLowerCase();
 
             if (userInput.equalsIgnoreCase("Help"))
-                this.helpMenu();
+//                this.helpMenu();
 
             if (userInput.equalsIgnoreCase("quit")) {
                 System.out.println("Quitting game");
@@ -295,83 +296,56 @@ public class Game {
     }
 
     // generates the backstory for the game (from a child -> college)
-    private void getPlayerBasicData() {
+    public void getPlayerBasicData() {
         String printBackstoryArt = Art.getArt("backstory");
         System.out.println(printBackstoryArt);  // Prints backstory banner
         System.out.println("Enter your Name: ");
-//        String playerName = getInput(); // validates and stores user input
-//        while(playerName.isEmpty()){    // prevents empty strings
-//            System.out.println("Name is required. Please enter your name.");
-//            playerName = getInput();
-//        }
-//
-//        if (playerName.equalsIgnoreCase("DEV")) {   // cheat code for DEV
-//            player.setName("DEV");
-//            player.setPrivilege(true);
-//            player.setEducation(true);
-//            player.addStrength(5);
-//            player.addIntellect(5);
-//            player.addCreativity(5);
-//            System.out.println("Playing the game in DEV mode");
-//            return;
-//        }
-        mainFrame.showTwoOptionsScreen();
-        System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
-        translator.writeToComponent(mainFrame.backstoryTextArea,"Select your privilege status" );
-        translator.editButtonText(mainFrame.optionA, "Working Class");
-        translator.editButtonText(mainFrame.optionB, "Middle Class");
 
-        removeAllActionListeners(mainFrame.optionA);
-        removeAllActionListeners(mainFrame.optionB);
-        mainFrame.optionA.addActionListener(e -> {
+        System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
+        translator.editButtonText(mainFrame.backstory.button1, "Working Class");
+        translator.editButtonText(mainFrame.backstory.button2, "Middle Class");
+        translator.editButtonText(mainFrame.backstory.button3, "");
+        mainFrame.backstory.button3.setVisible(false);
+        mainFrame.backstory.continueButton.setVisible(false);
+        translator.writeToComponent(mainFrame.backstory.textArea,"Select your privilege status!" );
+
+
+
+        mainFrame.backstory.button1.addActionListener(e -> {
             this.player.setNetWorth(player.getNetWorth() - 25000);
-            mainFrame.hideTwoOptionsScreen();
-            mainFrame.showBackstorySelectionScreen();
+            mainFrame.backstory.button3.setVisible(true);
             startBackstoryScenes();});
 
-        mainFrame.optionB.addActionListener(e -> {
+        mainFrame.backstory.button2.addActionListener(e -> {
             this.player.setNetWorth(player.getNetWorth() + 25000);
-            mainFrame.hideTwoOptionsScreen();
-            mainFrame.showBackstorySelectionScreen();
+            mainFrame.backstory.button3.setVisible(true);
             startBackstoryScenes();});
     }
 
     private void startBackstoryScenes(){
-
         List<Backstory> backstories = getBackStoryScenes(); // stores backstory data from JSON in a List
         processBackstories(backstories, 0);
-//
     }
 
 
     private void collegeScene(){
 //        // TODO: Make this better narrative
 //        // Going to college reduces your net worth by -100000
-//        System.out.println("Do you want to go to college? (Y/N): ");
-        translator.writeToComponent(mainFrame.backstoryTextArea, "Would you like to go to college?");
-        translator.editButtonText(mainFrame.optionA, "Yes");
-        translator.editButtonText(mainFrame.optionB, "No");
-        mainFrame.optionA.addActionListener(e -> {
+        translator.writeToComponent(mainFrame.backstory.textArea, "Would you like to go to college?");
+        translator.editButtonText(mainFrame.backstory.button1, "Yes");
+        translator.editButtonText(mainFrame.backstory.button2, "No");
+        mainFrame.backstory.button3.setVisible(false);
+        removeAllActionListeners(mainFrame.backstory.button3);
+        mainFrame.backstory.button1.addActionListener(e -> {
             player.addMoney(-100000);
             player.setEducation(true);
-            runSceneOneCareer(player);
-            mainFrame.hideTwoOptionsScreen();
-            mainFrame.hideBackstorySelectionScreen();
-            mainFrame.hideBackstoryTextPanel();
+
 
         });
-        mainFrame.optionB.addActionListener(e -> {
+        mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
-            runSceneOneCareer(player);
-            mainFrame.hideTwoOptionsScreen();
-            mainFrame.hideBackstorySelectionScreen();
-            mainFrame.hideBackstoryTextPanel();
+
         });
-
-        mainFrame.showTwoOptionsScreen();
-
-        //run sceneOneCareer() Next!
-
 
     }
 
@@ -389,15 +363,18 @@ public class Game {
         System.out.println("Creativity: " + player.getCreativity());
 
         //reset teh action listeners here
-        removeAllActionListeners(mainFrame.backstoryOptionOneButton);
-        removeAllActionListeners(mainFrame.backstoryOptionTwoButton);
-        removeAllActionListeners(mainFrame.backstoryOptionThreeButton);
-        removeAllActionListeners(mainFrame.continueButton);
-        mainFrame.hideContinueButton();
+        removeAllActionListeners(mainFrame.backstory.allBackstoryOptionsButtons.get(0));
+        removeAllActionListeners(mainFrame.backstory.allBackstoryOptionsButtons.get(1));
+        removeAllActionListeners(mainFrame.backstory.allBackstoryOptionsButtons.get(2));
+        removeAllActionListeners(mainFrame.backstory.continueButton);
+//        mainFrame.hideContinueButton();
+        mainFrame.backstory.button1.setVisible(true);
+        mainFrame.backstory.button2.setVisible(true);
+        mainFrame.backstory.button3.setVisible(true);
 
         if (j > backstories.size() - 1){
-            mainFrame.hideBackstorySelectionScreen();
-
+//            mainFrame.hideBackstorySelectionScreen();
+            System.out.println("**** FINISIHED END OF PROCESS BACKSTORIES *****");
             collegeScene();
             return;
         }
@@ -405,17 +382,23 @@ public class Game {
             Backstory backstory = backstories.get(j);
             System.out.println("J____" + j);
             int i = 0;
-            translator.writeToComponent(mainFrame.backstoryTextArea, backstory.getPrompt());
+            translator.writeToComponent(mainFrame.backstory.textArea, backstory.getPrompt());
             for (BackstoryOption option : backstory.getOptions()){
-                translator.editButtonText(mainFrame.allBackstoryOptionsButtons.get(i), option.getText());
-                mainFrame.allBackstoryOptionsButtons.get(i).setVisible(true);
-                mainFrame.backstoryOptionsPanel.updateUI();
-                mainFrame.allBackstoryOptionsButtons.get(i).addActionListener(e -> {
-                    mainFrame.hideBackstorySelectionScreen();
-                    mainFrame.showContinueButton();
-                    mainFrame.continueButton.addActionListener(event -> processBackstories(backstories, j + 1));
-                    translator.writeToComponent(mainFrame.backstoryTextArea, option.getOutcome());
+                translator.editButtonText(mainFrame.backstory.allBackstoryOptionsButtons.get(i), option.getText());
+
+                mainFrame.backstory.allBackstoryOptionsButtons.get(i).addActionListener(e -> {
+                    mainFrame.backstory.continueButton.setVisible(true);
+                    mainFrame.backstory.button1.setVisible(false);
+                    mainFrame.backstory.button2.setVisible(false);
+                    mainFrame.backstory.button3.setVisible(false);
+                    mainFrame.backstory.continueButton.addActionListener(event -> {
+                        mainFrame.backstory.continueButton.setVisible(false);
+                        processBackstories(backstories, j + 1);
+
+                    });
+                    translator.writeToComponent(mainFrame.backstory.textArea, option.getOutcome());
                     EffectsTranslator.getAttribute(player, option.getAttribute());
+
                 });
                 i++;
             };
@@ -465,13 +448,8 @@ public class Game {
                 "                                                                                                                                                     |  $$$$$$/              |  $$$$$$/\n" +
                 "                                                                                                                                                      \\______/                \\______/ \n";
         System.out.println(art);
-        mainFrame.writeToTextArea(mainFrame.backstoryTextArea, "Welcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\n Each choice you make will affect your net worth and health levels.\n\n Enter name to start");
-        removeAllActionListeners(mainFrame.continueButton);
-        mainFrame.continueButton.addActionListener(e -> {
-            player.setName(mainFrame.nameTextField.getText());
-            mainFrame.showBackstoryOptions();
-            getPlayerBasicData();
-        });
+        mainFrame.writeToTextArea(mainFrame.intro.textArea, "Welcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\n Each choice you make will affect your net worth and health levels.\n\n Enter name to start");
+
        // getInput();
 //        clearScreen();
         return "";
@@ -491,43 +469,43 @@ public class Game {
         return true;
     }
 
-    public void helpMenu() {
-
-        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +
-                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
-
-                "\nChoices will change how much money you have, as well as health points." +
-                "\nEx: choosing education will grant you an extra money to your salary" +
-                "\nbut skipping college will start you out with less debt.\n" +
-                "\nChoose carefully, your life depends on it!" +
-                "\nIf you're done with the help section, please make a selection below:");
-
-        System.out.println("Game is meant to simulate life." +
-                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
-                "\nChoices will change how much money you have, as well as health points." +
-                "\nEx: choosing education will grant you an extra money to your salary" +
-                "\nbut skipping college will start you out with less debt." +
-                "\nChoose carefully, your life depends on it" +
-                "\nIf you're done with the help section, press any key to continue.");
-//        try {
-//            System.in.read();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-    }
+//    public void helpMenu() {
+//
+//        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +
+//                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+//
+//                "\nChoices will change how much money you have, as well as health points." +
+//                "\nEx: choosing education will grant you an extra money to your salary" +
+//                "\nbut skipping college will start you out with less debt.\n" +
+//                "\nChoose carefully, your life depends on it!" +
+//                "\nIf you're done with the help section, please make a selection below:");
+//
+//        System.out.println("Game is meant to simulate life." +
+//                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+//                "\nChoices will change how much money you have, as well as health points." +
+//                "\nEx: choosing education will grant you an extra money to your salary" +
+//                "\nbut skipping college will start you out with less debt." +
+//                "\nChoose carefully, your life depends on it" +
+//                "\nIf you're done with the help section, press any key to continue.");
+////        try {
+////            System.in.read();
+////        } catch (Exception e) {
+////            System.out.println(e.getMessage());
+////        }
+//    }
 
     //TODO: move this to eventual translator class
-    private void setAllActionListeners () {
-        mainFrame.playButton.addActionListener(e -> execute());
-        mainFrame.exitButton.addActionListener(e -> exitGame());
-        mainFrame.loadButton.addActionListener(e -> loadGame());
-        mainFrame.helpButton.addActionListener(e -> helpMenu());
-        mainFrame.skipBackstory.addActionListener(e -> displayAttributes());
-    }
+//    private void setAllActionListeners () {
+//        mainFrame.playButton.addActionListener(e -> execute());
+//        mainFrame.exitButton.addActionListener(e -> exitGame());
+//        mainFrame.loadButton.addActionListener(e -> loadGame());
+//        mainFrame.helpButton.addActionListener(e -> helpMenu());
+//        mainFrame.skipBackstory.addActionListener(e -> displayAttributes());
+//    }
 
-    private void gameBanner() {
-        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
-    }
+//    private void gameBanner() {
+//        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+//    }
 
     private void exitGame() {
         System.exit(1);
@@ -535,23 +513,23 @@ public class Game {
 
 
     // Testing purposes for now
-    private void displayAttributes(){
-        mainFrame.hideMenuScreen();
-        player.setName("DEV");
-        player.setPrivilege(true);
-        player.setEducation(true);
-        player.addStrength(5);
-        player.addIntellect(5);
-        player.addCreativity(5);
-        player.setCareer(Careers.PASSION);
-        mainFrame.showAttributesScreen(player);
-        System.out.println("Playing the game in DEV mode");
-        System.out.println("Your character's stats:");
-        System.out.println("Strength: " + player.getStrength());
-        System.out.println("Intellect: " + player.getIntellect());
-        System.out.println("Creativity: " + player.getCreativity());
-
-}
+//    private void displayAttributes(){
+//        mainFrame.hideMenuScreen();
+//        player.setName("DEV");
+//        player.setPrivilege(true);
+//        player.setEducation(true);
+//        player.addStrength(5);
+//        player.addIntellect(5);
+//        player.addCreativity(5);
+//        player.setCareer(Careers.PASSION);
+//        mainFrame.showAttributesScreen(player);
+//        System.out.println("Playing the game in DEV mode");
+//        System.out.println("Your character's stats:");
+//        System.out.println("Strength: " + player.getStrength());
+//        System.out.println("Intellect: " + player.getIntellect());
+//        System.out.println("Creativity: " + player.getCreativity());
+//
+//}
     private void removeAllActionListeners(JButton button) {
         for (ActionListener action : button.getActionListeners()) {
             button.removeActionListener(action);

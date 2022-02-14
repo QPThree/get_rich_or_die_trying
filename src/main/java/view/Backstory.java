@@ -10,7 +10,14 @@ public class Backstory {
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = TestMainFrame.frame;
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
-    static JButton continueButton;
+    static public JButton button1 = createJButton("Button 1", 200, 150, false);
+    static public JButton button2 = createJButton("Button 2", 200, 150, false);
+    static public JButton button3 = createJButton("Button 3", 200, 150, false);
+    public static JButton continueButton;
+    public static JTextArea textArea;
+
+    public Backstory(){
+    }
 
     public static void backstoryPane(Container pane) {
         if (RIGHT_TO_LEFT) {
@@ -19,7 +26,7 @@ public class Backstory {
 
         JButton button;
         pane.setLayout(new GridBagLayout());
-        pane.setSize(600,400);
+        pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
         if (shouldFill) {
             //natural height, maximum width
@@ -30,8 +37,6 @@ public class Backstory {
             c.weightx = 0;
         }
 
-
-
         button = new JButton("Help");
         button.addActionListener(e -> System.out.println("Clicked Help"));
         if (shouldWeightX) {
@@ -40,6 +45,7 @@ public class Backstory {
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 1;
+        button.setVisible(true);
         pane.add(button, c);
 
         button = new JButton("Load");
@@ -47,6 +53,7 @@ public class Backstory {
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 0;
+        button.setVisible(true);
         pane.add(button, c);
 
         button = new JButton("exit");
@@ -54,47 +61,50 @@ public class Backstory {
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 0;
+        button.setVisible(true);
         pane.add(button, c);
 
-
-        button = createJButton("Button 1", 200, 150, false);
-        button.addActionListener(e -> System.out.println("Clicked Button 1"));
+//        button = createJButton("Button 1", 200, 150, false);
+        button1.addActionListener(e -> System.out.println("Clicked Button 1"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 1;
-        allBackstoryOptionsButtons.add(button);
-        pane.add(button, c);
+        allBackstoryOptionsButtons.add(button1);
+        button1.setVisible(true);
+        pane.add(button1, c);
 
 
-        button = createJButton("Button 2", 200, 150, false);
-        button.addActionListener(e -> System.out.println("Clicked Button 2"));
+//        button = createJButton("Button 2", 200, 150, false);
+        button2.addActionListener(e -> System.out.println("Clicked Button 2"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 2;
-        allBackstoryOptionsButtons.add(button);
-        pane.add(button, c);
+        allBackstoryOptionsButtons.add(button2);
+        button2.setVisible(true);
+        pane.add(button2, c);
 
-        button = createJButton("Button 3", 200, 150, false);
-        button.addActionListener(e -> System.out.println("Clicked Button 3"));
+//        button = createJButton("Button 3", 200, 150, false);
+        button3.addActionListener(e -> System.out.println("Clicked Button 3"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 3;
-        allBackstoryOptionsButtons.add(button);
-        pane.add(button, c);
+        allBackstoryOptionsButtons.add(button3);
+        button3.setVisible(true);
+        pane.add(button3, c);
 
-        JTextArea product = new JTextArea();
-        product.setBackground(Color.white);
-        product.setVisible(true);
-        product.setFont(new Font("Hei", Font.BOLD, 22));
-        product.setPreferredSize(new Dimension(500, 330));
-        product.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        textArea = new JTextArea();
+        textArea.setBackground(Color.white);
+        textArea.setVisible(true);
+        textArea.setFont(new Font("Hei", Font.BOLD, 22));
+        textArea.setPreferredSize(new Dimension(500, 330));
+//        textArea.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
         c.gridx = 0;
         c.gridy = 1;
         c.gridheight = 3;
-        pane.add(product, c);
+        pane.add(textArea, c);
 
         continueButton = createJButton("Continue", 800, 50, false);
         continueButton.addActionListener(e -> System.out.println("Clicked Continue"));
@@ -105,6 +115,7 @@ public class Backstory {
         c.gridx = 0;
         c.gridy = 4;
         pane.add(continueButton, c);
+        pane.revalidate();
         pane.setVisible(true);
     }
 
@@ -113,6 +124,7 @@ public class Backstory {
         JButton product = new JButton(title);
         product.setPreferredSize(new Dimension(width, height));
         product.setFocusable(focusable);
+        System.out.println("BACKSTORY JBUTTON CREATED");
         return product;
     }
 
@@ -123,11 +135,12 @@ public class Backstory {
      */
     public static void render() {
         //Create and set up the window.
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
         backstoryPane(frame.getContentPane());
-        System.out.println("COMING FROM BACKSTORY CLASS NOW");
+
         //Display the window.
 
         frame.pack();

@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TestMainFrame{
-    static JFrame frame = new JFrame("Game Frame");
-    static private Intro intro = new Intro();
-    static private Backstory backstory = new Backstory();
+    public static JFrame frame = new JFrame("Game Frame");;
+    static public Intro intro = new Intro();
+    public static Backstory backstory = new Backstory();
     public static Game game = new Game();
 
 
-    public TestMainFrame(String title) {
-        frame = new JFrame(title);
+    public TestMainFrame() {
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Display the window.
         frame.pack();
@@ -36,9 +36,10 @@ public class TestMainFrame{
     public static void changeView(String view){
         switch (view){
             case "backstory":
-                System.out.println("backstory called!");
                 removeComponentsFromPane(frame.getContentPane(), frame);
                 backstory.render();
+                game.getPlayerBasicData(); //start the game
+
                 break;
         }
 
