@@ -8,7 +8,7 @@ public class Backstory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = MainFrame.frame;
+    static JFrame frame = MainFrame.getInstance();
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
     static public JButton button1 = createJButton("Button 1", 200, 150, false);
     static public JButton button2 = createJButton("Button 2", 200, 150, false);
@@ -124,7 +124,6 @@ public class Backstory {
         JButton product = new JButton(title);
         product.setPreferredSize(new Dimension(width, height));
         product.setFocusable(focusable);
-        System.out.println("BACKSTORY JBUTTON CREATED");
         return product;
     }
 

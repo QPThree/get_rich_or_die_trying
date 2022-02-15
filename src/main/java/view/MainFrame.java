@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame {
-    public static JFrame frame = null;
+    private static JFrame frame = null; //singleton from getInstance()
     static public Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
@@ -18,6 +18,7 @@ public class MainFrame {
         initialize();  //frame boilerplate
     }
 
+    //singleton frame is handled here
     public static JFrame getInstance(){
         if (frame == null){
             frame = new JFrame("Get Rich");
