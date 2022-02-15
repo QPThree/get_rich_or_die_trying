@@ -36,6 +36,11 @@ public class TestMainFrame{
 
     public static void changeView(String view){
         switch (view){
+            case "intro":
+                System.out.println("Change to intro");
+                removeComponentsFromPane(frame.getContentPane(), frame);
+                intro.render();
+                break;
             case "backstory":
                 removeComponentsFromPane(frame.getContentPane(), frame);
                 backstory.render();

@@ -56,8 +56,8 @@ public class Backstory {
         button.setVisible(true);
         pane.add(button, c);
 
-        button = new JButton("exit");
-        button.addActionListener(e -> System.out.println("Clicked Exit"));
+        button = new JButton("Main Menu");
+        button.addActionListener(e -> TestMainFrame.changeView("intro"));
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 0;
