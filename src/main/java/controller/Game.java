@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -602,6 +601,9 @@ public class Game {
             player.setHealth((int) loadedHealth);
             long loadedChildren = (long) loadedData.get("Children");
             player.addChild((int) loadedChildren);
+            String loadedCareer = (String) loadedData.get("Career");
+            System.out.println(loadedCareer);
+            player.setCareer(Careers.valueOf(loadedCareer));
 
 
             // Set player Attributes
