@@ -59,7 +59,7 @@ public class TestMainFrame{
 
     }
     public void writeToTextArea(JTextArea textArea, Color color, String string) {
-        textArea.setFont(new Font("Arial", Font.BOLD, 11));
+        textArea.setFont(new Font("Arial", Font.BOLD, 24));
         textArea.setBackground(color);
         textArea.setText(string);
     }

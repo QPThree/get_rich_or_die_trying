@@ -509,7 +509,7 @@ public class Game {
 //        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
 //    }
 
-    private void exitGame() {
+    public static void exitGame() {
         System.exit(1);
     }
 

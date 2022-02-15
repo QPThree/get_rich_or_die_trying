@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import controller.GUILogicTranslator;
+import controller.Game;
 
 public class Intro {
     final static boolean shouldFill = true;
@@ -57,7 +58,7 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Exit");
-        button.addActionListener(e -> System.out.println("Clicked Exit"));
+        button.addActionListener(e -> Game.exitGame());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 3;

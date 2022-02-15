@@ -10,9 +10,9 @@ public class Backstory {
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = TestMainFrame.frame;
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
-    static public JButton button1 = createJButton("Button 1", 200, 150, false);
-    static public JButton button2 = createJButton("Button 2", 200, 150, false);
-    static public JButton button3 = createJButton("Button 3", 200, 150, false);
+    static public JButton button1 = createJButton("Button 1", 200, 110, false);
+    static public JButton button2 = createJButton("Button 2", 200, 110, false);
+    static public JButton button3 = createJButton("Button 3", 200, 110, false);
     public static JButton continueButton;
     public static JTextArea textArea;
 
@@ -37,13 +37,24 @@ public class Backstory {
             c.weightx = 0;
         }
 
+        // Backstory Banner Inserted into page. starts on gridx 0, grid y 0. Spans 4 grids horizontally
+        ImageIcon banner = new ImageIcon(new ImageIcon("resources/backstory.png").getImage().getScaledInstance(800,150,Image.SCALE_AREA_AVERAGING));
+        JLabel bannerLabel = new JLabel();
+        //used for main menu
+        bannerLabel.setIcon(banner);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 4;
+        pane.add(bannerLabel, c);
+
         button = new JButton("Help");
         button.addActionListener(e -> System.out.println("Clicked Help"));
         if (shouldWeightX) {
             c.weightx = 0.5;
         }
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.gridwidth = 1;
         button.setVisible(true);
         pane.add(button, c);
@@ -52,7 +63,8 @@ public class Backstory {
         button.addActionListener(e -> System.out.println("Clicked Load"));
         c.weightx = 0.5;
         c.gridx = 1;
-        c.gridy = 0;
+        c.gridy = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
         button.setVisible(true);
         pane.add(button, c);
 
@@ -60,7 +72,8 @@ public class Backstory {
         button.addActionListener(e -> System.out.println("Clicked Exit"));
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 0;
+        c.gridy = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
         button.setVisible(true);
         pane.add(button, c);
 
@@ -69,7 +82,7 @@ public class Backstory {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 1;
+        c.gridy = 2;
         allBackstoryOptionsButtons.add(button1);
         button1.setVisible(true);
         pane.add(button1, c);
@@ -80,7 +93,7 @@ public class Backstory {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 2;
+        c.gridy = 3;
         allBackstoryOptionsButtons.add(button2);
         button2.setVisible(true);
         pane.add(button2, c);
@@ -90,20 +103,18 @@ public class Backstory {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 3;
+        c.gridy = 4;
         allBackstoryOptionsButtons.add(button3);
         button3.setVisible(true);
         pane.add(button3, c);
 
         textArea = new JTextArea();
-        textArea.setBackground(Color.white);
+        textArea.setBounds(0, 400, 800, 400);
         textArea.setVisible(true);
-        textArea.setFont(new Font("Hei", Font.BOLD, 22));
-        textArea.setPreferredSize(new Dimension(500, 330));
-//        textArea.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        textArea.setPreferredSize(new Dimension(500, 275));
         c.gridx = 0;
-        c.gridy = 1;
-        c.gridheight = 3;
+        c.gridy = 2;
+        c.gridheight = 2;
         pane.add(textArea, c);
 
         continueButton = createJButton("Continue", 800, 50, false);
