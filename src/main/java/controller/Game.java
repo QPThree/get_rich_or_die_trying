@@ -22,13 +22,14 @@ public class Game {
     private GUILogicTranslator translator;
 
     public Game () {
+        scenes = new SceneContainer();
         translator = new GUILogicTranslator(this, mainFrame);
 //        setAllActionListeners();
 //        gameBanner();
     }
 
     public void execute() {
-        scenes = new SceneContainer();
+
 
         welcome();
 
@@ -41,21 +42,51 @@ public class Game {
 //        playAgainOrExit();
     }
     private void mainGameLoop(){
-        while (shouldPlay()) {
-//            clearScreen();
+        if (shouldPlay()) {
             Scene currentScene = scenes.getRandomScene(player);
-            System.out.println(currentScene.getArt());
-            System.out.println("\n+++++++ 5 years later +++++++");
             player.addAge(5);
-            int input = prompt(currentScene);
-            clearScreen();
-            displayOutcome(input, currentScene);
-            runEffect(input, currentScene);
-            String salaryReport = player.addSalary();
-            System.out.println("\nEnter any key to see your 5-year summary");
-            getInput();
-            displaySceneSummary(salaryReport);
-            nextTurnPrompt();
+
+            mainFrame.mainLoop.continueButton.setVisible(false);
+            removeAllActionListeners(mainFrame.mainLoop.continueButton);
+            removeAllActionListeners(mainFrame.mainLoop.option1);
+            removeAllActionListeners(mainFrame.mainLoop.option2);
+            mainFrame.mainLoop.option1.setVisible(true);
+            mainFrame.mainLoop.option2.setVisible(true);
+
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, currentScene.getPrompt());
+            translator.editButtonText(mainFrame.mainLoop.option1, currentScene.getOptions().get(0));
+            translator.editButtonText(mainFrame.mainLoop.option2, currentScene.getOptions().get(1));
+            mainFrame.mainLoop.option1.addActionListener(e -> {
+                        translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, currentScene.getOutcomes().get(0));
+                        mainFrame.mainLoop.continueButton.setVisible(true);
+                        mainFrame.mainLoop.option2.setVisible(false);
+                        removeAllActionListeners(mainFrame.mainLoop.option1);
+                        EffectsTranslator.doEffects(player, currentScene.getEffects().get(0));
+                        mainFrame.mainLoop.continueButton.addActionListener(el -> {
+                            System.out.println("lets go!");
+                            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, displaySceneSummary(player.addSalary()));
+
+                            removeAllActionListeners(mainFrame.mainLoop.continueButton);
+
+                            mainFrame.mainLoop.continueButton.addActionListener(event -> mainGameLoop());
+                        });
+                    });
+            mainFrame.mainLoop.option2.addActionListener(e -> {
+                translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, currentScene.getOutcomes().get(1));
+                mainFrame.mainLoop.continueButton.setVisible(true);
+                mainFrame.mainLoop.option1.setVisible(false);
+                removeAllActionListeners(mainFrame.mainLoop.option2);
+                EffectsTranslator.doEffects(player, currentScene.getEffects().get(1));
+                mainFrame.mainLoop.continueButton.addActionListener(el -> {
+                    System.out.println("lets go!");
+                    translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, displaySceneSummary(player.addSalary()));
+
+                    removeAllActionListeners(mainFrame.mainLoop.continueButton);
+                    mainFrame.mainLoop.continueButton.setVisible(true);
+                    mainFrame.mainLoop.continueButton.addActionListener(event -> mainGameLoop());
+                });
+            });
+
         }
     }
 
@@ -338,12 +369,14 @@ public class Game {
             player.addMoney(-100000);
             player.setEducation(true);
             mainFrame.changeView("mainLoop");
+            mainGameLoop();
 
 
         });
         mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
             mainFrame.changeView("mainLoop");
+            mainGameLoop();
 
         });
 
@@ -457,12 +490,12 @@ public class Game {
 
     private boolean shouldPlay() {
         if (player.getHealthPoints() <= 0) {
-            System.out.println("Game Over. You died because you ran out of health points: " + player.getHealthPoints());
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"Game Over. You died because you ran out of health points: " + player.getHealthPoints());
             return false;
         }
 
         if (player.getNetWorth() >= 1000000) {
-            System.out.println("You win. You have: " + player.getPrettyNetWorth());
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"You win. You have: " + player.getPrettyNetWorth());
             return false;
         }
 
