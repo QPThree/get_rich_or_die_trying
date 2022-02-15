@@ -4,6 +4,7 @@ import controller.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class TestMainFrame{
     public static JFrame frame = new JFrame("Game Frame");;
@@ -11,6 +12,13 @@ public class TestMainFrame{
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
     public static LifeStory mainLoop = new LifeStory();
+    public static String instructions = "Game is meant to simulate life." +
+            "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+            "\nChoices will change how much money you have, as well as health points." +
+            "\nEx: choosing education will grant you an extra money to your salary" +
+            "\nbut skipping college will start you out with less debt." +
+            "\nChoose carefully, your life depends on it" +
+            "\nIf you're done with the help section, press any key to continue.";
 
 
     public TestMainFrame() {
@@ -52,16 +60,26 @@ public class TestMainFrame{
 
 
     //Game sends text to translator which sends text to here
-    public void writeToTextArea(JTextArea textArea,String string) {
+    public static void writeToTextArea(JTextArea textArea,String string) {
         //textArea.setPreferredSize(new Dimension(425, 75));
         textArea.removeAll();
         writeToTextArea(textArea, Color.white, string);
 
     }
-    public void writeToTextArea(JTextArea textArea, Color color, String string) {
+    public static void writeToTextArea(JTextArea textArea, Color color, String string) {
         textArea.setFont(new Font("Arial", Font.BOLD, 11));
         textArea.setBackground(color);
         textArea.setText(string);
+    }
+
+    public static void removeAllActionListeners(JButton button) {
+        for (ActionListener action : button.getActionListeners()) {
+            button.removeActionListener(action);
+        }
+    }
+
+    public static void changeButtonText(JButton button, String text) {
+        button.setText(text);
     }
 
 public static void main(String[] args) {

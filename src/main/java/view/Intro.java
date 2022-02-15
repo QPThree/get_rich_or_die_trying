@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import java.util.Objects;
 import javax.swing.*;
 import controller.GUILogicTranslator;
 
@@ -10,7 +11,7 @@ public class Intro {
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = TestMainFrame.frame;
     public static JTextArea textArea;
-
+    static String welcomeText = "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.";
 
     public static void introPane(Container pane) {
         pane.setVisible(true);
@@ -19,6 +20,7 @@ public class Intro {
         }
 
         JButton button;
+        JButton HelpButton;
         pane.setLayout(new GridBagLayout());
         pane.setSize(600,400);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
@@ -37,8 +39,41 @@ public class Intro {
         c.gridwidth = 4;
         pane.add(bannerLabel, c);
 
-        button = new JButton("Help");
-        button.addActionListener(e -> System.out.println("Help"));
+    // for help functionality
+//        exitHelpButton = new JButton("Exit Help");
+//        c.fill = GridBagConstraints.HORIZONTAL;
+//        c.gridx = 2;
+//        c.gridy = 3;
+//        c.gridwidth = 1;
+//        exitHelpButton.setVisible(false);
+//        pane.add(exitHelpButton);
+
+        HelpButton = new JButton("Help");
+        HelpButton.addActionListener(e -> {
+            TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
+            TestMainFrame.removeAllActionListeners(HelpButton);
+            TestMainFrame.changeButtonText(HelpButton, "Exit Help");
+
+            HelpButton.addActionListener(el -> {
+                displayWelcomeText();
+                TestMainFrame.changeButtonText(HelpButton, "Help");
+            });
+            System.out.println(HelpButton.getText());
+        /*
+            if(Objects.equals(HelpButton.getText(), "Help")){
+                TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
+                TestMainFrame.removeAllActionListeners(HelpButton);
+                TestMainFrame.changeButtonText(HelpButton, "Exit Help");
+                HelpButton.addActionListener(el -> {
+                    displayWelcomeText();
+                    TestMainFrame.changeButtonText(HelpButton, "Help");
+                });
+            } else {
+                System.out.println("different");
+            }
+            */
+        });
+
         if (shouldWeightX) {
             c.weightx = 0.5;
         }
@@ -46,7 +81,7 @@ public class Intro {
         c.gridx = 1;
         c.gridy = 1;
         c.gridwidth = 1;
-        pane.add(button, c);
+        pane.add(HelpButton, c);
 
         button = new JButton("Load");
         button.addActionListener(e -> System.out.println("Clicked Load"));
@@ -83,11 +118,15 @@ public class Intro {
         textArea.setVisible(true);
         textArea.setFont(new Font("Hei", Font.BOLD, 22));
         textArea.setPreferredSize(new Dimension(800, 400));
-        textArea.setText("\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
+        textArea.setText(welcomeText);
         c.gridx = 0;
         c.gridy = 3;
         pane.add(textArea, c);
 
+    }
+
+    private static void displayWelcomeText(){
+        textArea.setText(welcomeText);
     }
 
 
