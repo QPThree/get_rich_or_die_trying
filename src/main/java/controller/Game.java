@@ -471,6 +471,26 @@ public class Game {
         return true;
     }
 
+    public String helpMenu() {
+//        mainFrame.writeToTextArea();
+        String instructions = "Game is meant to simulate life." +
+                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+                "\nChoices will change how much money you have, as well as health points." +
+                "\nEx: choosing education will grant you an extra money to your salary" +
+                "\nbut skipping college will start you out with less debt." +
+                "\nChoose carefully, your life depends on it" +
+                "\nIf you're done with the help section, press any key to continue.";
+
+        System.out.println("Game is meant to simulate life." +
+                "\nThe intent of the game is to have 1 million dollars by the end of the game" +
+                "\nChoices will change how much money you have, as well as health points." +
+                "\nEx: choosing education will grant you an extra money to your salary" +
+                "\nbut skipping college will start you out with less debt." +
+                "\nChoose carefully, your life depends on it" +
+                "\nIf you're done with the help section, press any key to continue.");
+        return instructions;
+    }
+
 //    public void helpMenu() {
 //
 //        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "Game is meant to simulate life." +

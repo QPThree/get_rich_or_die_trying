@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Backstory {
     final static boolean shouldFill = true;
@@ -25,6 +26,7 @@ public class Backstory {
         }
 
         JButton button;
+        JButton helpButton;
         pane.setLayout(new GridBagLayout());
         pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
@@ -37,6 +39,7 @@ public class Backstory {
             c.weightx = 0;
         }
 
+
         // Backstory Banner Inserted into page. starts on gridx 0, grid y 0. Spans 4 grids horizontally
         ImageIcon banner = new ImageIcon(new ImageIcon("resources/backstory.png").getImage().getScaledInstance(800,150,Image.SCALE_AREA_AVERAGING));
         JLabel bannerLabel = new JLabel();
@@ -47,8 +50,20 @@ public class Backstory {
         c.gridwidth = 4;
         pane.add(bannerLabel, c);
 
-        button = new JButton("Help");
-        button.addActionListener(e -> System.out.println("Clicked Help"));
+
+        helpButton = new JButton("Help");
+        helpButton.addActionListener(e -> {
+            String currentSceneText = textArea.getText();
+            System.out.println("Clicked Help");
+                TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
+                TestMainFrame.removeAllActionListeners(helpButton);
+                TestMainFrame.changeButtonText(helpButton, "Exit Help");
+                helpButton.addActionListener(el -> {
+                    TestMainFrame.writeToTextArea(textArea, currentSceneText);
+                    TestMainFrame.changeButtonText(helpButton, "Help");
+                });
+        });
+
         if (shouldWeightX) {
             c.weightx = 0.5;
         }
@@ -56,8 +71,8 @@ public class Backstory {
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
-        button.setVisible(true);
-        pane.add(button, c);
+        helpButton.setVisible(true);
+        pane.add(helpButton, c);
 
         button = new JButton("Load");
         button.addActionListener(e -> System.out.println("Clicked Load"));
