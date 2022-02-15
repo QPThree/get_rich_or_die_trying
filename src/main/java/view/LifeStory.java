@@ -15,7 +15,9 @@ public class LifeStory {
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = TestMainFrame.frame; //from quen/zach branch
-    public static JButton option1, option2, continueButton;
+    public static JButton option1 = createJButton("Button 1", 200, 150, false);
+    public static JButton option2 = createJButton("Button 2", 200, 150, false);
+    public static JButton continueButton;
     public static JPanel optionsPanel;
     public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), playerAttributes = new JTextArea(5, 20);
     public static JLabel healthLabel = new JLabel(), wealthLabel = new JLabel();
@@ -28,7 +30,7 @@ public class LifeStory {
         if (RIGHT_TO_LEFT) {
             pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
-
+        JButton button;
         pane.setLayout(new GridBagLayout());
         pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
@@ -40,23 +42,54 @@ public class LifeStory {
         // instantiating player data for testing
 //        testPlayer();
 
-        playerInfoTextArea.setBounds(0, 50, 100, 100);
+
+//        button = new JButton("Help");
+//        button.addActionListener(e -> System.out.println("Clicked Help"));
+//        if (shouldWeightX) {
+//            c.weightx = 0.5;
+//        }
+//        c.gridx = 0;
+//        c.gridy = 0;
+//        c.gridwidth = 1;
+//        button.setVisible(true);
+//        pane.add(button, c);
+//
+//        button = new JButton("Load");
+//        button.addActionListener(e -> System.out.println("Clicked Load"));
+//        c.weightx = 0.5;
+//        c.gridx = 1;
+//        c.gridy = 0;
+//        button.setVisible(true);
+//        pane.add(button, c);
+//
+//        button = new JButton("exit");
+//        button.addActionListener(e -> System.out.println("Clicked Exit"));
+//        c.weightx = 0.5;
+//        c.gridx = 2;
+//        c.gridy = 0;
+//        button.setVisible(true);
+//        pane.add(button, c);
+
+
+//        playerInfoTextArea.setBounds(0, 50, 100, 100);
         playerInfoTextArea.setBackground(Color.gray);
         playerInfoTextArea.setVisible(true);
         playerInfoTextArea.setFont(new Font("Hei", Font.BOLD, 12));
-        playerInfoTextArea.setPreferredSize(new Dimension(300, 100));
+        playerInfoTextArea.setPreferredSize(new Dimension( 550, 100));
         playerInfoTextArea.setText("Name: " + player.getName() +
-                "\nAge: " + player.getAge()
-                + "\nCareer Choice: " + player.getCareer());
+                "  Age: " + player.getAge()
+                + "  Career Choice: " + player.getCareer() +
+                " NetWorth: " + player.getPrettyNetWorth() +
+                " Health: " + player.getHealthPoints());
         c.gridx = 0;
         c.gridy = 0;
         pane.add(playerInfoTextArea, c);
 
-        playerAttributes.setBounds(0, 50, 100, 100);
+//        playerAttributes.setBounds(0, 50, 100, 100);
         playerAttributes.setBackground(Color.blue);
         playerAttributes.setVisible(true);
         playerAttributes.setFont(new Font("Hei", Font.BOLD, 12));
-        playerAttributes.setPreferredSize(new Dimension(500, 100));
+        playerAttributes.setPreferredSize(new Dimension(250, 100));
         playerAttributes.setText("Strength: " + player.getStrength() +
                 " Intellect: " + player.getIntellect() + " Creativity: " + player.getCreativity());
 
@@ -64,48 +97,56 @@ public class LifeStory {
         c.gridy = 0;
         pane.add(playerAttributes, c);
 
-        sceneInfoTextArea.setBounds(0, 400, 800, 800);
+//        sceneInfoTextArea.setBounds(0, 400, 800, 800);
         sceneInfoTextArea.setBackground(Color.pink);
         sceneInfoTextArea.setVisible(true);
-        sceneInfoTextArea.setFont(new Font("Hei", Font.BOLD, 12));
-        sceneInfoTextArea.setPreferredSize(new Dimension(200, 200));
+        sceneInfoTextArea.setFont(new Font("Hei", Font.BOLD, 16));
+        sceneInfoTextArea.setPreferredSize(new Dimension(400, 200));
         sceneInfoTextArea.setWrapStyleWord(true);
         sceneInfoTextArea.setLineWrap(true);
         sceneInfoTextArea.setText(currentScene.getPrompt());
         c.gridx = 0;
         c.gridy = 1;
+        c.gridheight = 2;
         pane.add(sceneInfoTextArea, c);
 
         //creating the options panel & buttons
-        optionsPanel = new JPanel();
-        optionsPanel.setLayout(new GridLayout(2,1,0,20));
-        c.gridy = 1;
-        c.gridx = 1;
-        optionsPanel.setBackground(Color.green);
+//        optionsPanel = new JPanel();
+//        optionsPanel.setLayout(new GridLayout(2,1,0,20));
+//        c.gridy = 1;
+//        c.gridx = 1;
+//        optionsPanel.setBackground(Color.green)
 
-        option1 = new JButton();
-        option2 = new JButton();
-
-        optionsPanel.add(option1, c);
-        optionsPanel.add(option2, c);
         setListenersForButtons();
-        pane.add(optionsPanel, c);
-
-        continueButton = new JButton("Continue");
-        continueButton.setVisible(false);
-        optionsPanel.add(continueButton, c);
-
-        healthLabel.setText("Health: " + player.getHealthPoints());
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 4;
-        pane.add(healthLabel, c);
-
-        wealthLabel.setText("Net worth: " + player.getPrettyNetWorth());
+        // Option1 grid
         c.gridx = 1;
+        c.gridy = 1;
+        c.gridheight = 1;
+        pane.add(option1, c);
+
+        //Option 2 grid
+        c.gridx= 1;
         c.gridy = 2;
-        c.gridwidth = 4;
-        pane.add(wealthLabel, c);
+        c.gridheight = 1;
+        pane.add(option2, c);
+
+        continueButton = createJButton("Continue", 800, 50, false);
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 2;
+        pane.add(continueButton, c);
+
+//        healthLabel.setText("Health: " + player.getHealthPoints());
+//        c.gridx = 0;
+//        c.gridy = 4;
+//        c.gridwidth = 1;
+//        pane.add(healthLabel, c);
+//
+//        wealthLabel.setText("Net worth: " + player.getPrettyNetWorth());
+//        c.gridx = 1;
+//        c.gridy = 4;
+//        c.gridwidth = 1;
+//        pane.add(wealthLabel, c);
 
         pane.revalidate();
         pane.setVisible(true);
@@ -125,13 +166,21 @@ public class LifeStory {
     }
 
     private static void writeToTextArea(JTextArea textArea, Color color, String string) {
-        textArea.setFont(new Font("Arial", Font.BOLD, 11));
+        textArea.setFont(new Font("Arial", Font.BOLD, 16));
         textArea.setBackground(color);
         textArea.setText(string);
         option1.setVisible(false);
         option2.setVisible(false);
-        optionsPanel.updateUI();
         showContinueButton();
+        continueButton.updateUI();
+    }
+
+    private static JButton createJButton(String title, int width, int height, boolean focusable) {
+        JButton product = new JButton(title);
+        product.setPreferredSize(new Dimension(width, height));
+        product.setFocusable(focusable);
+        System.out.println("BACKSTORY JBUTTON CREATED");
+        return product;
     }
 
     private static void showContinueButton() {
@@ -244,8 +293,10 @@ public class LifeStory {
     private static void playerUpdateAge() {
         player.addAge(5);
         playerInfoTextArea.setText("Name: " + player.getName() +
-                "\nAge: " + player.getAge()
-                + "\nCareer Choice: " + player.getCareer());
+                "  Age: " + player.getAge()
+                + "  Career Choice: " + player.getCareer() +
+                " NetWorth: " + player.getPrettyNetWorth() +
+                " Health: " + player.getHealthPoints());
         playerInfoTextArea.updateUI();
         System.out.println("updated age");
     }
