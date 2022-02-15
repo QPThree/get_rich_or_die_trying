@@ -1,16 +1,15 @@
 package view;
 
 import java.awt.*;
-import java.util.Objects;
 import javax.swing.*;
-import controller.GUILogicTranslator;
+
 import controller.Game;
 
 public class Intro {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = TestMainFrame.frame;
+    static JFrame frame = MainFrame.getInstance();
     public static JTextArea textArea;
     static String welcomeText = "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.";
 
@@ -51,13 +50,13 @@ public class Intro {
 
         HelpButton = new JButton("Help");
         HelpButton.addActionListener(e -> {
-            TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
-            TestMainFrame.removeAllActionListeners(HelpButton);
-            TestMainFrame.changeButtonText(HelpButton, "Exit Help");
+            MainFrame.writeToTextArea(textArea, MainFrame.instructions);
+            MainFrame.removeAllActionListeners(HelpButton);
+            MainFrame.changeButtonText(HelpButton, "Exit Help");
 
             HelpButton.addActionListener(el -> {
                 displayWelcomeText();
-                TestMainFrame.changeButtonText(HelpButton, "Help");
+                MainFrame.changeButtonText(HelpButton, "Help");
             });
             System.out.println(HelpButton.getText());
         /*
@@ -102,7 +101,8 @@ public class Intro {
 
         button = new JButton("Play Game");
 //        button.addActionListener(e -> backstoryPane(pane));
-        button.addActionListener(e -> {TestMainFrame.changeView("backstory"); }); //this starts the game!
+        button.addActionListener(e -> {
+            MainFrame.changeView("backstory"); }); //this starts the game!
         c.fill = GridBagConstraints.HORIZONTAL;
         button.setBackground(Color.green);
         c.ipady = 40;      //make this component tall
