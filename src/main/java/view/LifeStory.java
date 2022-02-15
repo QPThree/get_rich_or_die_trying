@@ -14,7 +14,7 @@ public class LifeStory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = TestMainFrame.frame; //from quen/zach branch
+    static JFrame frame = MainFrame.getInstance(); //from quen/zach branch
     public static JButton option1 = createJButton("Button 1", 200, 150, false);
     public static JButton option2 = createJButton("Button 2", 200, 150, false);
     public static JButton continueButton;

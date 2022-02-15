@@ -1,7 +1,6 @@
 package controller;
 
 import view.MainFrame;
-import view.TestMainFrame;
 
 import javax.swing.*;
 
@@ -10,11 +9,10 @@ import javax.swing.*;
  */
 public class GUILogicTranslator {
     private Game game;
-    private MainFrame mainframe;
-    TestMainFrame frame;
+    MainFrame frame;
 
 
-    public GUILogicTranslator(Game game, TestMainFrame frame){
+    public GUILogicTranslator(Game game, MainFrame frame){
         setGame(game);
         setMainframe(frame);
     }
@@ -23,7 +21,7 @@ public class GUILogicTranslator {
         this.game = game;
     }
 
-    private void setMainframe(TestMainFrame frame) {
+    private void setMainframe(MainFrame frame) {
         this.frame = frame;
     }
 

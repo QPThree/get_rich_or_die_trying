@@ -3,13 +3,12 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Backstory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = TestMainFrame.frame;
+    static JFrame frame = MainFrame.getInstance();
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
     static public JButton button1 = createJButton("Button 1", 200, 110, false);
     static public JButton button2 = createJButton("Button 2", 200, 110, false);
@@ -55,12 +54,12 @@ public class Backstory {
         helpButton.addActionListener(e -> {
             String currentSceneText = textArea.getText();
             System.out.println("Clicked Help");
-                TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
-                TestMainFrame.removeAllActionListeners(helpButton);
-                TestMainFrame.changeButtonText(helpButton, "Exit Help");
+                MainFrame.writeToTextArea(textArea, MainFrame.instructions);
+                MainFrame.removeAllActionListeners(helpButton);
+                MainFrame.changeButtonText(helpButton, "Exit Help");
                 helpButton.addActionListener(el -> {
-                    TestMainFrame.writeToTextArea(textArea, currentSceneText);
-                    TestMainFrame.changeButtonText(helpButton, "Help");
+                    MainFrame.writeToTextArea(textArea, currentSceneText);
+                    MainFrame.changeButtonText(helpButton, "Help");
                 });
         });
 
@@ -83,8 +82,8 @@ public class Backstory {
         button.setVisible(true);
         pane.add(button, c);
 
-        button = new JButton("exit");
-        button.addActionListener(e -> System.out.println("Clicked Exit"));
+        button = new JButton("Main Menu");
+        button.addActionListener(e -> MainFrame.changeView("intro"));
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 1;
