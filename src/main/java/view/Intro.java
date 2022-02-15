@@ -7,7 +7,7 @@ public class Intro {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = MainFrame.frame;
+    static JFrame frame = MainFrame.getInstance();
     public static JTextArea textArea;
 
 

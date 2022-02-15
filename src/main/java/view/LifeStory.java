@@ -14,7 +14,7 @@ public class LifeStory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = MainFrame.frame; //from quen/zach branch
+    static JFrame frame = MainFrame.getInstance(); //from quen/zach branch
     public static JButton option1, option2, continueButton;
     public static JPanel optionsPanel;
     public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), playerAttributes = new JTextArea(5, 20);

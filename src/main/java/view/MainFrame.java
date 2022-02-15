@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame {
-    public static JFrame frame = new JFrame("Game Frame");;
+    public static JFrame frame = null;
     static public Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
@@ -14,7 +14,19 @@ public class MainFrame {
 
 
     public MainFrame() {
+        getInstance();
+        initialize();  //frame boilerplate
+    }
 
+    public static JFrame getInstance(){
+        if (frame == null){
+            frame = new JFrame("Get Rich");
+        }
+      return frame;
+    }
+
+    //boilerplate to set up frame
+    private static void initialize() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Display the window.
         frame.pack();
@@ -26,8 +38,9 @@ public class MainFrame {
         frame.setLayout(null);
         frame.setVisible(true);
     }
+
     //this kicks off the game.
-    public void run() {
+    public static void run() {
         intro.render();
     }
 
@@ -39,21 +52,20 @@ public class MainFrame {
         pane.revalidate();
     }
 
+    //change view switches out the view being displayed in the frame.
+    //always use removeComponentsFromPane() to clear the frame before displaying new view
     public static void changeView(String view){
+        removeComponentsFromPane(frame.getContentPane(), frame);
         switch (view){
             case "intro":
-                System.out.println("Change to intro");
-                removeComponentsFromPane(frame.getContentPane(), frame);
                 intro.render();
                 break;
             case "backstory":
-                removeComponentsFromPane(frame.getContentPane(), frame);
                 backstory.render();
-                game.getPlayerBasicData(); //start the game
+                game.getPlayerBasicData(); //start the game from backstory
                 break;
 
             case "mainLoop":
-                removeComponentsFromPane(frame.getContentPane(), frame);
                 mainLoop.render();
                 break;
         }
