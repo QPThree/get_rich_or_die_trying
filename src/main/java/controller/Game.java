@@ -19,30 +19,18 @@ public class Game {
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
     private MainFrame mainFrame = new MainFrame(); // Java Swing
-    private GUILogicTranslator translator;
+    private GUILogicTranslator translator; //translates logic to display components
 
     public Game () {
         translator = new GUILogicTranslator(this, mainFrame);
-//        setAllActionListeners();
-//        gameBanner();
     }
 
     public void execute() {
         scenes = new SceneContainer();
-
         welcome();
-
-//        checkSaveFile();
-//        getPlayerBasicData();
-//        clearScreen();
-//        runSceneOneCareer(player);
-//
-
-//        playAgainOrExit();
     }
     private void mainGameLoop(){
         while (shouldPlay()) {
-//            clearScreen();
             Scene currentScene = scenes.getRandomScene(player);
             System.out.println(currentScene.getArt());
             System.out.println("\n+++++++ 5 years later +++++++");
@@ -494,18 +482,6 @@ public class Game {
 ////        }
 //    }
 
-    //TODO: move this to eventual translator class
-//    private void setAllActionListeners () {
-//        mainFrame.playButton.addActionListener(e -> execute());
-//        mainFrame.exitButton.addActionListener(e -> exitGame());
-//        mainFrame.loadButton.addActionListener(e -> loadGame());
-//        mainFrame.helpButton.addActionListener(e -> helpMenu());
-//        mainFrame.skipBackstory.addActionListener(e -> displayAttributes());
-//    }
-
-//    private void gameBanner() {
-//        mainFrame.writeToTextArea(mainFrame.textArea, Color.white, "\nWelcome to Get Rich Or Die Trying.\nAt a young age you realize that you want to be a millionaire.\nYour mission is to make $1 million before all your health points run out.\nEach choice you make will affect your net worth and health levels.");
-//    }
 
     private void exitGame() {
         System.exit(1);
