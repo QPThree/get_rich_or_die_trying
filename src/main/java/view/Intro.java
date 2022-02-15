@@ -2,13 +2,12 @@ package view;
 
 import java.awt.*;
 import javax.swing.*;
-import controller.GUILogicTranslator;
 
 public class Intro {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = TestMainFrame.frame;
+    static JFrame frame = MainFrame.frame;
     public static JTextArea textArea;
 
 
@@ -66,7 +65,8 @@ public class Intro {
 
         button = new JButton("Play Game");
 //        button.addActionListener(e -> backstoryPane(pane));
-        button.addActionListener(e -> {TestMainFrame.changeView("backstory"); }); //this starts the game!
+        button.addActionListener(e -> {
+            MainFrame.changeView("backstory"); }); //this starts the game!
         c.fill = GridBagConstraints.HORIZONTAL;
         button.setBackground(Color.green);
         c.ipady = 40;      //make this component tall

@@ -8,7 +8,7 @@ public class Backstory {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    static JFrame frame = TestMainFrame.frame;
+    static JFrame frame = MainFrame.frame;
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
     static public JButton button1 = createJButton("Button 1", 200, 150, false);
     static public JButton button2 = createJButton("Button 2", 200, 150, false);
@@ -57,7 +57,7 @@ public class Backstory {
         pane.add(button, c);
 
         button = new JButton("Main Menu");
-        button.addActionListener(e -> TestMainFrame.changeView("intro"));
+        button.addActionListener(e -> MainFrame.changeView("intro"));
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 0;

@@ -5,10 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import view.MainFrame;
-import view.TestMainFrame;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 import java.io.*;
@@ -20,7 +18,7 @@ public class Game {
     public static Person player = new Person();
     private static final String os = System.getProperty("os.name").toLowerCase();
     boolean isWindows = System.getProperty("os.name").contains("Windows");
-    private TestMainFrame mainFrame = new TestMainFrame(); // Java Swing
+    private MainFrame mainFrame = new MainFrame(); // Java Swing
     private GUILogicTranslator translator;
 
     public Game () {
