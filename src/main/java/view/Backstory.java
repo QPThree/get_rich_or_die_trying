@@ -31,7 +31,6 @@ public class Backstory {
         pane.setLayout(new GridBagLayout());
         pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
-        c.insets = new Insets(0,5,0,5);
         if (shouldFill) {
             //natural height, maximum width
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -140,6 +139,7 @@ public class Backstory {
         c.gridy = 2;
         c.gridheight = 3;
         c.gridwidth = 2;
+        c.insets = new Insets(-75,5,0,5);
         pane.add(textArea, c);
 
         continueButton = createJButton("Continue", 800, 50, false);

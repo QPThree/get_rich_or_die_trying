@@ -125,6 +125,7 @@ public class Intro {
         textArea.setText(welcomeText);
         c.gridx = 0;
         c.gridy = 3;
+        c.insets = new Insets(10,5,0,5);
         pane.add(textArea, c);
 
     }
