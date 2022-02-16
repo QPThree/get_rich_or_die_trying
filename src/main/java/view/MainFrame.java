@@ -121,4 +121,34 @@ public class MainFrame {
         button.setText(text);
     }
 
+    // Responsible for toggling the help menu
+    /*
+    public static void helpToggler(JButton HelpButton, JTextArea textArea, String previousText){
+        if(HelpButton.getText().equals("Help")) {
+            MainFrame.writeToTextArea(textArea, MainFrame.instructions);
+            MainFrame.changeButtonText(HelpButton, "Exit Help");
+//            MainFrame.removeAllActionListeners(HelpButton);
+            HelpButton.addActionListener(e -> {
+                MainFrame.writeToTextArea(textArea,previousText);
+                MainFrame.changeButtonText(HelpButton,"Help");
+                System.out.println("1");
+//                helpToggler(HelpButton,textArea,MainFrame.instructions);
+            });
+        } else {
+            System.out.println(previousText);
+            textArea.setText(previousText);
+            MainFrame.changeButtonText(HelpButton, "Help");
+        }
+    }
+*/
+    public static void helpToggler(JButton HelpButton, JTextArea textArea, String previousText){
+        if(HelpButton.getText().equals("Help")) {
+            MainFrame.writeToTextArea(textArea, MainFrame.instructions);
+            MainFrame.changeButtonText(HelpButton, "Exit Help");
+        } else {
+            System.out.println(previousText);
+            textArea.setText(previousText);
+            MainFrame.changeButtonText(HelpButton, "Help");
+        }
+    }
 }

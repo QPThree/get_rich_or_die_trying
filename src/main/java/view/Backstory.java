@@ -17,6 +17,7 @@ public class Backstory {
     static public JButton button3 = createJButton("Button 3", 185, 110, false);
     public static JButton continueButton;
     public static JTextArea textArea;
+    static String currentSceneText;
 
     public Backstory(){
     }
@@ -54,15 +55,10 @@ public class Backstory {
 
         helpButton = new JButton("Help");
         helpButton.addActionListener(e -> {
-            String currentSceneText = textArea.getText();
-            System.out.println("Clicked Help");
-                MainFrame.writeToTextArea(textArea, MainFrame.instructions);
-                MainFrame.removeAllActionListeners(helpButton);
-                MainFrame.changeButtonText(helpButton, "Exit Help");
-                helpButton.addActionListener(el -> {
-                    MainFrame.writeToTextArea(textArea, currentSceneText);
-                    MainFrame.changeButtonText(helpButton, "Help");
-                });
+            if(!textArea.getText().equals(MainFrame.instructions)){
+                currentSceneText = textArea.getText();
+            }
+            MainFrame.helpToggler(helpButton,textArea,currentSceneText);
         });
 
         if (shouldWeightX) {
