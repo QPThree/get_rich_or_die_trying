@@ -44,7 +44,7 @@ public class LifeStory {
 
         playerInfoTextArea.setVisible(true);
         playerInfoTextArea.setFont(new Font("Hei", Font.BOLD, 16));
-        playerInfoTextArea.setPreferredSize(new Dimension( 800, 100));
+        playerInfoTextArea.setPreferredSize(new Dimension( 700, 100));
         playerInfoTextArea.setText( "\n" +
                 " | Name: " + player.getName() +
                 " | Age: " + player.getAge() +
@@ -58,6 +58,7 @@ public class LifeStory {
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 3;
+        c.insets = new Insets(10,7,2,15);
         pane.add(playerInfoTextArea, c);
 
 
