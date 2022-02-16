@@ -11,6 +11,7 @@ public class MainFrame {
     static public Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
+    public static CareerChoice careerChoice = new CareerChoice();
     public static LifeStory mainLoop = new LifeStory();
     public static String instructions = "Game is meant to simulate life." +
             "\nThe intent of the game is to have 1 million dollars by the end of the game" +
@@ -72,6 +73,10 @@ public class MainFrame {
             case "backstory":
                 backstory.render();
                 game.getPlayerBasicData(); //start the game from backstory
+                break;
+            case "careerChoice":
+                careerChoice.render();
+                System.out.println("Rendering Career Choice");
                 break;
 
             case "mainLoop":

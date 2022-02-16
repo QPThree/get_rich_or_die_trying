@@ -203,28 +203,33 @@ public class Game {
     }
 
     // first Scene after college, for the career choice
-//    private void runSceneOneCareer(Person player) {
-//
+    private void runSceneOneCareer(Person player) {
+
 //        mainFrame.showAttributesScreen(player);
-//        // availCareers are dictated by user choice in regards going to college
-//
-//        if(player.hasEducation()) {
-//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "Congratulations!\nYou finished college.");
-//        }
-//        else {
-//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "You decided to skip the college route.");
-//        }
-//        mainFrame.showContinueButton();
-//        mainFrame.continueButton.addActionListener( e-> {
-//            chooseCareer();
-//        });
-//
-//
-//    }
+        // availCareers are dictated by user choice in regards going to college
+
+        if(player.hasEducation()) {
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "Congratulations!\nYou finished college.");
+        }
+        else {
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "You decided to skip the college route.");
+        }
+        mainFrame.mainLoop.continueButton.setVisible(true);
+        mainFrame.mainLoop.option2.addActionListener( e -> {
+            chooseCareer();
+            mainFrame.changeView("careerChoice");
+        });
+        mainFrame.mainLoop.continueButton.addActionListener( e-> {
+            mainFrame.changeView("careerChoice");
+            chooseCareer();
+        });
+
+
+    }
 
     private void chooseCareer() {
         Map<Careers, List<String>> availCareers = player.hasEducation() ? Careers.getCollegeCareers() : Careers.getNonCollegeCareers();
-//        System.out.println("What career do you want?");
+        System.out.println("What career do you want?");
 
         // loops and prints out available careers depending on your college decision
         List<String> allValidCareers = new ArrayList<>();
@@ -235,21 +240,37 @@ public class Game {
             }
         }
 
-//        String selectedCareer = getInput(allValidCareers); // stores selected career
+        translator.editButtonText(mainFrame.careerChoice.button1, "New Text!");
 
-        // sets career and breaks if you have selected a valid career
-//        topLoop:
-//        for (Careers career : availCareers.keySet()) {
-//            for (String specialty : availCareers.get(career)) {
-//                if (selectedCareer.equalsIgnoreCase(specialty)) {
-//                    player.setCareer(career);
-//                    break topLoop;
-//                }
-//            }
-//        }
+       for (int i = 0; i < mainFrame.careerChoice.allCareerChoiceButtons.size(); i++){
+           //edit button text
+           translator.editButtonText(mainFrame.careerChoice.allCareerChoiceButtons.get(i), allValidCareers.get(i));
+           String choice = allValidCareers.get(i);
+           //add ev ent listener
+           mainFrame.careerChoice.allCareerChoiceButtons.get(i).addActionListener( e -> {
+               setPlayerCareerFromCareerChoices(choice, availCareers, allValidCareers);
+           });
+       }
+
+
 
         System.out.println("\nYou chose a " + player.getCareer() + " job");
 
+    }
+
+    private void setPlayerCareerFromCareerChoices(String choice,  Map<Careers, List<String>> availCareers, List<String> allValidCareers){
+
+        // sets career and breaks if you have selected a valid career
+        for (Careers career : availCareers.keySet()) {
+            for (String specialty : availCareers.get(career)) {
+                if (choice.equalsIgnoreCase(specialty)) {
+                    player.setCareer(career);
+                    break;
+                }
+            }
+        }
+        mainGameLoop();
+        mainFrame.changeView("mainLoop");
     }
 
     private String getInput(Collection<String> options) {
@@ -384,15 +405,17 @@ public class Game {
         mainFrame.backstory.button1.addActionListener(e -> {
             player.addMoney(-100000);
             player.setEducation(true);
-            mainFrame.changeView("mainLoop");
-            mainGameLoop();
 
+            //these should trigger career choice scene
+            mainFrame.changeView("mainLoop");
+            runSceneOneCareer(player);
 
         });
         mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
+            //these should trigger career choice scene
             mainFrame.changeView("mainLoop");
-            mainGameLoop();
+            runSceneOneCareer(player);
 
         });
 
