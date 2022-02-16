@@ -12,9 +12,9 @@ public class Backstory {
     final static boolean RIGHT_TO_LEFT = false;
     static JFrame frame = MainFrame.getInstance();
     static public ArrayList<JButton> allBackstoryOptionsButtons = new ArrayList<>();
-    static public JButton button1 = createJButton("Button 1", 200, 110, false);
-    static public JButton button2 = createJButton("Button 2", 200, 110, false);
-    static public JButton button3 = createJButton("Button 3", 200, 110, false);
+    static public JButton button1 = createJButton("Button 1", 185, 110, false);
+    static public JButton button2 = createJButton("Button 2", 185, 110, false);
+    static public JButton button3 = createJButton("Button 3", 185, 110, false);
     public static JButton continueButton;
     public static JTextArea textArea;
 
@@ -31,6 +31,7 @@ public class Backstory {
         pane.setLayout(new GridBagLayout());
         pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
+        c.insets = new Insets(0,5,0,5);
         if (shouldFill) {
             //natural height, maximum width
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -124,13 +125,21 @@ public class Backstory {
         button3.setVisible(true);
         pane.add(button3, c);
 
+
         textArea = new JTextArea();
         textArea.setBounds(0, 400, 800, 400);
+        textArea.setMargin(new Insets(25,100,25,40));
+        textArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
         textArea.setVisible(true);
-        textArea.setPreferredSize(new Dimension(500, 275));
+//        textArea.setForeground(Color.orange);
+//        textArea.setBackground(Color.black);
+        textArea.setPreferredSize(new Dimension(450, 250));
         c.gridx = 0;
         c.gridy = 2;
-        c.gridheight = 2;
+        c.gridheight = 3;
+        c.gridwidth = 2;
         pane.add(textArea, c);
 
         continueButton = createJButton("Continue", 800, 50, false);
@@ -140,7 +149,7 @@ public class Backstory {
         c.gridheight = 0;
         c.gridwidth = 5;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 5;
         pane.add(continueButton, c);
         pane.revalidate();
         pane.setVisible(true);

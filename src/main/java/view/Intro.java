@@ -24,6 +24,7 @@ public class Intro {
         pane.setLayout(new GridBagLayout());
         pane.setSize(600,400);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
+//        c.insets = new Insets(0,5,0,5);
         if (shouldFill) {
             //natural height, maximum width
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -113,11 +114,14 @@ public class Intro {
 
 
         textArea = new JTextArea();
-        textArea.setBounds(0, 400, 800, 800);
+        textArea.setBounds(0, 400, 800, 300);
+        textArea.setMargin(new Insets(25,100,25,40));
+        textArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         textArea.setBackground(Color.white);
         textArea.setVisible(true);
         textArea.setFont(new Font("Hei", Font.BOLD, 22));
-        textArea.setPreferredSize(new Dimension(800, 400));
+        textArea.setPreferredSize(new Dimension(750, 200));
         textArea.setText(welcomeText);
         c.gridx = 0;
         c.gridy = 3;
