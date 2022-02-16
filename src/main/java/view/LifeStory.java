@@ -105,7 +105,7 @@ public class LifeStory {
 
         sceneInfoTextArea.setMargin(new Insets(25,100,25,40));
         sceneInfoTextArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
-                BorderFactory.createEmptyBorder(100, 15, -130, 18)));
+                BorderFactory.createEmptyBorder(100, 15, -275, 18)));
 
         sceneInfoTextArea.setVisible(true);
         sceneInfoTextArea.setFont(new Font("Hei", Font.BOLD, 18));
