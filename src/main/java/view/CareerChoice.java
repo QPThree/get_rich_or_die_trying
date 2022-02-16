@@ -42,8 +42,6 @@ public class CareerChoice {
             pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
 
-        JButton button;
-        JButton helpButton;
         pane.setLayout(new GridBagLayout());
         pane.setSize(800,500);
         GridBagConstraints c = new GridBagConstraints(); // if you choose to use the same one throughout, remember to reset values.
@@ -58,14 +56,14 @@ public class CareerChoice {
 
 
         // Backstory Banner Inserted into page. starts on gridx 0, grid y 0. Spans 4 grids horizontally
-//        ImageIcon banner = new ImageIcon(new ImageIcon("resources/backstory.png").getImage().getScaledInstance(800,150,Image.SCALE_AREA_AVERAGING));
-//        JLabel bannerLabel = new JLabel();
-//        //used for main menu
-//        bannerLabel.setIcon(banner);
-//        c.gridx = 0;
-//        c.gridy = 0;
-//        c.gridwidth = 4;
-//        pane.add(bannerLabel, c);
+        ImageIcon banner = new ImageIcon(new ImageIcon("resources/career.png").getImage().getScaledInstance(800,150,Image.SCALE_AREA_AVERAGING));
+        JLabel bannerLabel = new JLabel();
+        //used for main menu
+        bannerLabel.setIcon(banner);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 4;
+        pane.add(bannerLabel, c);
 
 
 //        helpButton = new JButton("Help");
@@ -110,12 +108,13 @@ public class CareerChoice {
 //        pane.add(button, c);
 
 //        button = createJButton("Button 1", 200, 150, false);
+
         button1.addActionListener(e -> System.out.println("Clicked Button 1"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
-        c.gridy = 0;
-        allCareerChoiceButtons.add(button1);
+        c.gridy = 1;
+        c.gridwidth = 1;
         button1.setVisible(true);
         pane.add(button1, c);
 
@@ -125,8 +124,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
-        c.gridy = 0;
-        allCareerChoiceButtons.add(button2);
+        c.gridy = 1;
         button2.setVisible(true);
         pane.add(button2, c);
 
@@ -135,8 +133,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 0;
-        allCareerChoiceButtons.add(button3);
+        c.gridy = 1;
         button3.setVisible(true);
         pane.add(button3, c);
 
@@ -144,8 +141,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
-        c.gridy = 1;
-        allCareerChoiceButtons.add(button4);
+        c.gridy = 2;
         button4.setVisible(true);
         pane.add(button4, c);
 
@@ -153,8 +149,8 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
-        c.gridy = 1;
-        allCareerChoiceButtons.add(button5);
+        c.gridy = 2;
+
         button5.setVisible(true);
         pane.add(button5, c);
 
@@ -162,8 +158,8 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 1;
-        allCareerChoiceButtons.add(button6);
+        c.gridy = 2;
+
         button6.setVisible(true);
         pane.add(button6, c);
 
@@ -171,8 +167,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
-        c.gridy = 2;
-        allCareerChoiceButtons.add(button7);
+        c.gridy = 3;
         button7.setVisible(true);
         pane.add(button7, c);
 
@@ -180,8 +175,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 1;
-        c.gridy = 2;
-        allCareerChoiceButtons.add(button8);
+        c.gridy = 3;
         button8.setVisible(true);
         pane.add(button8, c);
 
@@ -189,8 +183,7 @@ public class CareerChoice {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
-        c.gridy = 2;
-        allCareerChoiceButtons.add(button9);
+        c.gridy = 3;
         button9.setVisible(true);
         pane.add(button9, c);
 

@@ -218,9 +218,11 @@ public class Game {
         mainFrame.mainLoop.option2.addActionListener( e -> {
             chooseCareer();
             mainFrame.changeView("careerChoice");
+
         });
         mainFrame.mainLoop.continueButton.addActionListener( e-> {
             mainFrame.changeView("careerChoice");
+            //todo: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
             chooseCareer();
         });
 
@@ -240,7 +242,6 @@ public class Game {
             }
         }
 
-        translator.editButtonText(mainFrame.careerChoice.button1, "New Text!");
 
        for (int i = 0; i < mainFrame.careerChoice.allCareerChoiceButtons.size(); i++){
            //edit button text
