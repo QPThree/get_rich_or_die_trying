@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import view.MainFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import java.io.*;
@@ -45,7 +46,7 @@ public class Game {
         if (shouldPlay()) {
             Scene currentScene = scenes.getRandomScene(player);
             player.addAge(5);
-
+            updatePlayerAttributesDisplay();
             mainFrame.mainLoop.continueButton.setVisible(false);
             removeAllActionListeners(mainFrame.mainLoop.continueButton);
             removeAllActionListeners(mainFrame.mainLoop.option1);
@@ -105,6 +106,21 @@ public class Game {
 //            saveGame.save();
             saveGame();
         }
+    }
+
+    private void updatePlayerAttributesDisplay(){
+        String playerAttributes =  "\n" +
+                " | Name: " + player.getName() +
+                " | Age: " + player.getAge() +
+                " | Career Choice: " + player.getCareer() +
+                " | NetWorth: " + player.getPrettyNetWorth() +
+                " | Health: " + player.getHealthPoints() + " |\n\n" +
+                " | Strength: " + player.getStrength() +
+                " | Intellect: " + player.getIntellect() +
+                " | Creativity: " + player.getCreativity() + " | \n";
+
+        translator.writeToComponent(mainFrame.mainLoop.playerInfoTextArea, playerAttributes);
+        mainFrame.mainLoop.playerInfoTextArea.setFont(new Font("Hei", Font.BOLD, 16));
     }
 
     private void playAgainOrExit() {
