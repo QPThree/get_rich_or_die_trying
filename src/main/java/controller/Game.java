@@ -506,12 +506,18 @@ public class Game {
 
     private boolean shouldPlay() {
         if (player.getHealthPoints() <= 0) {
-            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"Game Over. You died because you ran out of health points: " + player.getHealthPoints());
+            translator.writeToComponent(mainFrame.gameOver.textArea,"Game Over. You have lost because you ran out of health points: " + player.getHealthPoints() +
+                    "\nAt the time of your death you were " + player.getAge() + " year's old " +
+                    "\nwith a NetWorth of " + player.getPrettyNetWorth() +
+                    "\nYou may want to rethink your life decisions. ");
+            mainFrame.changeView("gameOver");
             return false;
         }
 
         if (player.getNetWorth() >= 1000000) {
-            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"You win. You have: " + player.getPrettyNetWorth());
+            translator.writeToComponent(mainFrame.winner.textArea,"You win. Your NetWorth is: " + player.getPrettyNetWorth() +
+            "\n");
+            mainFrame.changeView("winner");
             return false;
         }
 

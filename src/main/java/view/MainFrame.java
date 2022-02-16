@@ -12,6 +12,8 @@ public class MainFrame {
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
     public static LifeStory mainLoop = new LifeStory();
+    public static GameOver gameOver = new GameOver();
+    public static Winner winner = new Winner();
     public static String instructions = "Game is meant to simulate life." +
             "\nThe intent of the game is to have 1 million dollars by the end of the game" +
             "\nChoices will change how much money you have, as well as health points." +
@@ -29,7 +31,7 @@ public class MainFrame {
     //singleton frame is handled here
     public static JFrame getInstance(){
         if (frame == null){
-            frame = new JFrame("Get Rich");
+            frame = new JFrame("Get Rich or Die Trying");
         }
         return frame;
     }
@@ -76,6 +78,14 @@ public class MainFrame {
 
             case "mainLoop":
                 mainLoop.render();
+                break;
+
+            case "gameOver":
+                gameOver.render();
+                break;
+
+            case "winner":
+                winner.render();
                 break;
         }
 
