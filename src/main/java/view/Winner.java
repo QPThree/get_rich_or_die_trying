@@ -55,6 +55,8 @@ public class Winner {
         textArea.setMargin(new Insets(25, 100, 25, 5));
         textArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray, 2, true),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
         textArea.setVisible(true);
         textArea.setPreferredSize(new Dimension(450, 200));
         //setting text here for testing purposes - this will eventually come from the game
@@ -122,13 +124,13 @@ public class Winner {
     }
 
     //    For testing individual page. This needs to be removed once functionality is connected to the rest of the game
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                render();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        //Schedule a job for the event-dispatching thread:
+//        //creating and showing this application's GUI.
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                render();
+//            }
+//        });
+//    }
 }
