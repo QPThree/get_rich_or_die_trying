@@ -49,31 +49,11 @@ public class Intro {
 //        exitHelpButton.setVisible(false);
 //        pane.add(exitHelpButton);
 
+        Boolean flag = false;
         HelpButton = new JButton("Help");
-        HelpButton.addActionListener(e -> {
-            MainFrame.writeToTextArea(textArea, MainFrame.instructions);
-            MainFrame.removeAllActionListeners(HelpButton);
-            MainFrame.changeButtonText(HelpButton, "Exit Help");
-
-            HelpButton.addActionListener(el -> {
-                displayWelcomeText();
-                MainFrame.changeButtonText(HelpButton, "Help");
+            HelpButton.addActionListener(e -> {
+                MainFrame.helpToggler(HelpButton, textArea, welcomeText);
             });
-            System.out.println(HelpButton.getText());
-        /*
-            if(Objects.equals(HelpButton.getText(), "Help")){
-                TestMainFrame.writeToTextArea(textArea, TestMainFrame.instructions);
-                TestMainFrame.removeAllActionListeners(HelpButton);
-                TestMainFrame.changeButtonText(HelpButton, "Exit Help");
-                HelpButton.addActionListener(el -> {
-                    displayWelcomeText();
-                    TestMainFrame.changeButtonText(HelpButton, "Help");
-                });
-            } else {
-                System.out.println("different");
-            }
-            */
-        });
 
         if (shouldWeightX) {
             c.weightx = 0.5;
@@ -129,12 +109,6 @@ public class Intro {
         pane.add(textArea, c);
 
     }
-
-    private static void displayWelcomeText(){
-        textArea.setText(welcomeText);
-    }
-
-
 
     /**
      * Create the GUI and show it.  For thread safety,

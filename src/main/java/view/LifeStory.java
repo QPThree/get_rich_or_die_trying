@@ -22,6 +22,7 @@ public class LifeStory {
     public static JLabel healthLabel = new JLabel(), wealthLabel = new JLabel();
     private static Person player = Game.player;
     static SceneContainer scene = new SceneContainer();
+    static String currentSceneText;
 
     public static void addGameComponentsToPane(Container pane) {
         if (RIGHT_TO_LEFT) {
@@ -64,16 +65,12 @@ public class LifeStory {
 
         helpButton = new JButton("Help");
         helpButton.addActionListener(e -> {
-            String currentSceneText = sceneInfoTextArea.getText();
-            System.out.println("Clicked Help");
-            MainFrame.writeToTextArea(sceneInfoTextArea, MainFrame.instructions);
-            MainFrame.removeAllActionListeners(helpButton);
-            MainFrame.changeButtonText(helpButton, "Exit Help");
-            helpButton.addActionListener(el -> {
-                MainFrame.writeToTextArea(sceneInfoTextArea, currentSceneText);
-                MainFrame.changeButtonText(helpButton, "Help");
-            });
+            if(!sceneInfoTextArea.getText().equals(MainFrame.instructions)){
+                currentSceneText = sceneInfoTextArea.getText();
+            }
+            MainFrame.helpToggler(helpButton,sceneInfoTextArea,currentSceneText);
         });
+
         if (shouldWeightX) {
             c.weightx = 0.5;
         }
@@ -105,7 +102,7 @@ public class LifeStory {
 
         sceneInfoTextArea.setMargin(new Insets(25,100,25,40));
         sceneInfoTextArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
-                BorderFactory.createEmptyBorder(100, 15, -130, 18)));
+                BorderFactory.createEmptyBorder(100, 15, -250, 18)));
 
         sceneInfoTextArea.setVisible(true);
         sceneInfoTextArea.setFont(new Font("Hei", Font.BOLD, 18));
