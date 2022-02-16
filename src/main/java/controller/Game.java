@@ -342,11 +342,8 @@ public class Game {
 
     // generates the backstory for the game (from a child -> college)
     public void getPlayerBasicData() {
-        String printBackstoryArt = Art.getArt("backstory");
-        System.out.println(printBackstoryArt);  // Prints backstory banner
-        System.out.println("Enter your Name: ");
+        System.out.println("Start player basic data");
 
-        System.out.println("Select your privilege status (Working Class)/(Middle Class): ");
         translator.editButtonText(mainFrame.backstory.button1, "Working Class");
         translator.editButtonText(mainFrame.backstory.button2, "Middle Class");
         translator.editButtonText(mainFrame.backstory.button3, "");
@@ -384,14 +381,19 @@ public class Game {
         mainFrame.backstory.button1.addActionListener(e -> {
             player.addMoney(-100000);
             player.setEducation(true);
-
+            removeAllActionListeners(mainFrame.backstory.button1);
+            removeAllActionListeners(mainFrame.backstory.button2);
             //these should trigger career choice scene
             mainFrame.changeView("mainLoop");
+
             runSceneOneCareer(player);
+
 
         });
         mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
+            removeAllActionListeners(mainFrame.backstory.button1);
+            removeAllActionListeners(mainFrame.backstory.button2);
             //these should trigger career choice scene
             mainFrame.changeView("mainLoop");
             runSceneOneCareer(player);
@@ -407,7 +409,8 @@ public class Game {
         displays the current scene (prompt & options)
         prompts user for an answer
          */
-
+        System.out.println("++++++++++ " + j);
+        System.out.println(backstories.size());
         System.out.println("Your character's stats:");
         System.out.println("Strength: " + player.getStrength());
         System.out.println("Intellect: " + player.getIntellect());
@@ -683,9 +686,16 @@ public class Game {
         }
     }
     public static void promptPlayerName () {
+        player.setNetWorth(0);
+        player.setHealth(100);
+        player.setAge(18);
+        player.setStrength(0);
+        player.setCreativity(0);
+        player.setIntellect(0);
         String name = JOptionPane.showInputDialog(null, "Please enter desired name for player", "PLAYER NAME", JOptionPane.INFORMATION_MESSAGE);
         player.setName(name);
         MainFrame.changeView("backstory"); // Once player enters their name this starts the backstory
+
     }
 }
 

@@ -18,6 +18,8 @@ public class Person {
         money.setMaximumFractionDigits(0);
     }
 
+
+
     public Person(String name, int initialWorth) {
         this.name = name;
         this.netWorth = initialWorth;
@@ -278,5 +280,16 @@ public class Person {
     //added setter to use when loading a saved game
     public void setHealth(int health) {
         this.health = health;
+    }
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setIntellect(int intellect) {
+        this.intellect = intellect;
+    }
+
+    public void setCreativity(int creativity) {
+        this.creativity = creativity;
     }
 }
