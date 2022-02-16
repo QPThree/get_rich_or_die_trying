@@ -25,22 +25,13 @@ public class Game {
     public Game () {
         scenes = new SceneContainer();
         translator = new GUILogicTranslator(this, mainFrame);
-//        setAllActionListeners();
-//        gameBanner();
+
     }
 
     public void execute() {
 
 
         welcome();
-
-//        checkSaveFile();
-//        getPlayerBasicData();
-//        clearScreen();
-//        runSceneOneCareer(player);
-//
-
-//        playAgainOrExit();
     }
     private void mainGameLoop(){
         if (shouldPlay()) {
@@ -198,16 +189,12 @@ public class Game {
             selectedIndex++;
         }
 
-
         return selectedIndex;
     }
 
     // first Scene after college, for the career choice
     private void runSceneOneCareer(Person player) {
-
-//        mainFrame.showAttributesScreen(player);
         // availCareers are dictated by user choice in regards going to college
-
         if(player.hasEducation()) {
             translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "Congratulations!\nYou finished college.");
         }
@@ -225,8 +212,6 @@ public class Game {
             //todo: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
             chooseCareer();
         });
-
-
     }
 
     private void chooseCareer() {
@@ -247,15 +232,12 @@ public class Game {
            //edit button text
            translator.editButtonText(mainFrame.careerChoice.allCareerChoiceButtons.get(i), allValidCareers.get(i));
            String choice = allValidCareers.get(i);
-           //add ev ent listener
+           //add event listener
            mainFrame.careerChoice.allCareerChoiceButtons.get(i).addActionListener( e -> {
+               //pass info to parse and set players career
                setPlayerCareerFromCareerChoices(choice, availCareers, allValidCareers);
            });
        }
-
-
-
-        System.out.println("\nYou chose a " + player.getCareer() + " job");
 
     }
 

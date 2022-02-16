@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame {
     private static JFrame frame = null; //singleton from getInstance()
-    static public Intro intro = new Intro();
+    public static Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
     public static CareerChoice careerChoice = new CareerChoice();

@@ -1,7 +1,5 @@
 package view;
 
-import controller.Game;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ public class CareerChoice {
     static public JButton button7 = createJButton("Button 7", 185, 110, false);
     static public JButton button8 = createJButton("Button 8", 185, 110, false);
     static public JButton button9 = createJButton("Button 9", 185, 110, false);
-    public static JButton continueButton;
-    public static JTextArea textArea;
 
     public CareerChoice(){
         allCareerChoiceButtons.add(button1);
@@ -65,49 +61,6 @@ public class CareerChoice {
         c.gridwidth = 4;
         pane.add(bannerLabel, c);
 
-
-//        helpButton = new JButton("Help");
-//        helpButton.addActionListener(e -> {
-//            String currentSceneText = textArea.getText();
-//            System.out.println("Clicked Help");
-//            MainFrame.writeToTextArea(textArea, MainFrame.instructions);
-//            MainFrame.removeAllActionListeners(helpButton);
-//            MainFrame.changeButtonText(helpButton, "Exit Help");
-//            helpButton.addActionListener(el -> {
-//                MainFrame.writeToTextArea(textArea, currentSceneText);
-//                MainFrame.changeButtonText(helpButton, "Help");
-//            });
-//        });
-
-//        if (shouldWeightX) {
-//            c.weightx = 0.5;
-//        }
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.gridx = 0;
-//        c.gridy = 1;
-//        c.gridwidth = 1;
-//        helpButton.setVisible(true);
-//        pane.add(helpButton, c);
-//
-//        button = new JButton("Save");
-//        button.addActionListener(e -> Game.saveGame());
-//        c.weightx = 0.5;
-//        c.gridx = 1;
-//        c.gridy = 1;
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        button.setVisible(true);
-//        pane.add(button, c);
-//
-//        button = new JButton("Main Menu");
-//        button.addActionListener(e -> MainFrame.changeView("intro"));
-//        c.weightx = 0.5;
-//        c.gridx = 2;
-//        c.gridy = 1;
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        button.setVisible(true);
-//        pane.add(button, c);
-
-//        button = createJButton("Button 1", 200, 150, false);
 
         button1.addActionListener(e -> System.out.println("Clicked Button 1"));
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -198,7 +151,6 @@ public class CareerChoice {
         JButton product = new JButton(title);
         product.setPreferredSize(new Dimension(width, height));
         product.setFocusable(focusable);
-        System.out.println("BACKSTORY JBUTTON CREATED");
         return product;
     }
 
