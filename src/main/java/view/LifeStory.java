@@ -92,7 +92,7 @@ public class LifeStory {
         pane.add(button, c);
 
         button = new JButton("Exit");
-        button.addActionListener(e -> System.out.println("Clicked Exit"));
+        button.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -102,7 +102,9 @@ public class LifeStory {
 
         sceneInfoTextArea.setMargin(new Insets(25,100,25,40));
         sceneInfoTextArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
-                BorderFactory.createEmptyBorder(100, 15, -250, 18)));
+
+        BorderFactory.createEmptyBorder(100, 15, -275, 18)));
+
 
         sceneInfoTextArea.setVisible(true);
         sceneInfoTextArea.setFont(new Font("Hei", Font.BOLD, 18));

@@ -115,6 +115,9 @@ public class Person {
     }
 
     public void addChild(int value) {
+        if (value < 0){
+            value = 0;
+        }
         children += value;
         String some = value > 1 ? "children" : "child";
         String msg = String.format("You have gained %d %s", value, some);

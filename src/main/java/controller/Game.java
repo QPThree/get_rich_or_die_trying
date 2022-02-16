@@ -25,22 +25,13 @@ public class Game {
     public Game () {
         scenes = new SceneContainer();
         translator = new GUILogicTranslator(this, mainFrame);
-//        setAllActionListeners();
-//        gameBanner();
+
     }
 
     public void execute() {
 
 
         welcome();
-
-//        checkSaveFile();
-//        getPlayerBasicData();
-//        clearScreen();
-//        runSceneOneCareer(player);
-//
-
-//        playAgainOrExit();
     }
     private void mainGameLoop(){
         if (shouldPlay()) {
@@ -83,7 +74,6 @@ public class Game {
                     translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, displaySceneSummary(player.addSalary()));
 
                     removeAllActionListeners(mainFrame.mainLoop.continueButton);
-                    mainFrame.mainLoop.continueButton.setVisible(true);
                     mainFrame.mainLoop.continueButton.addActionListener(event -> mainGameLoop());
                 });
             });
@@ -198,33 +188,31 @@ public class Game {
             selectedIndex++;
         }
 
-
         return selectedIndex;
     }
 
     // first Scene after college, for the career choice
-//    private void runSceneOneCareer(Person player) {
-//
-//        mainFrame.showAttributesScreen(player);
-//        // availCareers are dictated by user choice in regards going to college
-//
-//        if(player.hasEducation()) {
-//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "Congratulations!\nYou finished college.");
-//        }
-//        else {
-//            translator.writeToComponent(mainFrame.sceneInfoTextArea, "You decided to skip the college route.");
-//        }
-//        mainFrame.showContinueButton();
-//        mainFrame.continueButton.addActionListener( e-> {
-//            chooseCareer();
-//        });
-//
-//
-//    }
+    private void runSceneOneCareer(Person player) {
+        // availCareers are dictated by user choice in regards going to college
+        if(player.hasEducation()) {
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "Congratulations!\nYou finished college.");
+        }
+        else {
+            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "You decided to skip the college route.");
+        }
+        mainFrame.mainLoop.continueButton.setVisible(true);
+        mainFrame.mainLoop.option1.setVisible(false);
+        mainFrame.mainLoop.option2.setVisible(false);
+        mainFrame.mainLoop.continueButton.addActionListener( e-> {
+            mainFrame.changeView("careerChoice");
+            //todo: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
+            chooseCareer();
+        });
+    }
 
     private void chooseCareer() {
         Map<Careers, List<String>> availCareers = player.hasEducation() ? Careers.getCollegeCareers() : Careers.getNonCollegeCareers();
-//        System.out.println("What career do you want?");
+        System.out.println("What career do you want?");
 
         // loops and prints out available careers depending on your college decision
         List<String> allValidCareers = new ArrayList<>();
@@ -235,21 +223,33 @@ public class Game {
             }
         }
 
-//        String selectedCareer = getInput(allValidCareers); // stores selected career
+
+       for (int i = 0; i < mainFrame.careerChoice.allCareerChoiceButtons.size(); i++){
+           //edit button text
+           translator.editButtonText(mainFrame.careerChoice.allCareerChoiceButtons.get(i), allValidCareers.get(i));
+           String choice = allValidCareers.get(i);
+           //add event listener
+           mainFrame.careerChoice.allCareerChoiceButtons.get(i).addActionListener( e -> {
+               //pass info to parse and set players career
+               setPlayerCareerFromCareerChoices(choice, availCareers, allValidCareers);
+           });
+       }
+
+    }
+
+    private void setPlayerCareerFromCareerChoices(String choice,  Map<Careers, List<String>> availCareers, List<String> allValidCareers){
 
         // sets career and breaks if you have selected a valid career
-//        topLoop:
-//        for (Careers career : availCareers.keySet()) {
-//            for (String specialty : availCareers.get(career)) {
-//                if (selectedCareer.equalsIgnoreCase(specialty)) {
-//                    player.setCareer(career);
-//                    break topLoop;
-//                }
-//            }
-//        }
-
-        System.out.println("\nYou chose a " + player.getCareer() + " job");
-
+        for (Careers career : availCareers.keySet()) {
+            for (String specialty : availCareers.get(career)) {
+                if (choice.equalsIgnoreCase(specialty)) {
+                    player.setCareer(career);
+                    break;
+                }
+            }
+        }
+        mainGameLoop();
+        mainFrame.changeView("mainLoop");
     }
 
     private String getInput(Collection<String> options) {
@@ -384,15 +384,17 @@ public class Game {
         mainFrame.backstory.button1.addActionListener(e -> {
             player.addMoney(-100000);
             player.setEducation(true);
-            mainFrame.changeView("mainLoop");
-            mainGameLoop();
 
+            //these should trigger career choice scene
+            mainFrame.changeView("mainLoop");
+            runSceneOneCareer(player);
 
         });
         mainFrame.backstory.button2.addActionListener(e -> {
             player.setEducation(false);
+            //these should trigger career choice scene
             mainFrame.changeView("mainLoop");
-            mainGameLoop();
+            runSceneOneCareer(player);
 
         });
 
@@ -429,7 +431,7 @@ public class Game {
         }
         else{
             Backstory backstory = backstories.get(j);
-            System.out.println("J____" + j);
+
             int i = 0;
             translator.writeToComponent(mainFrame.backstory.textArea, backstory.getPrompt());
             for (BackstoryOption option : backstory.getOptions()){
@@ -506,12 +508,20 @@ public class Game {
 
     private boolean shouldPlay() {
         if (player.getHealthPoints() <= 0) {
-            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"Game Over. You died because you ran out of health points: " + player.getHealthPoints());
+            mainFrame.changeView("gameOver");
+            translator.writeToComponent(mainFrame.gameOver.textArea,"Game Over! " + player.getName()+ " you have lost because you ran out of health points" +
+                    "\nYou have died trying to become a millionaire" +
+                    "\nAt the time of your death you were " + player.getAge() + " year's old " +
+                    "\nwith a NetWorth of " + player.getPrettyNetWorth() +
+                    "\n\nYou may want to rethink some of your life decisions ");
             return false;
         }
 
         if (player.getNetWorth() >= 1000000) {
-            translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea,"You win. You have: " + player.getPrettyNetWorth());
+            mainFrame.changeView("winner");
+            translator.writeToComponent(mainFrame.winner.textArea,"You win. Your NetWorth is: " + player.getPrettyNetWorth() +
+                    "\n" + player.getName() + " you were able to become a millionaire at the age of " + player.getAge() +
+                    "You have made some pretty good life decisions. Hope you enjoy the millionaire lifestyle!!!" );
             return false;
         }
 
