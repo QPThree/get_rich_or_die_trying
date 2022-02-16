@@ -59,7 +59,7 @@ public class Person {
         return fieldValues.get(index);
     }
 
-    private String getPartnerStatus() {
+    public String getPartnerStatus() {
         String partnerStatus = "single";
 
         if (this.partner != null)
@@ -203,7 +203,7 @@ public class Person {
         }
     }
 
-    private double getIncomeMultiplier() {
+    public double getIncomeMultiplier() {
         //1 - 1.5
 
         switch (career) {
