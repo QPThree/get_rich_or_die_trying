@@ -74,7 +74,6 @@ public class Game {
                     translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, displaySceneSummary(player.addSalary()));
 
                     removeAllActionListeners(mainFrame.mainLoop.continueButton);
-                    mainFrame.mainLoop.continueButton.setVisible(true);
                     mainFrame.mainLoop.continueButton.addActionListener(event -> mainGameLoop());
                 });
             });
@@ -202,11 +201,8 @@ public class Game {
             translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "You decided to skip the college route.");
         }
         mainFrame.mainLoop.continueButton.setVisible(true);
-        mainFrame.mainLoop.option2.addActionListener( e -> {
-            chooseCareer();
-            mainFrame.changeView("careerChoice");
-
-        });
+        mainFrame.mainLoop.option1.setVisible(false);
+        mainFrame.mainLoop.option2.setVisible(false);
         mainFrame.mainLoop.continueButton.addActionListener( e-> {
             mainFrame.changeView("careerChoice");
             //todo: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
@@ -435,7 +431,7 @@ public class Game {
         }
         else{
             Backstory backstory = backstories.get(j);
-            System.out.println("J____" + j);
+
             int i = 0;
             translator.writeToComponent(mainFrame.backstory.textArea, backstory.getPrompt());
             for (BackstoryOption option : backstory.getOptions()){

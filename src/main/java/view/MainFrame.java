@@ -76,7 +76,6 @@ public class MainFrame {
                 break;
             case "careerChoice":
                 careerChoice.render();
-                System.out.println("Rendering Career Choice");
                 break;
 
             case "mainLoop":

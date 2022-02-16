@@ -1,3 +1,5 @@
+package models;
+
 import controller.Game;
 import models.Careers;
 import models.Person;
@@ -66,6 +68,28 @@ public class PersonTest {
         assertTrue(player.getPartnerStatus().equals("single"));
 
     }
+
+    @Test
+    public void addAge_whenOverFifty_shouldReduceHealth(){
+        Person player = new Person();
+        int healthUnderFifty = player.getHealthPoints();
+        player.setAge(50);
+        player.addAge(1);
+
+        assertTrue(healthUnderFifty > player.getHealthPoints());
+    }
+
+    @Test
+    public void addAge_whenUnderFifty_shouldNotReduceHealth(){
+        Person player = new Person();
+        int healthUnderFifty = player.getHealthPoints();
+        player.setAge(49);
+        player.addAge(1);
+
+        assertTrue(healthUnderFifty == player.getHealthPoints());
+    }
+
+
 
 
 
