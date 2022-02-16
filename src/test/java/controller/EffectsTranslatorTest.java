@@ -1,3 +1,5 @@
+package controller;
+
 import controller.EffectsTranslator;
 import models.Person;
 import models.Scene;

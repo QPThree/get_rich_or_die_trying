@@ -95,7 +95,7 @@ public class LifeStory {
         pane.add(button, c);
 
         button = new JButton("Exit");
-        button.addActionListener(e -> System.out.println("Clicked Exit"));
+        button.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;

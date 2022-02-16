@@ -8,9 +8,10 @@ import java.awt.event.ActionListener;
 
 public class MainFrame {
     private static JFrame frame = null; //singleton from getInstance()
-    static public Intro intro = new Intro();
+    public static Intro intro = new Intro();
     public static Backstory backstory = new Backstory();
     public static Game game = new Game();
+    public static CareerChoice careerChoice = new CareerChoice();
     public static LifeStory mainLoop = new LifeStory();
     public static GameOver gameOver = new GameOver();
     public static Winner winner = new Winner();
@@ -74,6 +75,9 @@ public class MainFrame {
             case "backstory":
                 backstory.render();
                 game.getPlayerBasicData(); //start the game from backstory
+                break;
+            case "careerChoice":
+                careerChoice.render();
                 break;
 
             case "mainLoop":
