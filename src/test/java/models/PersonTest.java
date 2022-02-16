@@ -89,6 +89,12 @@ public class PersonTest {
         assertTrue(healthUnderFifty == player.getHealthPoints());
     }
 
+    @Test
+    public void addChild_shouldSetChildrenToZero_whenPassedNegativeInteger(){
+        player.addChild(-1);
+        assertTrue(player.getChildren() >= 0);
+    }
+
 
 
 
