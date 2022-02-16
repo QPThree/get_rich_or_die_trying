@@ -1,5 +1,7 @@
 package view;
 
+import controller.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,8 +75,8 @@ public class Backstory {
         helpButton.setVisible(true);
         pane.add(helpButton, c);
 
-        button = new JButton("Load");
-        button.addActionListener(e -> System.out.println("Clicked Load"));
+        button = new JButton("Save");
+        button.addActionListener(e -> Game.saveGame());
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 1;

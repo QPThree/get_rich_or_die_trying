@@ -557,7 +557,7 @@ public class Game {
     }
 
 
-    private void saveGame() {
+    public static void saveGame() {
         JSONObject saveData = new JSONObject();
 
         saveData.put("Career", player.getCareer());
@@ -584,15 +584,14 @@ public class Game {
         }
     }
 
-    private void loadGame () {
+    public static void loadGame() {
         try {
-            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE).toLowerCase();
+            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE);
             org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
             org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
             System.out.println("Loaded File" + loadedData.get("NetWorth"));
-//            //Load scene
-//
-//            //Load player info
+
+            //Set player info from saved file
             player.setName(name);
             long loadedNetWorth = (long) loadedData.get("NetWorth");
             player.setNetWorth((int) loadedNetWorth);
@@ -600,12 +599,34 @@ public class Game {
             player.setAge((int) loadedAge);
             long loadedHealth = (long) loadedData.get("Health");
             player.setHealth((int) loadedHealth);
-//            System.out.println("Example of saved data:" + player.getPrettyNetWorth() + player.getAge() + player.getHealthPoints());
+            long loadedChildren = (long) loadedData.get("Children");
+            player.addChild((int) loadedChildren);
+            String loadedCareer = (String) loadedData.get("Career");
+            System.out.println(loadedCareer);
+            player.setCareer(Careers.valueOf(loadedCareer));
+
+
+            // Set player Attributes
+            long loadedStrength = (long) loadedData.get("Strength Attribute");
+            player.addStrength((int) loadedStrength);
+            long loadedIntellect = (long) loadedData.get("Intellect Attribute");
+            player.addIntellect((int) loadedIntellect);
+            long loadedCreativity = (long) loadedData.get("Creativity Attribute");
+            player.addCreativity((int) loadedCreativity);
+
+            // Load game to main game loop
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.changeView("mainLoop");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
             System.out.println("ERROR: Could not locate your saved file");
 
         }
+    }
+    public static void promptPlayerName () {
+        String name = JOptionPane.showInputDialog(null, "Please enter desired name for player", "PLAYER NAME", JOptionPane.INFORMATION_MESSAGE);
+        player.setName(name);
+        MainFrame.changeView("backstory"); // Once player enters their name this starts the backstory
     }
 }
 
