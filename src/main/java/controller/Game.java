@@ -205,7 +205,7 @@ public class Game {
         mainFrame.mainLoop.option2.setVisible(false);
         mainFrame.mainLoop.continueButton.addActionListener( e-> {
             mainFrame.changeView("careerChoice");
-            //todo: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
+            //DONE: chooseCareers needs to be called from the continue button. Continue button not currently displaying. Switch when it is.
             chooseCareer();
         });
     }
@@ -250,6 +250,7 @@ public class Game {
         }
         mainGameLoop();
         mainFrame.changeView("mainLoop");
+
     }
 
     private String getInput(Collection<String> options) {

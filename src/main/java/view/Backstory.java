@@ -139,11 +139,11 @@ public class Backstory {
         textArea.setMargin(new Insets(25,100,25,40));
         textArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-
         textArea.setVisible(true);
-//        textArea.setForeground(Color.orange);
-//        textArea.setBackground(Color.black);
         textArea.setPreferredSize(new Dimension(450, 250));
+        textArea.setEditable(false);
+
+
         c.gridx = 0;
         c.gridy = 2;
         c.gridheight = 3;
@@ -154,7 +154,7 @@ public class Backstory {
         continueButton = createJButton("Continue", 200, 75, false);
         continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
         button.setOpaque(true);
-        continueButton.addActionListener(e -> System.out.println("Clicked Continue"));
+        continueButton.addActionListener(e -> System.out.println("Clicked Continue from backstory"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridheight = 0;
@@ -172,7 +172,6 @@ public class Backstory {
         JButton product = new JButton(title);
         product.setPreferredSize(new Dimension(width, height));
         product.setFocusable(focusable);
-        System.out.println("BACKSTORY JBUTTON CREATED");
         return product;
     }
 

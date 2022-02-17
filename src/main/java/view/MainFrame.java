@@ -15,13 +15,11 @@ public class MainFrame {
     public static LifeStory mainLoop = new LifeStory();
     public static GameOver gameOver = new GameOver();
     public static Winner winner = new Winner();
-    public static String instructions = "Game is meant to simulate life." +
-            "\nThe intent of the game is to have 1 million dollars by the end of the game" +
-            "\nChoices will change how much money you have, as well as health points." +
-            "\nEx: choosing education will grant you an extra money to your salary" +
-            "\nbut skipping college will start you out with less debt." +
-            "\nChoose carefully, your life depends on it" +
-            "\nIf you're done with the help section, press any key to continue.";
+    public static String instructions = "Get RICH or Die Trying!" +
+            "\n\n* Try to accumulate a net worth of 1 million dollars by the end of the game." +
+            "\n* Choices will change how much money you have, as well as health points." +
+            "\n* Choose carefully, your LIFE depends on it" +
+            "\n\n[Exit Help] to continue.";
     // colors for buttons
     public static final String CONTINUE_BUTTON_COLOR = "#2a9d8f";
     public static final String HELP_BUTTON_COLOR = "#ee9b00";
@@ -86,6 +84,7 @@ public class MainFrame {
 
             case "mainLoop":
                 mainLoop.render();
+                mainLoop.continueButton.setVisible(false);
                 break;
 
             case "gameOver":
@@ -109,7 +108,9 @@ public class MainFrame {
     }
 
     public static void writeToTextArea(JTextArea textArea, Color color, String string) {
-        textArea.setFont(new Font("Hei", Font.BOLD, 22));
+        //Euphemia UCAS
+
+        textArea.setFont(new Font("Euphemia UCAS", Font.BOLD, 18));
 
         textArea.setBackground(color);
         textArea.setText(string);

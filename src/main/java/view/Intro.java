@@ -80,6 +80,7 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Play Game");
+        button.setFont(new Font("Geneva", Font.BOLD, 18));
 //        button.addActionListener(e -> backstoryPane(pane));
         button.addActionListener(e -> Game.promptPlayerName()); //prompts the player to enter their name and then the game starts
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -110,13 +111,15 @@ public class Intro {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         textArea.setBackground(Color.white);
         textArea.setVisible(true);
-        textArea.setFont(new Font("Hei", Font.BOLD, 22));
+        textArea.setFont(new Font("Euphemia UCAS", Font.BOLD, 18));
         textArea.setPreferredSize(new Dimension(750, 200));
         textArea.setText(welcomeText);
         c.gridx = 0;
         c.gridy = 3;
         c.insets = new Insets(10,5,0,5);
         pane.add(textArea, c);
+
+        textArea.setEditable(false);
 
     }
 
