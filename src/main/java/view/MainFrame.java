@@ -23,7 +23,7 @@ public class MainFrame {
             "\nChoose carefully, your life depends on it" +
             "\nIf you're done with the help section, press any key to continue.";
     // colors for buttons
-    public static final String CONTINUE_BUTTON_COLOR = "#0a9396";
+    public static final String CONTINUE_BUTTON_COLOR = "#2a9d8f";
     public static final String HELP_BUTTON_COLOR = "#ee9b00";
     public static final String EXIT_BUTTON_COLOR = "#ae2012";
     public static final String LOAD_BUTTON_COLOR = "#001219";

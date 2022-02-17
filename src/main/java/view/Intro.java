@@ -1,7 +1,11 @@
 package view;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import controller.Game;
 
@@ -40,14 +44,6 @@ public class Intro {
         c.gridwidth = 4;
         pane.add(bannerLabel, c);
 
-    // for help functionality
-//        exitHelpButton = new JButton("Exit Help");
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.gridx = 2;
-//        c.gridy = 3;
-//        c.gridwidth = 1;
-//        exitHelpButton.setVisible(false);
-//        pane.add(exitHelpButton);
 
         Boolean flag = false;
         HelpButton = new JButton("Help");
@@ -88,23 +84,12 @@ public class Intro {
         button.addActionListener(e -> Game.promptPlayerName()); //prompts the player to enter their name and then the game starts
         c.fill = GridBagConstraints.HORIZONTAL;
 
-//        button.setBackground(Color.decode("#00b4d8"));
-        button.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+        button.setBackground(Color.decode("#FFFFFF")); //primary color of button
+//        button.setForeground(Color.decode("#FFFFFF")); //color of text on
 
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (UnsupportedLookAndFeelException e) {
-//            e.printStackTrace();
-//        }
 //        button.setFocusable(false);
 //        button.setBorderPainted(false);
-//        button.setBorder(new CompoundBorder(new LineBorder(Color.black), new EmptyBorder(5,15,5,15)));
+        button.setBorder(new CompoundBorder(new LineBorder(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR)), new EmptyBorder(5,15,5,15)));
 //        button.setMargin(new Insets(5,15,5,15));
 
 
@@ -114,6 +99,7 @@ public class Intro {
         c.gridwidth = 4;
         c.gridx = 1;
         c.gridy = 2;
+        c.insets = new Insets(10,60,10,60);
         pane.add(button, c);
 
 

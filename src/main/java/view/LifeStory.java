@@ -94,6 +94,7 @@ public class LifeStory {
         pane.add(button, c);
 
         button = new JButton("Main Menu");
+        button.setBackground(Color.decode("#FFFFFF"));
         button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         button.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -133,11 +134,17 @@ public class LifeStory {
         c.gridheight = 1;
         pane.add(option2, c);
 
-        continueButton = createJButton("Continue", 800, 50, false);
+        continueButton = createJButton("Continue", 200, 75, false);
         continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+        button.setOpaque(true);
+        continueButton.addActionListener(e -> System.out.println("Clicked Continue"));
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridheight = 0;
+        c.gridwidth = 3;
         c.gridx = 0;
-        c.gridy = 4;
-        c.gridwidth = 4;
+        c.gridy = 5;
+        c.insets = new Insets(0,100,0,100);
         pane.add(continueButton, c);
 
         pane.revalidate();
