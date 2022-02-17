@@ -44,7 +44,7 @@ public class LifeStory {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
 
         playerInfoTextArea.setVisible(true);
-        playerInfoTextArea.setFont(new Font("Hei", Font.BOLD, 16));
+        playerInfoTextArea.setFont(new Font("Euphemia UCAS", Font.BOLD, 14));
         playerInfoTextArea.setPreferredSize(new Dimension( 700, 100));
         playerInfoTextArea.setText( "\n" +
                 " | Name: " + player.getName() +
@@ -64,6 +64,7 @@ public class LifeStory {
 
 
         helpButton = new JButton("Help");
+        helpButton.setForeground(Color.decode(MainFrame.HELP_BUTTON_COLOR));
         helpButton.addActionListener(e -> {
             if(!sceneInfoTextArea.getText().equals(MainFrame.instructions)){
                 currentSceneText = sceneInfoTextArea.getText();
@@ -82,7 +83,11 @@ public class LifeStory {
         pane.add(helpButton, c);
 
         button = new JButton("Save");
+
         button.addActionListener(e -> MainFrame.game.saveGame());
+
+        button.setForeground(Color.decode(MainFrame.LOAD_BUTTON_COLOR));
+
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
 
@@ -91,7 +96,9 @@ public class LifeStory {
         button.setVisible(true);
         pane.add(button, c);
 
-        button = new JButton("Exit");
+        button = new JButton("Main Menu");
+        button.setBackground(Color.decode("#FFFFFF"));
+        button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         button.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -100,10 +107,10 @@ public class LifeStory {
         button.setVisible(true);
         pane.add(button, c);
 
-        sceneInfoTextArea.setMargin(new Insets(25,100,25,40));
+        sceneInfoTextArea.setMargin(new Insets(0,100,25,40));
         sceneInfoTextArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
 
-        BorderFactory.createEmptyBorder(100, 15, -275, 18)));
+        BorderFactory.createEmptyBorder(25, 15, -200, 18)));
 
 
         sceneInfoTextArea.setVisible(true);
@@ -119,25 +126,37 @@ public class LifeStory {
         pane.add(sceneInfoTextArea, c);
 
         // Option1 grid
+        option1.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         c.gridx = 2;
         c.gridy = 2;
         c.gridheight = 1;
         pane.add(option1, c);
 
         //Option 2 grid
+        option2.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         c.gridx= 2;
         c.gridy = 3;
         c.gridheight = 1;
         pane.add(option2, c);
 
-        continueButton = createJButton("Continue", 800, 50, false);
+        continueButton = createJButton("Continue", 200, 75, false);
+        continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+        button.setOpaque(true);
+        continueButton.addActionListener(e -> System.out.println("Clicked Continue from LifeStory"));
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridheight = 0;
+        c.gridwidth = 3;
         c.gridx = 0;
-        c.gridy = 4;
-        c.gridwidth = 4;
+        c.gridy = 5;
+        c.insets = new Insets(0,100,0,100);
         pane.add(continueButton, c);
 
         pane.revalidate();
         pane.setVisible(true);
+        playerInfoTextArea.setEditable(false);
+        sceneInfoTextArea.setEditable(false);
+
     }
 
     private static JButton createJButton(String title, int width, int height, boolean focusable) {

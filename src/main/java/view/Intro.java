@@ -1,7 +1,11 @@
 package view;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class Intro {
     final static boolean shouldFill = true;
@@ -38,17 +42,10 @@ public class Intro {
         c.gridwidth = 4;
         pane.add(bannerLabel, c);
 
-    // for help functionality
-//        exitHelpButton = new JButton("Exit Help");
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.gridx = 2;
-//        c.gridy = 3;
-//        c.gridwidth = 1;
-//        exitHelpButton.setVisible(false);
-//        pane.add(exitHelpButton);
 
         Boolean flag = false;
         HelpButton = new JButton("Help");
+        HelpButton.setForeground(Color.decode(MainFrame.HELP_BUTTON_COLOR));
             HelpButton.addActionListener(e -> {
                 MainFrame.helpToggler(HelpButton, textArea, welcomeText);
             });
@@ -63,7 +60,11 @@ public class Intro {
         pane.add(HelpButton, c);
 
         button = new JButton("Load");
+
         button.addActionListener(e -> MainFrame.game.loadGame());
+
+        button.setForeground(Color.decode(MainFrame.LOAD_BUTTON_COLOR));
+
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -71,7 +72,11 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Exit");
+
         button.addActionListener(e -> MainFrame.game.exitGame());
+
+        button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
+
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 3;
@@ -79,15 +84,27 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Play Game");
+        button.setFont(new Font("Geneva", Font.BOLD, 18));
 //        button.addActionListener(e -> backstoryPane(pane));
         button.addActionListener(e -> MainFrame.game.promptPlayerName()); //prompts the player to enter their name and then the game starts
         c.fill = GridBagConstraints.HORIZONTAL;
-        button.setBackground(Color.green);
+
+        button.setBackground(Color.decode("#FFFFFF")); //primary color of button
+//        button.setForeground(Color.decode("#FFFFFF")); //color of text on
+
+//        button.setFocusable(false);
+//        button.setBorderPainted(false);
+        button.setBorder(new CompoundBorder(new LineBorder(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR)), new EmptyBorder(5,15,5,15)));
+//        button.setMargin(new Insets(5,15,5,15));
+
+
+        button.setOpaque(true);
         c.ipady = 40;      //make this component tall
         c.weightx = 0.0;
         c.gridwidth = 4;
         c.gridx = 1;
         c.gridy = 2;
+        c.insets = new Insets(10,60,10,60);
         pane.add(button, c);
 
 
@@ -98,13 +115,15 @@ public class Intro {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
         textArea.setBackground(Color.white);
         textArea.setVisible(true);
-        textArea.setFont(new Font("Hei", Font.BOLD, 22));
+        textArea.setFont(new Font("Euphemia UCAS", Font.BOLD, 18));
         textArea.setPreferredSize(new Dimension(750, 200));
         textArea.setText(welcomeText);
         c.gridx = 0;
         c.gridy = 3;
         c.insets = new Insets(10,5,0,5);
         pane.add(textArea, c);
+
+        textArea.setEditable(false);
 
     }
 
