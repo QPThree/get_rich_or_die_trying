@@ -150,7 +150,7 @@ public class Game {
         values += ("\nNet Worth: " + player.getPrettyNetWorth());
         values += ("\nChildren: " + player.getChildren());
         if (player.isMarried()) {
-            values += ("\nSpouse: " + player.getPartner());
+            values += ("\nSpouse: " + player.getPartner().getName());
         } else {
             values += ("\nPartner: " + (player.getPartner() == null ? "none" : player.getPartner().getName()));
         }
