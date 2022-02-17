@@ -51,6 +51,7 @@ public class Intro {
 
         Boolean flag = false;
         HelpButton = new JButton("Help");
+        HelpButton.setForeground(Color.decode(MainFrame.HELP_BUTTON_COLOR));
             HelpButton.addActionListener(e -> {
                 MainFrame.helpToggler(HelpButton, textArea, welcomeText);
             });
@@ -66,6 +67,7 @@ public class Intro {
 
         button = new JButton("Load");
         button.addActionListener(e -> Game.loadGame());
+        button.setForeground(Color.decode(MainFrame.LOAD_BUTTON_COLOR));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -74,6 +76,7 @@ public class Intro {
 
         button = new JButton("Exit");
         button.addActionListener(e -> Game.exitGame());
+        button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 3;
@@ -84,7 +87,28 @@ public class Intro {
 //        button.addActionListener(e -> backstoryPane(pane));
         button.addActionListener(e -> Game.promptPlayerName()); //prompts the player to enter their name and then the game starts
         c.fill = GridBagConstraints.HORIZONTAL;
-        button.setBackground(Color.green);
+
+//        button.setBackground(Color.decode("#00b4d8"));
+        button.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+
+//        try {
+//            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedLookAndFeelException e) {
+//            e.printStackTrace();
+//        }
+//        button.setFocusable(false);
+//        button.setBorderPainted(false);
+//        button.setBorder(new CompoundBorder(new LineBorder(Color.black), new EmptyBorder(5,15,5,15)));
+//        button.setMargin(new Insets(5,15,5,15));
+
+
+        button.setOpaque(true);
         c.ipady = 40;      //make this component tall
         c.weightx = 0.0;
         c.gridwidth = 4;

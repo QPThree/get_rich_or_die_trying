@@ -54,6 +54,7 @@ public class Backstory {
 
 
         helpButton = new JButton("Help");
+        helpButton.setForeground(Color.decode(MainFrame.HELP_BUTTON_COLOR));
         helpButton.addActionListener(e -> {
             if(!textArea.getText().equals(MainFrame.instructions)){
                 currentSceneText = textArea.getText();
@@ -72,6 +73,7 @@ public class Backstory {
         pane.add(helpButton, c);
 
         button = new JButton("Save");
+        button.setForeground(Color.decode(MainFrame.LOAD_BUTTON_COLOR));
         button.addActionListener(e -> Game.saveGame());
         c.weightx = 0.5;
         c.gridx = 1;
@@ -81,6 +83,7 @@ public class Backstory {
         pane.add(button, c);
 
         button = new JButton("Main Menu");
+        button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         button.addActionListener(e -> MainFrame.changeView("intro"));
         c.weightx = 0.5;
         c.gridx = 2;
@@ -91,6 +94,8 @@ public class Backstory {
 
 //        button = createJButton("Button 1", 200, 150, false);
         button1.addActionListener(e -> System.out.println("Clicked Button 1"));
+        button1.setForeground(Color.decode("#3d405b"));
+        button1.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -102,6 +107,8 @@ public class Backstory {
 
 //        button = createJButton("Button 2", 200, 150, false);
         button2.addActionListener(e -> System.out.println("Clicked Button 2"));
+        button2.setForeground(Color.decode("#3d405b"));
+        button2.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -112,6 +119,8 @@ public class Backstory {
 
 //        button = createJButton("Button 3", 200, 150, false);
         button3.addActionListener(e -> System.out.println("Clicked Button 3"));
+        button3.setForeground(Color.decode("#3d405b"));
+        button3.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -139,6 +148,8 @@ public class Backstory {
         pane.add(textArea, c);
 
         continueButton = createJButton("Continue", 800, 50, false);
+        continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+        button.setOpaque(true);
         continueButton.addActionListener(e -> System.out.println("Clicked Continue"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;

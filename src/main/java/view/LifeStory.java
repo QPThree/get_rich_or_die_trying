@@ -64,6 +64,7 @@ public class LifeStory {
 
 
         helpButton = new JButton("Help");
+        helpButton.setForeground(Color.decode(MainFrame.HELP_BUTTON_COLOR));
         helpButton.addActionListener(e -> {
             if(!sceneInfoTextArea.getText().equals(MainFrame.instructions)){
                 currentSceneText = sceneInfoTextArea.getText();
@@ -82,6 +83,7 @@ public class LifeStory {
         pane.add(helpButton, c);
 
         button = new JButton("Save");
+        button.setForeground(Color.decode(MainFrame.LOAD_BUTTON_COLOR));
         button.addActionListener(e -> System.out.println("Clicked Save"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -91,7 +93,8 @@ public class LifeStory {
         button.setVisible(true);
         pane.add(button, c);
 
-        button = new JButton("Exit");
+        button = new JButton("Main Menu");
+        button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         button.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -131,6 +134,7 @@ public class LifeStory {
         pane.add(option2, c);
 
         continueButton = createJButton("Continue", 800, 50, false);
+        continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
         c.gridx = 0;
         c.gridy = 4;
         c.gridwidth = 4;
