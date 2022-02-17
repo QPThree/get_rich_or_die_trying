@@ -73,8 +73,8 @@
     {
       "prompt": "You are teaching students your craft. They love it, you love it, but the money is not enough to pay your bills. A student asks why wont you quit. Pick your response",
       "options": [
-        "passion is more important than money",
-        "quit your job and get more money"
+        "follow your passion",
+        "quit for more money"
       ],
       "outcomes": [
         "You get more students, but the money is still terrible. You start selling drugs on the side to supplement income",

@@ -83,6 +83,7 @@ public class Backstory {
         pane.add(button, c);
 
         button = new JButton("Main Menu");
+        button.setBackground(Color.decode("#FFFFFF"));
         button.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
         button.addActionListener(e -> MainFrame.changeView("intro"));
         c.weightx = 0.5;
@@ -94,7 +95,8 @@ public class Backstory {
 
 //        button = createJButton("Button 1", 200, 150, false);
         button1.addActionListener(e -> System.out.println("Clicked Button 1"));
-        button1.setForeground(Color.decode("#3d405b"));
+        button1.setBackground(Color.decode("#FFFFFF"));
+        button1.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button1.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -107,7 +109,8 @@ public class Backstory {
 
 //        button = createJButton("Button 2", 200, 150, false);
         button2.addActionListener(e -> System.out.println("Clicked Button 2"));
-        button2.setForeground(Color.decode("#3d405b"));
+        button2.setBackground(Color.decode("#FFFFFF"));
+        button2.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button2.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -119,7 +122,8 @@ public class Backstory {
 
 //        button = createJButton("Button 3", 200, 150, false);
         button3.addActionListener(e -> System.out.println("Clicked Button 3"));
-        button3.setForeground(Color.decode("#3d405b"));
+        button3.setBackground(Color.decode("#FFFFFF"));
+        button3.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button3.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -135,11 +139,11 @@ public class Backstory {
         textArea.setMargin(new Insets(25,100,25,40));
         textArea.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.darkGray,2,true),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-
         textArea.setVisible(true);
-//        textArea.setForeground(Color.orange);
-//        textArea.setBackground(Color.black);
         textArea.setPreferredSize(new Dimension(450, 250));
+        textArea.setEditable(false);
+
+
         c.gridx = 0;
         c.gridy = 2;
         c.gridheight = 3;
@@ -147,16 +151,17 @@ public class Backstory {
         c.insets = new Insets(-75,5,0,5);
         pane.add(textArea, c);
 
-        continueButton = createJButton("Continue", 800, 50, false);
+        continueButton = createJButton("Continue", 200, 75, false);
         continueButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
         button.setOpaque(true);
-        continueButton.addActionListener(e -> System.out.println("Clicked Continue"));
+        continueButton.addActionListener(e -> System.out.println("Clicked Continue from backstory"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridheight = 0;
-        c.gridwidth = 5;
+        c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 5;
+        c.insets = new Insets(-50,100,0,100);
         pane.add(continueButton, c);
         pane.revalidate();
         pane.setVisible(true);
@@ -167,7 +172,6 @@ public class Backstory {
         JButton product = new JButton(title);
         product.setPreferredSize(new Dimension(width, height));
         product.setFocusable(focusable);
-        System.out.println("BACKSTORY JBUTTON CREATED");
         return product;
     }
 
