@@ -150,7 +150,7 @@ public class Game {
         values += ("\nNet Worth: " + player.getPrettyNetWorth());
         values += ("\nChildren: " + player.getChildren());
         if (player.isMarried()) {
-            values += ("\nSpouse: " + player.getPartner());
+            values += ("\nSpouse: " + player.getPartner().getName());
         } else {
             values += ("\nPartner: " + (player.getPartner() == null ? "none" : player.getPartner().getName()));
         }
@@ -510,6 +510,14 @@ public class Game {
     }
 
     private boolean shouldPlay() {
+        if (player.getNetWorth() >= 1000000) {
+            mainFrame.changeView("winner");
+            translator.writeToComponent(mainFrame.winner.textArea,"You win. Your NetWorth is: " + player.getPrettyNetWorth() +
+                    "\n" + player.getName() + " you were able to become a millionaire at the age of " + player.getAge() +
+                    "\nYou have made some pretty good life decisions. \nHope you enjoy the millionaire lifestyle!!!" );
+            return false;
+        }
+
         if (player.getHealthPoints() <= 0) {
             mainFrame.changeView("gameOver");
             translator.writeToComponent(mainFrame.gameOver.textArea,"Game Over! " + player.getName()+ " you have lost because you ran out of health points" +
@@ -519,15 +527,6 @@ public class Game {
                     "\n\nYou may want to rethink some of your life decisions ");
             return false;
         }
-
-        if (player.getNetWorth() >= 1000000) {
-            mainFrame.changeView("winner");
-            translator.writeToComponent(mainFrame.winner.textArea,"You win. Your NetWorth is: " + player.getPrettyNetWorth() +
-                    "\n" + player.getName() + " you were able to become a millionaire at the age of " + player.getAge() +
-                    "You have made some pretty good life decisions. Hope you enjoy the millionaire lifestyle!!!" );
-            return false;
-        }
-
         return true;
     }
 
@@ -619,12 +618,13 @@ public class Game {
     }
 
 
-    public static void saveGame() {
+    public void saveGame() {
         JSONObject saveData = new JSONObject();
 
-        saveData.put("Career", player.getCareer());
         saveData.put("Education", player.hasEducation());
-        saveData.put("Partner", player.getPartner());
+        saveData.put("Is Married", player.isMarried());
+        saveData.put("Get Partner", player.getPartner());
+        saveData.put("Partner Status", player.getPartnerStatus());
         saveData.put("NetWorth", player.getNetWorth());
         saveData.put("Age", player.getAge());
         saveData.put("Health", player.getHealthPoints());
@@ -646,39 +646,47 @@ public class Game {
         }
     }
 
-    public static void loadGame() {
+    public void loadGame() {
         try {
             String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE);
-            org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/"+name+".json"));
-            org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
-            System.out.println("Loaded File" + loadedData.get("NetWorth"));
+            if (name != null) {
+                org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/" + name + ".json"));
+                org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
+                System.out.println("Loaded File" + loadedData.get("NetWorth"));
 
-            //Set player info from saved file
-            player.setName(name);
-            long loadedNetWorth = (long) loadedData.get("NetWorth");
-            player.setNetWorth((int) loadedNetWorth);
-            long loadedAge = (long) loadedData.get("Age");
-            player.setAge((int) loadedAge);
-            long loadedHealth = (long) loadedData.get("Health");
-            player.setHealth((int) loadedHealth);
-            long loadedChildren = (long) loadedData.get("Children");
-            player.addChild((int) loadedChildren);
-            String loadedCareer = (String) loadedData.get("Career");
-            System.out.println(loadedCareer);
-            player.setCareer(Careers.valueOf(loadedCareer));
+                //Set player info from saved file
+                player.setName(name);
+                long savedNetWorth = (long) loadedData.get("NetWorth");
+                player.setNetWorth((int) savedNetWorth);
+                long savedAge = (long) loadedData.get("Age");
+                player.setAge((int) savedAge - 5);
+                long savedHealth = (long) loadedData.get("Health");
+                player.setHealth((int) savedHealth);
+                long savedChildren = (long) loadedData.get("Children");
+                player.addChild((int) savedChildren);
+                String savedCareer = (String) loadedData.get("Career Choice");
+                System.out.println(savedCareer);
+                player.setCareer(Careers.valueOf(savedCareer));
+                boolean savedMarriedStatus = (boolean) loadedData.get("Is Married");
+                if (savedMarriedStatus == true) {
+                    player.setMarried(true);
+                    player.addPartner(1);
+                }
 
+                // Set player Attributes
+                long savedStrength = (long) loadedData.get("Strength Attribute");
+                player.setStrength((int) savedStrength);
+                long savedIntellect = (long) loadedData.get("Intellect Attribute");
+                player.setIntellect((int) savedIntellect);
+                long savedCreativity = (long) loadedData.get("Creativity Attribute");
+                player.setCreativity((int) savedCreativity);
 
-            // Set player Attributes
-            long loadedStrength = (long) loadedData.get("Strength Attribute");
-            player.addStrength((int) loadedStrength);
-            long loadedIntellect = (long) loadedData.get("Intellect Attribute");
-            player.addIntellect((int) loadedIntellect);
-            long loadedCreativity = (long) loadedData.get("Creativity Attribute");
-            player.addCreativity((int) loadedCreativity);
-
-            // Load game to main game loop
-            MainFrame mainFrame = new MainFrame();
-            mainFrame.changeView("mainLoop");
+                // Load game to main game loop
+                mainFrame.changeView("mainLoop");
+                mainGameLoop();
+            } else {
+                MainFrame.changeView("intro"); // if player hits cancel on the dialog box it will return them to the intro page
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
             System.out.println("ERROR: Could not locate your saved file");
@@ -693,9 +701,12 @@ public class Game {
         player.setCreativity(0);
         player.setIntellect(0);
         String name = JOptionPane.showInputDialog(null, "Please enter desired name for player", "PLAYER NAME", JOptionPane.INFORMATION_MESSAGE);
-        player.setName(name);
-        MainFrame.changeView("backstory"); // Once player enters their name this starts the backstory
-
+        if(name !=null) {
+            player.setName(name);
+            MainFrame.changeView("backstory"); // Once player enters their name this starts the backstory
+        } else {
+            MainFrame.changeView("intro"); // if player hits cancel on the dialog box it will return them to the intro page
+        }
     }
 }
 

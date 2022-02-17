@@ -3,8 +3,6 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-import controller.Game;
-
 public class Intro {
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
@@ -65,7 +63,7 @@ public class Intro {
         pane.add(HelpButton, c);
 
         button = new JButton("Load");
-        button.addActionListener(e -> Game.loadGame());
+        button.addActionListener(e -> MainFrame.game.loadGame());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
@@ -73,7 +71,7 @@ public class Intro {
         pane.add(button, c);
 
         button = new JButton("Exit");
-        button.addActionListener(e -> Game.exitGame());
+        button.addActionListener(e -> MainFrame.game.exitGame());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 3;
@@ -82,7 +80,7 @@ public class Intro {
 
         button = new JButton("Play Game");
 //        button.addActionListener(e -> backstoryPane(pane));
-        button.addActionListener(e -> Game.promptPlayerName()); //prompts the player to enter their name and then the game starts
+        button.addActionListener(e -> MainFrame.game.promptPlayerName()); //prompts the player to enter their name and then the game starts
         c.fill = GridBagConstraints.HORIZONTAL;
         button.setBackground(Color.green);
         c.ipady = 40;      //make this component tall

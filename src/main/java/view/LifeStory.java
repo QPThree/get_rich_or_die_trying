@@ -82,7 +82,7 @@ public class LifeStory {
         pane.add(helpButton, c);
 
         button = new JButton("Save");
-        button.addActionListener(e -> System.out.println("Clicked Save"));
+        button.addActionListener(e -> MainFrame.game.saveGame());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
 

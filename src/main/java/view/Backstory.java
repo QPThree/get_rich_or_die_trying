@@ -1,7 +1,5 @@
 package view;
 
-import controller.Game;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public class Backstory {
         pane.add(helpButton, c);
 
         button = new JButton("Save");
-        button.addActionListener(e -> Game.saveGame());
+        button.addActionListener(e -> MainFrame.game.saveGame());
         c.weightx = 0.5;
         c.gridx = 1;
         c.gridy = 1;

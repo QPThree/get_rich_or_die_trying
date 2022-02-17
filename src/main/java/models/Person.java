@@ -112,7 +112,7 @@ public class Person {
         }
     }
 
-    private void setMarried(boolean b) {
+    public void setMarried(boolean b) {
         this.isMarried = b;
     }
 
