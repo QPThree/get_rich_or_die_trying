@@ -622,8 +622,6 @@ public class Game {
         JSONObject saveData = new JSONObject();
 
         saveData.put("Education", player.hasEducation());
-        saveData.put("Is Married", player.isMarried());
-        saveData.put("Get Partner", player.getPartner());
         saveData.put("Partner Status", player.getPartnerStatus());
         saveData.put("NetWorth", player.getNetWorth());
         saveData.put("Age", player.getAge());
@@ -641,14 +639,17 @@ public class Game {
             FileWriter file = new FileWriter("resources/saves/"+player.getName()+".json");
             file.write(newSaveData.toString());
             file.close();
+            JOptionPane.showMessageDialog(null,"File has been saved with filename:  " + player.getName());
         }catch (IOException e){
             System.out.println(e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null,e.getLocalizedMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void loadGame() {
         try {
-            String name = JOptionPane.showInputDialog(null, "Please enter player name", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE);
+            String name = JOptionPane.showInputDialog(null, "Please enter filename", "LOAD GAME", JOptionPane.INFORMATION_MESSAGE);
             if (name != null) {
                 org.json.simple.JSONObject loadFile = (org.json.simple.JSONObject) new JSONParser().parse(new FileReader("resources/saves/" + name + ".json"));
                 org.json.simple.JSONObject loadedData = (org.json.simple.JSONObject) loadFile.get(name);
@@ -667,10 +668,19 @@ public class Game {
                 String savedCareer = (String) loadedData.get("Career Choice");
                 System.out.println(savedCareer);
                 player.setCareer(Careers.valueOf(savedCareer));
-                boolean savedMarriedStatus = (boolean) loadedData.get("Is Married");
-                if (savedMarriedStatus == true) {
+                String loadedPartnerStatus = (String) loadedData.get("Partner Status");
+                if (loadedPartnerStatus.equals("married")) {
                     player.setMarried(true);
                     player.addPartner(1);
+                }
+                if (loadedPartnerStatus.equals("partner")) {
+                    player.setMarried(false);
+                    player.addPartner(1);
+                }
+
+                if (loadedPartnerStatus.equals("single")) {
+                    player.setMarried(false);
+                    player.removePartner();
                 }
 
                 // Set player Attributes
@@ -688,18 +698,21 @@ public class Game {
                 MainFrame.changeView("intro"); // if player hits cancel on the dialog box it will return them to the intro page
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your save file");
+            JOptionPane.showMessageDialog(new JFrame(), "ERROR: Could not locate your saved filename");
             System.out.println("ERROR: Could not locate your saved file");
 
         }
     }
     public static void promptPlayerName () {
+        // Resetting player attributes needed when they play again
         player.setNetWorth(0);
         player.setHealth(100);
         player.setAge(18);
         player.setStrength(0);
         player.setCreativity(0);
         player.setIntellect(0);
+        player.setMarried(false);
+        player.removePartner();
         String name = JOptionPane.showInputDialog(null, "Please enter desired name for player", "PLAYER NAME", JOptionPane.INFORMATION_MESSAGE);
         if(name !=null) {
             player.setName(name);
