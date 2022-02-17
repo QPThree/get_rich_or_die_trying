@@ -83,12 +83,12 @@
     "prompt": "As a teen, you are hosting a party on a Saturday night while your parents are away. The party is lit AF. Suddenly, you hear a pounding at the door. 'Open up!! It's the police'. What do you do?",
     "options": [
       {
-        "text": "tell everyone to run into the woods",
+        "text": "run into the woods",
         "attribute": "strength",
         "outcome": "All the teens run into the woods. You can feel the cop's flashlight from your back. As everyone starts dispersing in different direction, the cops get confused on who to follow. You begin sprinting because you're a natural athlete. 'Hehe,' you think."
       },
       {
-        "text": "tell them to come back with a warrant",
+        "text": "Ask: 'Wheres your warrant?'",
         "attribute": "intellect",
         "outcome": "There's no way they are coming in. 'I know my rights,' you assure everyone. Everyone nods and agree. 'I'm so smart,' you think."
       },

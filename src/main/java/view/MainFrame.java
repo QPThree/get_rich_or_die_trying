@@ -25,6 +25,7 @@ public class MainFrame {
     public static final String HELP_BUTTON_COLOR = "#ee9b00";
     public static final String EXIT_BUTTON_COLOR = "#ae2012";
     public static final String LOAD_BUTTON_COLOR = "#001219";
+    public static final String CHOICE_BUTTON_COLOR = "#3d405b";
 
     public MainFrame() {
         getInstance();

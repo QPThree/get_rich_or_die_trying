@@ -96,7 +96,7 @@ public class Backstory {
 //        button = createJButton("Button 1", 200, 150, false);
         button1.addActionListener(e -> System.out.println("Clicked Button 1"));
         button1.setBackground(Color.decode("#FFFFFF"));
-        button1.setForeground(Color.decode("#3d405b"));
+        button1.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button1.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -110,7 +110,7 @@ public class Backstory {
 //        button = createJButton("Button 2", 200, 150, false);
         button2.addActionListener(e -> System.out.println("Clicked Button 2"));
         button2.setBackground(Color.decode("#FFFFFF"));
-        button2.setForeground(Color.decode("#3d405b"));
+        button2.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button2.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -123,7 +123,7 @@ public class Backstory {
 //        button = createJButton("Button 3", 200, 150, false);
         button3.addActionListener(e -> System.out.println("Clicked Button 3"));
         button3.setBackground(Color.decode("#FFFFFF"));
-        button3.setForeground(Color.decode("#3d405b"));
+        button3.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         button3.setOpaque(true);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;

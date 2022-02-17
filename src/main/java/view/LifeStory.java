@@ -123,12 +123,14 @@ public class LifeStory {
         pane.add(sceneInfoTextArea, c);
 
         // Option1 grid
+        option1.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         c.gridx = 2;
         c.gridy = 2;
         c.gridheight = 1;
         pane.add(option1, c);
 
         //Option 2 grid
+        option2.setForeground(Color.decode(MainFrame.CHOICE_BUTTON_COLOR));
         c.gridx= 2;
         c.gridy = 3;
         c.gridheight = 1;
