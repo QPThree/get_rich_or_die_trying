@@ -22,7 +22,7 @@
       ]
     },
     {
-      "prompt": "You are living a relatively healthy life. That is why you are surprised when, at your yearly physical, the doctor says you have high cholesterol. He offers you an expensive experimental treatment to lower cholesterol using nanomachines. Alternatively you can just try to eat healthier and exercise more.",
+      "prompt": "You are living a relatively healthy life. You are surprised at your yearly physical, when the doctor says you have high cholesterol. He offers you an expensive experimental treatment to lower cholesterol using nanomachines. You could instead eat healthier and exercise more.",
       "options": [
         "take treatment",
         "live healthier"
