@@ -277,11 +277,11 @@ public class Game {
         return true;
     }
 
-    private void updatePlayerAttributesDisplay(){
+    public void updatePlayerAttributesDisplay(){
         String playerAttributes =  "\n" +
                 " | Name: " + player.getName() +
                 " | Age: " + player.getAge() +
-                " | Job: " + player.getJobTitle() +
+                (player.getJobTitle() == null? " ":" | Job: " + player.getJobTitle())+
                 " | NetWorth: " + player.getPrettyNetWorth() +
                 " | Health: " + player.getHealthPoints() + " |\n\n" +
                 " | Strength: " + player.getStrength() +
@@ -295,12 +295,6 @@ public class Game {
 
     private String displaySceneSummary(String salaryBreakdown) {
         String values = "";
-        System.out.println("\n++++++ 5-Year Summary ++++++");
-        System.out.println("Player: " + player.getName());
-        System.out.println("Age: " + player.getAge());
-        System.out.println("Net Worth: " + player.getPrettyNetWorth());
-        System.out.println("Health: " + player.getHealthPoints());
-        System.out.println("Children: " + player.getChildren());
         if (player.isMarried()) {
             System.out.println("Spouse: Sam");
         } else {
@@ -345,8 +339,6 @@ public class Game {
 
         return new JSONArray(jsonString.toString());
     }
-
-
 
     public static void exitGame() {
         System.exit(1);

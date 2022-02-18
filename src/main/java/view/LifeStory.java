@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.tools.javac.Main;
 import controller.EffectsTranslator;
 import controller.Game;
 import models.Person;

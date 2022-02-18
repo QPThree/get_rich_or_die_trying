@@ -11,7 +11,7 @@ public class Person {
     private int strength = 0, intellect = 0, creativity = 0;
     private Boolean education = false, isMarried = false, hasPrivilege = false;
     private Careers career = Careers.PASSION;
-    private String jobTitle = "none";
+    private String jobTitle = null;
     private Person partner = null;
     private String name;
 
