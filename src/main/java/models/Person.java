@@ -131,6 +131,9 @@ public class Person {
         System.out.println(msg);
     }
 
+    public void removeChild() {
+        children = 0;
+    }
     public void changeCareer(int value) {
         String oldCareer = career.name();
         career = Careers.values()[value];
