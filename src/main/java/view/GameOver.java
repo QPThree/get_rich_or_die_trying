@@ -67,6 +67,7 @@ public class GameOver {
         c.gridy = 1;
         c.gridheight = 3;
         c.gridwidth = 1;
+        c.insets = new Insets(10,5,0,15);
         pane.add(textArea, c);
 
         playAgainButton = createJButton("Play Again", 200, 75, false);
