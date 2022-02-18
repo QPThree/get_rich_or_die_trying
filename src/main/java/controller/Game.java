@@ -305,6 +305,7 @@ public class Game {
         // This can go away when serialization is implemented
         values += ("++++++ 5-Year Summary ++++++");
         values += ("\nPlayer: " + player.getName());
+        values += ("\nEarnings: " + player.getCareer().getSalaryAmount() + " x 5 = " +  player.getCareer().getSalaryAmount() * 5);
         values += ("\nNet Worth: " + player.getPrettyNetWorth());
         values += ("\nChildren: " + player.getChildren());
         if (player.isMarried()) {
