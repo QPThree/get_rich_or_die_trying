@@ -81,6 +81,7 @@ public class Game {
         mainFrame.backstory.button3.setVisible(true);
 
         if (j > backstories.size() - 1){
+            //triggers if player has scene all of the backstory scenarios
             collegeScene();
             return;
         }
@@ -200,7 +201,6 @@ public class Game {
             }
         }
         mainGameLoop();
-        updatePlayerAttributesDisplay();
         mainFrame.changeView("mainLoop");
 
     }
@@ -209,7 +209,6 @@ public class Game {
         if (shouldPlay()) {
             Scene currentScene = scenes.getRandomScene(player);
             player.addAge(5);
-            updatePlayerAttributesDisplay();
             mainFrame.mainLoop.continueButton.setVisible(false);
             removeAllActionListeners(mainFrame.mainLoop.continueButton);
             removeAllActionListeners(mainFrame.mainLoop.option1);
@@ -249,7 +248,7 @@ public class Game {
                     mainFrame.mainLoop.continueButton.addActionListener(event -> mainGameLoop());
                 });
             });
-
+            updatePlayerAttributesDisplay();
         }
     }
 
@@ -442,6 +441,7 @@ public class Game {
         // Resetting player attributes needed when they play again
         player.setNetWorth(0);
         player.setHealth(100);
+        player.setJobTitle(null);
         player.setAge(18);
         player.setStrength(0);
         player.setCreativity(0);

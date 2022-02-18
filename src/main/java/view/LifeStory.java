@@ -21,7 +21,6 @@ public class LifeStory {
     public static JButton continueButton;
     public static JTextArea textArea = new JTextArea(20, 20), playerInfoTextArea = new JTextArea(5,5), sceneInfoTextArea = new JTextArea(20,20), playerAttributes = new JTextArea(5, 20);
     public static JLabel healthLabel = new JLabel(), wealthLabel = new JLabel();
-    private static Person player = Game.player;
     static SceneContainer scene = new SceneContainer();
     static String currentSceneText;
 
@@ -148,6 +147,8 @@ public class LifeStory {
         playerInfoTextArea.setEditable(false);
         sceneInfoTextArea.setEditable(false);
 
+
+
     }
 
     private static JButton createJButton(String title, int width, int height, boolean focusable) {
@@ -159,7 +160,6 @@ public class LifeStory {
 
 
     static void render() {
-        System.out.println("****RUNNING MAIN LOOP! ****");
         //Create and set up the window.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
