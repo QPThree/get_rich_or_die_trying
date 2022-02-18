@@ -69,21 +69,31 @@ public class GameOver {
         c.gridwidth = 1;
         pane.add(textArea, c);
 
-        playAgainButton = createJButton("Play Again", 185, 50, false);
+        playAgainButton = createJButton("Play Again", 200, 75, false);
+        playAgainButton.setFont(new Font("Geneva", Font.BOLD, 18));
+        playAgainButton.setForeground(Color.decode(MainFrame.CONTINUE_BUTTON_COLOR));
+        playAgainButton.setBackground(Color.decode("#FFFFFF"));
+        playAgainButton.setOpaque(true);
         playAgainButton.addActionListener(e -> MainFrame.changeView("intro"));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 4;
+        c.insets = new Insets(0,100,0,100);
         playAgainButton.setVisible(true);
         pane.add(playAgainButton, c);
 
-        exitButton = createJButton("Exit Game", 185, 50, false);
+        exitButton = createJButton("Exit Game", 200, 75, false);
+        exitButton.setFont(new Font("Geneva", Font.BOLD, 18));
+        exitButton.setForeground(Color.decode(MainFrame.EXIT_BUTTON_COLOR));
+        exitButton.setBackground(Color.decode("#FFFFFF"));
+        exitButton.setOpaque(true);
         exitButton.addActionListener(e -> Game.exitGame());
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 7;
+        c.insets = new Insets(0,100,0,100);
         exitButton.setVisible(true);
         pane.add(exitButton, c);
 
