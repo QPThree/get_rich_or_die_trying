@@ -78,7 +78,7 @@ public class Backstory {
         c.gridx = 1;
         c.gridy = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        button.setVisible(true);
+        button.setVisible(false);
         pane.add(button, c);
 
         button = new JButton("Main Menu");
