@@ -6,10 +6,7 @@ import java.util.Random;
 
 public class Person {
 
-    private int netWorth = 0;
-    private int health = 100;
-    private int age = 18;
-    private int children = 0;
+    private int netWorth = 0, health = 100, age = 18, children = 0;
     private final NumberFormat money = NumberFormat.getCurrencyInstance();
     private int strength = 0, intellect = 0, creativity = 0;
     private Boolean education = false, isMarried = false, hasPrivilege = false;
