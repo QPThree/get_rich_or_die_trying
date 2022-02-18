@@ -302,7 +302,7 @@ public class Game {
         System.out.println(salaryBreakdown);
         // This is currently being used to output the summary.
         // This can go away when serialization is implemented
-        values += (player.getMoneyChange() == null ? "No didn't gain or lose money from your decision" :player.getMoneyChange() +"\n");
+        values += (player.getMoneyChange() == null ? "Did not gain or lose money from your decision" :player.getMoneyChange() +"\n");
         values += (player.getHealthChange() == null ? "No changes to health from your decision" : player.getHealthChange() +"\n\n");
         values += ("++++++ 5-Year Summary ++++++");
         values += ("\nPlayer: " + player.getName());
