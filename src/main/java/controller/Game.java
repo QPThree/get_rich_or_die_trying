@@ -302,6 +302,8 @@ public class Game {
         System.out.println(salaryBreakdown);
         // This is currently being used to output the summary.
         // This can go away when serialization is implemented
+        values += (player.getMoneyChange() +"\n");
+        values += (player.getHealthChange() == null ? "No changes to health from your decision" : player.getHealthChange() +"\n\n");
         values += ("++++++ 5-Year Summary ++++++");
         values += ("\nPlayer: " + player.getName());
         values += ("\nEarnings: " + player.getCareer().getSalaryAmount() + " x 5 = " +  player.getCareer().getSalaryAmount() * 5);

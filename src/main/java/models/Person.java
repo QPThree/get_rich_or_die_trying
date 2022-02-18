@@ -14,6 +14,8 @@ public class Person {
     private String jobTitle = null;
     private Person partner = null;
     private String name;
+    private String moneyChange;
+    private String healthChange;
 
     public Person() {
         money.setMaximumFractionDigits(0);
@@ -77,6 +79,7 @@ public class Person {
         netWorth += modifiedAmountToAdd;
         final String msg = String.format("You have %s %s from your choice", (amountToAdd < 0 ? "lost" : "gained"), money.format(modifiedAmountToAdd));
         System.out.println(msg);
+        moneyChange = msg;
     }
 
     public void addHealth(int value) {
@@ -86,6 +89,7 @@ public class Person {
         String gained = value < 0 ? "lost" : "gained";
         String msg = String.format("You have %s %d health", gained, value);
         System.out.println(msg);
+        healthChange = msg;
 
     }
 
@@ -301,5 +305,13 @@ public class Person {
 
     public void setCreativity(int creativity) {
         this.creativity = creativity;
+    }
+
+    public String getMoneyChange() {
+        return moneyChange;
+    }
+
+    public String getHealthChange() {
+        return healthChange;
     }
 }
