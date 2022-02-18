@@ -143,6 +143,7 @@ public class Game {
 
     // first Scene after college, for the career choice
     private void runSceneOneCareer(Person player) {
+        updatePlayerAttributesDisplay();
         // availCareers are dictated by user choice in regards going to college
         if(player.hasEducation()) {
             translator.writeToComponent(mainFrame.mainLoop.sceneInfoTextArea, "Congratulations!\nYou finished college.");
@@ -182,6 +183,7 @@ public class Game {
             mainFrame.careerChoice.allCareerChoiceButtons.get(i).addActionListener( e -> {
                 //pass info to parse and set players career
                 setPlayerCareerFromCareerChoices(choice, availCareers, allValidCareers);
+                player.setJobTitle(choice.toLowerCase(Locale.ROOT));
             });
         }
 
@@ -198,6 +200,7 @@ public class Game {
             }
         }
         mainGameLoop();
+        updatePlayerAttributesDisplay();
         mainFrame.changeView("mainLoop");
 
     }
@@ -278,12 +281,13 @@ public class Game {
         String playerAttributes =  "\n" +
                 " | Name: " + player.getName() +
                 " | Age: " + player.getAge() +
-                " | Career Choice: " + player.getCareer() +
+                " | Job: " + player.getJobTitle() +
                 " | NetWorth: " + player.getPrettyNetWorth() +
                 " | Health: " + player.getHealthPoints() + " |\n\n" +
                 " | Strength: " + player.getStrength() +
                 " | Intellect: " + player.getIntellect() +
-                " | Creativity: " + player.getCreativity() + " | \n";
+                " | Creativity: " + player.getCreativity() +
+                " | Career Path: " + player.getCareer() + " | \n";
 
         translator.writeToComponent(mainFrame.mainLoop.playerInfoTextArea, playerAttributes);
         mainFrame.mainLoop.playerInfoTextArea.setFont(new Font("Hei", Font.BOLD, 16));

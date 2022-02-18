@@ -11,6 +11,7 @@ public class Person {
     private int strength = 0, intellect = 0, creativity = 0;
     private Boolean education = false, isMarried = false, hasPrivilege = false;
     private Careers career = Careers.PASSION;
+    private String jobTitle = "none";
     private Person partner = null;
     private String name;
 
@@ -143,6 +144,15 @@ public class Person {
 
     public Careers getCareer() {
         return this.career;
+    }
+
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     public void addAge(int i) {

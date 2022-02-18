@@ -46,16 +46,6 @@ public class LifeStory {
         playerInfoTextArea.setVisible(true);
         playerInfoTextArea.setFont(new Font("Euphemia UCAS", Font.BOLD, 14));
         playerInfoTextArea.setPreferredSize(new Dimension( 700, 100));
-        playerInfoTextArea.setText( "\n" +
-                " | Name: " + player.getName() +
-                " | Age: " + player.getAge() +
-                " | Career Choice: " + player.getCareer() +
-                " | NetWorth: " + player.getPrettyNetWorth() +
-                " | Health: " + player.getHealthPoints() + " |\n\n" +
-                " | Strength: " + player.getStrength() +
-                " | Intellect: " + player.getIntellect() +
-                " | Creativity: " + player.getCreativity() + " | \n"
-        );
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 3;
